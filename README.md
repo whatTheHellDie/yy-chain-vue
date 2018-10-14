@@ -10,5 +10,4 @@
 
 ## 说明文档
 项目开发、部署等说明都在取自[wiki](https://github.com/daxiongYang/renren-fast-vue/wiki)中。
-
-
+    

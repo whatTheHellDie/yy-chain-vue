@@ -1,0 +1,187 @@
+<template>
+  <div>
+    <my-header></my-header>
+    <div class="login-wrap-box">
+      <div class="wrap clearfix">
+        <div class="login-main pull-right">
+          <div class="login-title">
+            <span class="tab cursor" :class="{active:checkStatus}" @click="switchForm(true)">登录</span><span class="tab cursor" :class="{active:!checkStatus}" @click="switchForm(false)">注册</span>
+          </div>
+          <el-form v-if="this.checkStatus" :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
+            <el-form-item prop="userName">
+              <label class="label" for="userName">会员编号 ：</label>
+              <el-input v-model="dataForm.userName"></el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+              <label class="label" for="password">登录密码 ：</label>
+              <el-input v-model="dataForm.password" type="password"></el-input>
+            </el-form-item>
+            <el-form-item prop="captcha">
+              <label class="label" for="captcha">图形验证 ：</label>
+              <el-input v-model="dataForm.captcha"></el-input>
+              <div class="captcha">FLJE </div>
+            </el-form-item>
+            <!--<el-form-item prop="captcha">
+              <el-row :gutter="20">
+                <el-col :span="14">
+                  <el-input v-model="dataForm.captcha" placeholder="验证码">
+                  </el-input>
+                </el-col>
+                <el-col :span="10" class="login-captcha">
+                  <img :src="captchaPath" @click="getCaptcha()" alt="">
+                </el-col>
+              </el-row>
+            </el-form-item>-->
+            <div class="remember-pass clearfix">
+              <el-checkbox v-model="rememberPass">记住账号</el-checkbox>
+              <span class="cursor default pull-right" @click="$router.push({name:'forgetPassword'})">忘记密码 ？</span>
+
+            </div>
+            <el-form-item>
+              <el-button class="login-btn-submit" type="primary" @click="dataFormSubmit()">登录</el-button>
+              <div class="no-account">没有账号？去<span @click="switchForm(false)" class="cursor default">注册</span></div>
+            </el-form-item>
+          </el-form>
+          <el-form v-else :model="dataForm1" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
+            <el-form-item prop="userName">
+              <label class="label" for="userName">会员编号 ：</label>
+              <el-input v-model="dataForm1.userName" readonly></el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+              <label class="label" for="password">登录密码 ：</label>
+              <el-input v-model="dataForm1.password" placeholder="请输入8-16位数字、字符组合密码" type="password"></el-input>
+            </el-form-item>
+            <el-form-item prop="rePassword">
+              <label class="label" for="password">确认密码 ：</label>
+              <el-input v-model="dataForm1.password" placeholder="请输入8-16位数字、字符组合密码" type="password"></el-input>
+            </el-form-item>
+            <el-form-item prop="userName">
+              <label class="label" for="userName">推荐会员 ：</label>
+              <el-input v-model="dataForm1.userName" placeholder="请输入推荐人帐号"></el-input>
+            </el-form-item>
+            <el-form-item prop="userName">
+              <label class="label" for="userName">手机号码 ：</label>
+              <el-input v-model="dataForm1.userName" placeholder="请输入手机号码"></el-input>
+            </el-form-item>
+            <el-form-item prop="captcha">
+              <label class="label" for="captcha">短信验证 ：</label>
+              <el-input v-model="dataForm1.captcha" placeholder="请输入短信验证码"></el-input>
+              <el-button class="captcha captcha1">获取验证码</el-button>
+            </el-form-item>
+            <!--<el-form-item prop="captcha">
+              <el-row :gutter="20">
+                <el-col :span="14">
+                  <el-input v-model="dataForm.captcha" placeholder="验证码">
+                  </el-input>
+                </el-col>
+                <el-col :span="10" class="login-captcha">
+                  <img :src="captchaPath" @click="getCaptcha()" alt="">
+                </el-col>
+              </el-row>
+            </el-form-item>-->
+            <el-form-item>
+              <el-button class="login-btn-submit" type="primary" @click="dataFormSubmit()">注册</el-button>
+              <div class="no-account">已有账号，去<span @click="switchForm(true)" class="cursor default">登录</span></div>
+            </el-form-item>
+          </el-form>
+        </div>
+        
+      </div>
+    </div>
+    <my-footer></my-footer>
+  </div>
+</template>
+
+<script>
+  import MyHeader from '@/components/common/header'
+  import MyFooter from '@/components/common/footer'
+  export default {
+    data() {
+      return {
+        checkStatus: true,
+        dataForm: {
+          userName: '',
+          password: '',
+          uuid: '',
+          captcha: ''
+        },
+        dataForm1: {
+          userName: 'FS00000001',
+          password: '',
+          uuid: '',
+          captcha: ''
+        },
+        dataRule: {
+          userName: [{
+            required: true,
+            message: '帐号不能为空',
+            trigger: 'blur'
+          }],
+          password: [{
+            required: true,
+            message: '密码不能为空',
+            trigger: 'blur'
+          }],
+
+          //        captcha: [
+          //          { required: true, message: '验证码不能为空', trigger: 'blur' }
+          //        ]
+        },
+        rememberPass: false,
+        //      captchaPath: ''
+      }
+    },
+    components: {
+      MyHeader,
+      MyFooter
+    },
+    created() {
+      //    this.getCaptcha()
+    },
+    methods: {
+      //切换注册登录
+      switchForm(status) {
+        this.checkStatus = status;
+        console.log(this.checkStatus)
+      },
+      // 提交表单
+      dataFormSubmit() {
+        this.$refs['dataForm'].validate((valid) => {
+          if(valid) {
+            this.$http({
+              url: this.$http.adornUrl('/sys/login'),
+              method: 'post',
+              data: this.$http.adornData({
+                'username': this.dataForm.userName,
+                'password': this.dataForm.password,
+                //              'uuid': this.dataForm.uuid,
+                //              'captcha': this.dataForm.captcha
+              })
+            }).then(({
+              data
+            }) => {
+              if(data && data.code === 0) {
+                this.$cookie.set('token', data.token)
+                this.$router.replace({
+                  name: 'index'
+                })
+              } else {
+                //              this.getCaptcha()
+                this.$message.error(data.msg)
+              }
+            })
+          }
+        })
+      },
+      // 获取验证码
+      //    getCaptcha () {
+      //      this.dataForm.uuid = getUUID()
+      //      this.captchaPath = this.$http.adornUrl(`/captcha.jpg?uuid=${this.dataForm.uuid}`)
+      //    }
+    }
+  }
+</script>
+
+<style lang="scss">
+
+</style>

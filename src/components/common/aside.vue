@@ -1,0 +1,72 @@
+<template>
+  <div class="left-navbar">
+    <dl>
+      <dt><icon-svg name="index" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>账户中心</dt>
+      <dd v-for="item in sideNav.account" :class="{active:$route.name == item.routeName }" @click="$router.push({ name: item.routeName })">{{item.name}}</dd>
+    </dl>
+    <dl>
+      <dt><icon-svg name="order" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>订单管理</dt>
+      <dd v-for="item in sideNav.order" :class="{active:$route.name == item.routeName }" @click="$router.push({ name: item.routeName })">{{item.name}}</dd>
+    </dl>
+    <dl>
+      <dt><icon-svg name="money" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>资金管理</dt>
+      <dd v-for="item in sideNav.fund" :class="{active:$route.name == item.routeName }" @click="$router.push({ name: item.routeName })">{{item.name}}</dd>
+    </dl>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        num1: 1,
+        sideNav:{
+          account:[//账户管理
+          {
+            name:"账户首页",
+            routeName:"index"
+          },
+          {
+            name:"设置支付密码",
+            routeName:"setPaymentPassword"
+          },
+          ],
+          order:[//订单管理
+          {
+            name:"入股订单",
+            routeName:"investmentShareOrder"
+          },
+          {
+            name:"充币订单",
+            routeName:"chargeCoinOrder"
+          }
+          ],
+          fund:[//资金管理
+          {
+            name:"充币",
+            routeName:"chargeCoin"
+          },
+          {
+            name:"资金明细",
+            routeName:""
+          }
+          ],
+        }
+      }
+    },
+    computed:{
+      
+    },
+    methods: {
+    },
+    mounted(){
+      console.log(this.$route.name)
+    }
+  }
+</script>
+
+<style>
+  .left-navbar dd.active{
+    color: #ed9d0e;
+  }
+</style>
