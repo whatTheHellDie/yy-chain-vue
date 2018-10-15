@@ -10,15 +10,15 @@
           <el-form v-if="this.checkStatus" :model="loginForm" :rules="loginFormRule" ref="loginForm" @keyup.enter.native="login()" status-icon>
             <el-form-item prop="userNumber">
               <label class="label" for="userNumber">会员编号 ：</label>
-              <el-input v-model="dataForm.userNumber"></el-input>
+              <el-input v-model="loginForm.userNumber"></el-input>
             </el-form-item>
             <el-form-item prop="password">
               <label class="label" for="password">登录密码 ：</label>
-              <el-input v-model="dataForm.password" type="password"></el-input>
+              <el-input v-model="loginForm.password" type="password"></el-input>
             </el-form-item>
             <el-form-item prop="captcha">
               <label class="label" for="captcha">图形验证 ：</label>
-              <el-input v-model="dataForm.captcha"></el-input>
+              <el-input v-model="loginForm.captcha"></el-input>
               <div class="captcha">FLJE </div>
             </el-form-item>
             <!--<el-form-item prop="captcha">
@@ -43,7 +43,7 @@
             </el-form-item>
           </el-form>
 
-          <el-form v-else :model="registerForm" :rules="registerRule" ref="registerForm" @keyup.enter.native="dataFormSubmit()" status-icon>
+          <el-form v-else :model="registerForm" :rules="registerRule" ref="registerForm" @keyup.enter.native="register()" status-icon>
             <el-form-item prop="userNumber">
               <label class="label" for="userNumber">会员编号 ：</label>
               <el-input v-model="registerForm.userNumber" readonly></el-input>
