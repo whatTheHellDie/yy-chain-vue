@@ -7,10 +7,10 @@
           <div class="login-title">
             <span class="tab cursor" :class="{active:checkStatus}" @click="$router.push({ name: 'login' })">登录</span><span class="tab cursor" :class="{active:!checkStatus}" @click="$router.push({ name: 'register' })">注册</span>
           </div>
-          <el-form v-if="this.checkStatus" :model="dataForm" :rules="registerRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
-            <el-form-item prop="userName">
-              <label class="label" for="userName">会员编号 ：</label>
-              <el-input v-model="dataForm.userName"></el-input>
+          <el-form v-if="this.checkStatus" :model="loginForm" :rules="loginFormRule" ref="loginForm" @keyup.enter.native="login()" status-icon>
+            <el-form-item prop="userNumber">
+              <label class="label" for="userNumber">会员编号 ：</label>
+              <el-input v-model="dataForm.userNumber"></el-input>
             </el-form-item>
             <el-form-item prop="password">
               <label class="label" for="password">登录密码 ：</label>
@@ -38,7 +38,7 @@
 
             </div>
             <el-form-item>
-              <el-button class="login-btn-submit" type="primary" @click="dataFormSubmit()">登录</el-button>
+              <el-button class="login-btn-submit" type="primary" @click="login()">登录</el-button>
               <div class="no-account">没有账号？去<span @click="$router.push({ name: 'register' })" class="cursor default">注册</span></div>
             </el-form-item>
           </el-form>
@@ -100,8 +100,8 @@
     data () {
       return {
 
-        dataForm: {
-          userName: '',
+        loginForm: {
+          userNumber: '',
           password: '',
           uuid: '',
           captcha: ''
@@ -114,6 +114,23 @@
           phone: '',
           captcha: ''
         },
+        loginRule: {
+          userNumber: [{
+            required: true,
+            message: '帐号不能为空',
+            trigger: 'blur'
+          }],
+          password: [{
+            required: true,
+            message: '密码不能为空',
+            trigger: 'blur'
+          }],
+          captcha: [{
+            required: true,
+            message: '验证码不能为空',
+            trigger: 'blur'
+          }]
+        },
         registerRule: {
           userNumber: [{
             required: true,
@@ -123,6 +140,21 @@
           password: [{
             required: true,
             message: '密码不能为空',
+            trigger: 'blur'
+          }],
+          rePassword: [{
+            required: true,
+            message: '确认密码不能为空',
+            trigger: 'blur'
+          }],
+          referrerNumber: [{
+            required: true,
+            message: '推荐人不能为空',
+            trigger: 'blur'
+          }],
+          phone: [{
+            required: true,
+            message: '电话不能为空',
             trigger: 'blur'
           }]
 
@@ -147,14 +179,15 @@
         }
       }
     },
-    created() {
-      //    this.getCaptcha()
-      this.createUserNumber();
+    watch: {
+      '$route' (to, from) {
+        // 对路由变化作出响应...
+        this.createUserNumber();
+      }
     },
     methods: {
       // 切换注册登录
       createUserNumber () {
-        if (!this.checkStatus) {
           this.$http({
             url: this.$http.adornUrl('/id/create'),
             method: 'get'
@@ -169,18 +202,17 @@
             this.dataListLoading = false
             this.$message.error(error)
           })
-        }
       },
-      // 提交表单
-      dataFormSubmit () {
-        this.$refs['dataForm'].validate((valid) => {
+      // 登录
+      login () {
+        this.$refs['loginForm'].validate((valid) => {
           if (valid) {
             this.$http({
               url: this.$http.adornUrl('/user/login'),
               method: 'post',
               data: this.$http.adornData({
-                'userNumber': this.dataForm.userName,
-                'loginPassword': this.dataForm.password
+                'userNumber': this.loginForm.userNumber,
+                'loginPassword': this.loginForm.password
               })
             }).then(({data}) => {
               if (data && data.code === 0) {
@@ -189,7 +221,6 @@
                   name: 'index'
                 })
               } else {
-                //              this.getCaptcha()
                 this.$message.error(data.msg)
               }
             })
