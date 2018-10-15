@@ -42,7 +42,7 @@
           newPassword: '',
           confirmPassword: ''
         },
-        dataRule: {
+        registerRule: {
           password: [
             { required: true, message: '原密码不能为空', trigger: 'blur' }
           ],

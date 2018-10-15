@@ -64,7 +64,7 @@
             <el-button class="login-btn-submit mb124 fan" type="primary" @click="$router.push({name:'login'})">返回登录</el-button>
           </div>
         </div>
-        
+
       </div>
     </div>
     <my-footer></my-footer>
@@ -78,20 +78,20 @@
     data() {
       return {
         step:1,
-        
+
         dataForm: {
           userName: '',
           password: '',
           uuid: '',
           captcha: ''
         },
-        dataForm1: {
+        registerForm: {
           userName: 'FS00000001',
           password: '',
           uuid: '',
           captcha: ''
         },
-        dataRule: {
+        registerRule: {
           userName: [{
             required: true,
             message: '帐号不能为空',
