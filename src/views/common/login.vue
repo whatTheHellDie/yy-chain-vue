@@ -5,7 +5,7 @@
       <div class="wrap clearfix">
         <div class="login-main pull-right">
           <div class="login-title">
-            <span class="tab cursor" :class="{active:checkStatus}" @click="switchForm(true)">登录</span><span class="tab cursor" :class="{active:!checkStatus}" @click="switchForm(false)">注册</span>
+            <span class="tab cursor" :class="{active:checkStatus}" @click="$router.push({ name: 'login' })">登录</span><span class="tab cursor" :class="{active:!checkStatus}" @click="$router.push({ name: 'register' })">注册</span>
           </div>
           <el-form v-if="this.checkStatus" :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
             <el-form-item prop="userName">
@@ -39,7 +39,7 @@
             </div>
             <el-form-item>
               <el-button class="login-btn-submit" type="primary" @click="dataFormSubmit()">登录</el-button>
-              <div class="no-account">没有账号？去<span @click="switchForm(false)" class="cursor default">注册</span></div>
+              <div class="no-account">没有账号？去<span @click="$router.push({ name: 'register' })" class="cursor default">注册</span></div>
             </el-form-item>
           </el-form>
           <el-form v-else :model="dataForm1" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
@@ -80,8 +80,8 @@
               </el-row>
             </el-form-item>-->
             <el-form-item>
-              <el-button class="login-btn-submit" type="primary" @click="dataFormSubmit()">注册</el-button>
-              <div class="no-account">已有账号，去<span @click="switchForm(true)" class="cursor default">登录</span></div>
+              <el-button class="login-btn-submit" type="primary" @click="">注册</el-button>
+              <div class="no-account">已有账号，去<span @click="$router.push({ name: 'login' })" class="cursor default">登录</span></div>
             </el-form-item>
           </el-form>
         </div>
@@ -98,7 +98,7 @@
   export default {
     data() {
       return {
-        checkStatus: true,
+        
         dataForm: {
           userName: '',
           password: '',
@@ -135,6 +135,16 @@
       MyHeader,
       MyFooter
     },
+    computed:{
+      checkStatus(){
+        if(this.$route.name=='register'){
+          return false
+        }else{
+          return true
+        }
+        
+      }
+    },
     created() {
       //    this.getCaptcha()
     },
@@ -146,32 +156,34 @@
       },
       // 提交表单
       dataFormSubmit() {
-        this.$refs['dataForm'].validate((valid) => {
-          if(valid) {
-            this.$http({
-              url: this.$http.adornUrl('/sys/login'),
-              method: 'post',
-              data: this.$http.adornData({
-                'username': this.dataForm.userName,
-                'password': this.dataForm.password,
-                //              'uuid': this.dataForm.uuid,
-                //              'captcha': this.dataForm.captcha
-              })
-            }).then(({
-              data
-            }) => {
-              if(data && data.code === 0) {
-                this.$cookie.set('token', data.token)
-                this.$router.replace({
-                  name: 'index'
-                })
-              } else {
-                //              this.getCaptcha()
-                this.$message.error(data.msg)
-              }
-            })
-          }
-        })
+        this.$router.push({ name: 'index' })
+//      this.$refs['dataForm'].validate((valid) => {
+//        if(valid) {
+//          this.$http({
+//            url: this.$http.adornUrl('/sys/login'),
+//            method: 'post',
+//            data: this.$http.adornData({
+//              'username': this.dataForm.userName,
+//              'password': this.dataForm.password,
+//              //              'uuid': this.dataForm.uuid,
+//              //              'captcha': this.dataForm.captcha
+//            })
+//          }).then(({
+//            data
+//          }) => {
+//            if(data && data.code === 0) {
+//              this.$cookie.set('token', data.token)
+//              this.$router.replace({
+//                name: 'index'
+//              })
+//            } else {
+//              //              this.getCaptcha()
+//              this.$message.error(data.msg)
+//            }
+//          })
+//        }
+//      })
+
       },
       // 获取验证码
       //    getCaptcha () {
