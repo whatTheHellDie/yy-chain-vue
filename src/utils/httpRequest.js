@@ -17,7 +17,7 @@ const http = axios.create({
  * 请求拦截
  */
 http.interceptors.request.use(config => {
-  config.headers['token'] = Vue.cookie.get('token') // 请求头带上token
+//config.headers['token'] = Vue.cookie.get('token') // 请求头带上token
   return config
 }, error => {
   return Promise.reject(error)
@@ -27,10 +27,10 @@ http.interceptors.request.use(config => {
  * 响应拦截
  */
 http.interceptors.response.use(response => {
-  if (response.data && response.data.code === 401) { // 401, token失效
-    clearLoginInfo()
-    router.push({ name: 'login' })
-  }
+//if (response.data && response.data.code === 401) { // 401, token失效
+//  clearLoginInfo()
+//  router.push({ name: 'login' })
+//}
   return response
 }, error => {
   return Promise.reject(error)

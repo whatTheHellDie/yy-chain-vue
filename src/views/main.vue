@@ -21,7 +21,7 @@
   export default {
     data () {
       return {
-        loading: true
+        loading: false
       }
     },
     components: {
@@ -62,17 +62,17 @@
       },
       // 获取当前管理员信息
       getUserInfo () {
-        this.$http({
-          url: this.$http.adornUrl('/sys/user/info'),
-          method: 'get',
-          params: this.$http.adornParams()
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.loading = false
-            this.userId = data.user.userId
-            this.userName = data.user.username
-          }
-        })
+//      this.$http({
+//        url: this.$http.adornUrl('/sys/user/info'),
+//        method: 'get',
+//        params: this.$http.adornParams()
+//      }).then(({data}) => {
+//        if (data && data.code === 0) {
+//          this.loading = false
+//          this.userId = data.user.userId
+//          this.userName = data.user.username
+//        }
+//      })
       }
     }
   }

@@ -34,7 +34,7 @@ const globalRoutes = [
 
 // 主入口路由(需嵌套上左右整体布局)
 const mainRoutes = {
-  path: '/myAccount',
+  path: '/',
   component: _import('main'),
   name: 'main',
   redirect: { name: 'index' },
@@ -69,36 +69,34 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  // 添加动态(菜单)路由
+   // 添加动态(菜单)路由
   // 1. 已经添加 or 全局路由, 直接访问
   // 2. 获取菜单列表, 添加并保存本地存储
-  if (router.options.isAddDynamicMenuRoutes || fnCurrentRouteType(to, globalRoutes) === 'global') {
-    if (to.meta.title) {
-          document.title = to.meta.title
-        }
-    next()
-  } else {
-    http({
-      url: http.adornUrl('/sys/menu/nav'),
-      method: 'get',
-      params: http.adornParams()
-    }).then(({data}) => {
-      if (data && data.code === 0) {
-        fnAddDynamicMenuRoutes(data.menuList)
-        router.options.isAddDynamicMenuRoutes = true
-        sessionStorage.setItem('menuList', JSON.stringify(data.menuList || '[]'))
-        sessionStorage.setItem('permissions', JSON.stringify(data.permissions || '[]'))
-        next({ ...to, replace: true })
-      } else {
-        sessionStorage.setItem('menuList', '[]')
-        sessionStorage.setItem('permissions', '[]')
-        next()
-      }
-    }).catch((e) => {
-      console.log(`%c${e} 请求菜单列表和权限失败，跳转至登录页！！`, 'color:blue')
-      router.push({ name: 'login' })
-    })
-  }
+  // if (router.options.isAddDynamicMenuRoutes || fnCurrentRouteType(to, globalRoutes) === 'global') {
+  //   next()
+  // } else {
+  //   http({
+  //     url: http.adornUrl('/sys/menu/nav'),
+  //     method: 'get',
+  //     params: http.adornParams()
+  //   }).then(({data}) => {
+  //     if (data && data.code === 0) {
+  //       fnAddDynamicMenuRoutes(data.menuList)
+  //       router.options.isAddDynamicMenuRoutes = true
+  //       sessionStorage.setItem('menuList', JSON.stringify(data.menuList || '[]'))
+  //       sessionStorage.setItem('permissions', JSON.stringify(data.permissions || '[]'))
+  //       next({ ...to, replace: true })
+  //     } else {
+  //       sessionStorage.setItem('menuList', '[]')
+  //       sessionStorage.setItem('permissions', '[]')
+  //       next()
+  //     }
+  //   }).catch((e) => {
+  //     console.log(`%c${e} 请求菜单列表和权限失败，跳转至登录页！！`, 'color:blue')
+  //     router.push({ name: 'login' })
+  //   })
+  // }
+  next()
 })
 
 /**
