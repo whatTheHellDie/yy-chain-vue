@@ -20,6 +20,7 @@ const globalRoutes = [
   { path: '/index', component: _import('common/index'), name: 'index', meta: { title: '易用链首页' } },
   { path: '/404', component: _import('common/404'), name: '404', meta: { title: '404未找到' } },
   { path: '/login', component: _import('common/login'), name: 'login', meta: { title: '登录' } },
+  { path: '/register', component: _import('common/login'), name: 'register', meta: { title: '注册' } },
   { path: '/forgetPassword', component: _import('common/forgetPassword'), name: 'forgetPassword', meta: { title: '忘记密码' } },
   //购买
   { path: '/buyPackage', component: _import('purchase/buyPackage'), name: 'buyPackage', meta: { title: '易用链订单' } },

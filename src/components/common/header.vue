@@ -5,7 +5,7 @@
         <icon-svg name="phone" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
         800-820-0000
         <div class="login-box clearfix">
-          <span class="cursor" @click="$router.push({ name: 'login' })">登录</span>|<span class="cursor" @click="$router.push({ name: 'home' })">注册</span>
+          <span class="cursor" @click="$router.push({ name: 'login' })">登录</span>|<span class="cursor" @click="$router.push({ name: 'register' })">注册</span>
         </div>
       </div>
     </div>
