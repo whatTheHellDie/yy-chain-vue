@@ -215,7 +215,7 @@
                 'loginPassword': this.loginForm.password
               })
             }).then(({data}) => {
-              if (data && data.code === 0) {
+              if (data && data.code === '01201') {
                 this.$cookie.set('token', data.token)
                 this.$router.replace({
                   name: 'index'
