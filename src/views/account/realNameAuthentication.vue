@@ -20,19 +20,19 @@
             <form class="form-horizontal" role="form">
           <div class="form-group combo-form">
             <label for="zhuan" class="col-sm-3 control-label red">认证不通过原因：</label>
-            <div class="lh40 red">填写姓名与证件图片中的姓名不一致</div>
+            <div class="lh40 red">{{authForm.reason}}</div>
           </div>
           <div class="form-group combo-form">
             <label for="zhuan" class="col-sm-3 control-label">真实姓名</label>
             <div class="col-sm-4">
-              <input class="form-control input" placeholder="请输入真实姓名">
+              <input class="form-control input" placeholder="请输入真实姓名" v-model="authForm.userName">
             </div>
             <div class="tips lh40 red">* 只包含字母和中文,并且不能低于两位</div>
           </div>
           <div class="form-group combo-form">
             <label for="zhuan" class="col-sm-3 control-label">身份证号</label>
             <div class="col-sm-4">
-              <input class="form-control input" placeholder="请输入身份证号">
+              <input class="form-control input" placeholder="请输入身份证号" v-model="authForm.idCardNumber">
             </div>
             <div class="tips lh40 red">* 所输入的身份证号不能低于十六位</div>
           </div>
@@ -61,7 +61,7 @@
 
           <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
-              <div type="button" class="btn btn-primary">提交</div>
+              <div type="button" class="btn btn-primary" @onclick="auth()">提交</div>
             </div>
           </div>
 
@@ -100,7 +100,7 @@
         border:1px #ED9D0E solid;
         padding: 0;
         color: #ED9D0E;
-        display: block; 
+        display: block;
         margin: 0 auto;
         text-align: center;
         border-radius: 5px;
@@ -114,15 +114,57 @@
 </style>
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MainBody from '@/components/common/mainBody'
   export default {
-    data() {
+    data () {
       return {
+        authForm: {
+          reason: '',
+          userName: '',
+          idCardNumber: '',
+          idCardFrontPicUrl: '',
+          idCardOppositePicUrl: ''
+        }
       }
     },
     components: {
       MainBody
     },
+    methods: {
+      auth () {
+        this.$http({
+          url: this.$http.adornUrl('/user/au/auth'),
+          method: 'post',
+          data: this.$http.adornData({
+            'userName': this.authForm.userName,
+            'idCardNumber': this.authForm.idCardNumber,
+            'idCardFrontPicUrl': this.authForm.idCardFrontPicUrl,
+            'idCardOppositePicUrl': this.authForm.idCardOppositePicUrl
+          })
+        }).then(({data}) => {
+          if (data && data.code === '01307') {
+            this.$message.success('用户认证受理成功')
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
+      },
+      failReason () {
+        this.$http({
+          url: this.$http.adornUrl('/au/nopass/remark'),
+          method: 'get'
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.authForm.reason = data.data
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
+      }
+    },
+    mounted: function () {
+      this.failReason()
+    }
   }
 </script>
