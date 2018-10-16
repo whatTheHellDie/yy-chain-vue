@@ -20,57 +20,60 @@
     data() {
       return {
         num1: 1,
-        sideNav:{
-          account:[//账户管理
-          {
-            name:"账户首页",
-            routeName:"accountIndex"
-          },
-          {
-            name:"实名认证",
-            routeName:"realNameAuthentication"
-          },
-          {
-            name:"设置支付密码",
-            routeName:"setPaymentPassword"
-          },
+        sideNav: {
+          account: [ //账户管理
+            {
+              name: "账户首页",
+              routeName: "accountIndex"
+            },
+            {
+              name: "个人信息",
+              routeName: "personalInformation"
+            },
+            {
+              name: "实名认证",
+              routeName: "realNameAuthentication"
+            },
+            {
+              name: "设置支付密码",
+              routeName: "setPaymentPassword"
+            },
           ],
-          order:[//订单管理
-          {
-            name:"入股订单",
-            routeName:"investmentShareOrder"
-          },
-          {
-            name:"充币订单",
-            routeName:"chargeCoinOrder"
-          }
+          order: [ //订单管理
+            {
+              name: "入股订单",
+              routeName: "investmentShareOrder"
+            },
+            {
+              name: "充币订单",
+              routeName: "chargeCoinOrder"
+            }
           ],
-          fund:[//资金管理
-          {
-            name:"充币",
-            routeName:"chargeCoin"
-          },
-          {
-            name:"资金明细",
-            routeName:""
-          }
+          fund: [ //资金管理
+            {
+              name: "充币",
+              routeName: "chargeCoin"
+            },
+            {
+              name: "资金明细",
+              routeName: ""
+            }
           ],
         }
       }
     },
-    computed:{
-      
+    computed: {
+
     },
-    methods: {
-    },
-    mounted(){
+    methods: {},
+    mounted() {
       console.log(this.$route.name)
     }
   }
 </script>
 
 <style>
-  .left-navbar dd.active{
+  .left-navbar dd.active {
     color: #ed9d0e;
   }
 </style>
