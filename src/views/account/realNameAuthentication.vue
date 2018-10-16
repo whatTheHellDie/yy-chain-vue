@@ -39,9 +39,9 @@
           <div class="form-group combo-form">
             <label for="zhuan" class="col-sm-3 control-label">上传证件图片:</label>
             <div class="col-sm-8">
-              <div class="card-box">
-                <div class="card-wrap mr45">
-                  <img src="img/zhan.png" class="img">
+              <div class="card-box mr45">
+                <div class="card-wrap">
+                  <img src="/static/img/zhan.png" class="img">
                   <div class="btn btn-chuan">上传图片</div>
                   <div class="card-tip">上传的身份证照片必须与上面填写的身份信息一致 ，否则申请不能通过。
                   </div>
@@ -50,18 +50,18 @@
               </div>
               <div class="card-box">
                 <div class="card-wrap">
-                  <img src="img/zhan.png" class="img">
+                  <img src="/static/img/zhan.png" class="img">
                   <div class="btn btn-chuan">点击上传</div>
                   <div class="card-tip">上传的身份证照片必须与上面填写的身份信息一致，否则申请不能通过。</div>
-                  <div class="text-center">（证件背面）</div>
                 </div>
+                <div class="text-center">（证件背面）</div>
               </div>
             </div>
           </div>
 
           <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
-              <div type="button" class="btn btn-primary">提交</div>
+              <div class="btn-ti">提交</div>
             </div>
           </div>
 
@@ -89,10 +89,18 @@
   }
   .red{color: #f43837;}
   .tips{margin-left: 6px;}
-  .card-box{display: inline-block;vertical-align: top;}
+  .card-box{display: inline-block;vertical-align: top;
+    &.mr45{margin-right: 45px;}
+  }
   .card-wrap{width: 310px;border: 1px solid #d1d1d1;margin-bottom: 6px;display: inline-block;vertical-align: top;
-  &.mr45{margin-right: 45px;}
+  
     .img{display: block;margin: 20px auto;width:267px;height: 200px;}
+    .card-tip{
+        margin: 10px 40px;
+        color: #999;
+    }
+    .mr45{margin-right: 45px;}
+    }
     .btn-chuan{
         width: 150px;
         height: 30px;
@@ -103,13 +111,19 @@
         display: block; 
         margin: 0 auto;
         text-align: center;
-        border-radius: 5px;
+        border-radius: 5px;cursor: pointer;
+        
     }
-    .card-tip{
-        margin: 10px 40px;
-        color: #999;
-    }
-    .mr45{margin-right: 45px;}
+    .btn-ti{
+        width: 121px;
+    height: 36px;
+    line-height: 36px;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    margin-left: 154px;
+    margin-bottom: 10px;
     }
 </style>
 
