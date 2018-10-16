@@ -22,7 +22,13 @@
                 <label for="zhuan" class="col-sm-2 control-label">手机号码</label><input type="text" class="form-control input" placeholder="请输入您绑定的手机号码">
               </div>
               <div class="form-group combo-form">
-                <label for="zhuan" class="col-sm-2 control-label">确认支付密码</label><input type="text" class="form-control input" placeholder="请在钱包记录页面复制URL粘贴在这里">
+                <label for="zhuan" class="col-sm-2 control-label">短信验证码</label><input type="text" class="form-control input" placeholder="请输入短信验证码">
+              </div>
+              <div class="form-group combo-form">
+                <label for="zhuan" class="col-sm-2 control-label">新支付密码</label><input type="text" class="form-control input" placeholder="6位数字">
+              </div>
+              <div class="form-group combo-form">
+                <label for="zhuan" class="col-sm-2 control-label">确认支付密码</label><input type="text" class="form-control input" placeholder="6位数字">
               </div>
 
 

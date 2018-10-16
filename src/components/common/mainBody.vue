@@ -1,6 +1,6 @@
 <template>
   <div>
-    <my-header></my-header>
+    <my-header :navIndex="navIndex"></my-header>
     <div class="main-content">
       <div class="wrap clearfix">
       <my-aside></my-aside>
@@ -16,6 +16,7 @@
   import MyFooter from '@/components/common/footer'
   import MyAside from '@/components/common/aside'
   export default {
+    props:['navIndex'],
     components: {
       MyHeader,
       MyFooter,

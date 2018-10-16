@@ -13,8 +13,8 @@
       <div class="navbar clearfix">
         <img src="/static/img/logo.png" alt="logo" @click="$router.push({name:'index'})" class="logo" />
         <dl class="clearfix">
-          <dd class="cursor active" @click="$router.push({name:'index'})">首页</dd>
-          <dd class="cursor" style="padding-left: 25px;">我的账户</dd>
+          <dd class="cursor" :class="{active:myNavIndex==0}" @click="$router.push({name:'index'})">首页</dd>
+          <dd class="cursor" :class="{active:myNavIndex==1}" @click="$router.push({name:'accountIndex'})" style="padding-left: 25px;">我的账户</dd>
         </dl>
       </div>
     </div>
@@ -23,6 +23,18 @@
 </template>
 
 <script>
+   export default {
+    props:['navIndex'],
+    computed:{
+      myNavIndex(){
+        if(!this.navIndex){
+          return 0
+        }else{
+          return this.navIndex;
+        }
+      }
+    }
+  }
 </script>
 
 <style>

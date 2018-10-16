@@ -29,7 +29,9 @@ const globalRoutes = [
   { path: '/chargeCoinOrder', component: _import('order/chargeCoinOrder'), name: 'chargeCoinOrder', meta: { title: '充币订单' } },
   { path: '/investmentShareOrder', component: _import('order/investmentShareOrder'), name: 'investmentShareOrder', meta: { title: '入股订单' } },
   //账户
-  { path: '/setPaymentPassword', component: _import('account/setPaymentPassword'), name: 'setPaymentPassword', meta: { title: '设置支付密码' } },
+  { path: '/accountIndex', component: _import('account/index'), name: 'accountIndex', meta: { title: '账户首页' } },
+  { path: '/realNameAuthentication', component: _import('account/realNameAuthentication'), name: 'realNameAuthentication', meta: { title: '设置支付密码' } },
+  { path: '/setPaymentPassword', component: _import('account/setPaymentPassword'), name: 'setPaymentPassword', meta: { title: '实名认证' } },
   { path: '/forgetPaymentPassword', component: _import('account/forgetPaymentPassword'), name: 'forgetPaymentPassword', meta: { title: '设置支付密码' } },
 ]
 

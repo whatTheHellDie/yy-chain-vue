@@ -24,7 +24,11 @@
           account:[//账户管理
           {
             name:"账户首页",
-            routeName:"index"
+            routeName:"accountIndex"
+          },
+          {
+            name:"实名认证",
+            routeName:"realNameAuthentication"
           },
           {
             name:"设置支付密码",
