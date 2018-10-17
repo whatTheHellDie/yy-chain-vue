@@ -17,7 +17,7 @@
         <img src="/static/img/logo.png" alt="logo" @click="$router.push({name:'index'})" class="logo" />
         <dl class="clearfix">
           <dd class="cursor" :class="{active:myNavIndex==0}" @click="$router.push({name:'index'})">首页</dd>
-          <dd class="cursor" :class="{active:myNavIndex==1}" @click="$router.push({name:'accountIndex'})" style="padding-left: 25px;">我的账户</dd>
+          <dd class="cursor" :class="{active:myNavIndex==1}" @click="toAccount" style="padding-left: 25px;">我的账户</dd>
         </dl>
       </div>
     </div>
@@ -51,19 +51,29 @@
       logout () {
         this.$http({
           url: this.$http.adornUrl('/user/logout'),
-          method: 'post'
+          method: 'get'
         }).then(({data}) => {
           if (data && data.code === '0000') {
             this.$cookie.delete('token')
-            this.$router.replace({
-              name: 'index'
-            })
-
             this.$message.success('注销成功')
+            this.loginStatus = '0'
           } else {
             this.$message.error(data.msg)
           }
         })
+      },
+      toAccount(){
+        if(this.$cookie.get('token')){
+          this.$router.push({name:'accountIndex'})
+        }else{
+          this.$confirm('您还没有登录，请登录', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$router.push({name:'login'})
+          })
+        }
       }
     }
   }

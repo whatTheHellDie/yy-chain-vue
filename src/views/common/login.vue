@@ -179,6 +179,9 @@
         }
       }
     },
+    created() {
+        this.createUserNumber();
+    },
     watch: {
       '$route' (to, from) {
         // 对路由变化作出响应...
@@ -220,7 +223,8 @@
                 this.$router.replace({
                   name: 'index'
                 })
-
+                window.sessionStorage.removeItem('userNumber')
+                window.sessionStorage.setItem('userNumber', data.data.userNumber)
                 this.$message.success('登录成功')
               } else {
                 this.$message.error(data.msg)

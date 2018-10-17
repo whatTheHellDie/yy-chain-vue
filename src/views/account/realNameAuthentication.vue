@@ -26,14 +26,14 @@
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-3 control-label">真实姓名</label>
                 <div class="col-sm-4">
-                  <input class="form-control input" placeholder="请输入真实姓名">
+                  <input class="form-control input" placeholder="请输入真实姓名" v-model="form.userName">
                 </div>
                 <div class="tips lh40 red">* 只包含字母和中文,并且不能低于两位</div>
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-3 control-label">身份证号</label>
                 <div class="col-sm-4">
-                  <input class="form-control input" placeholder="请输入身份证号">
+                  <input class="form-control input" placeholder="请输入身份证号" v-model="form.idCardNumber">
                 </div>
                 <div class="tips lh40 red">* 所输入的身份证号不能低于十六位</div>
               </div>
@@ -43,7 +43,7 @@
                   <div class="card-box mr45">
                     <div class="card-wrap">
                       <img :src="imgs[0]" class="img">
-                      <div class="btn btn-chuan">上传图片 <input @change='add_img($event,0)'  type="file"></div>
+                      <div class="btn btn-chuan">上传图片 <input @change='add_img($event,0)' type="file" id="saveImage"></div>
                       <div class="card-tip">上传的身份证照片必须与上面填写的身份信息一致 ，否则申请不能通过。
                       </div>
                     </div>
@@ -52,7 +52,7 @@
                   <div class="card-box">
                     <div class="card-wrap">
                       <img :src="imgs1[0]" class="img">
-                      <div class="btn btn-chuan">上传图片<input @change='add_img($event,1)'  type="file"></div>
+                      <div class="btn btn-chuan">上传图片<input @change='add_img($event,1)' type="file" id="saveImage1"></div>
                       <div class="card-tip">上传的身份证照片必须与上面填写的身份信息一致，否则申请不能通过。</div>
                     </div>
                     <div class="text-center">（证件背面）</div>
@@ -62,13 +62,13 @@
 
               <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
-                  <div class="btn-ti">提交</div>
+                  <div class="btn-ti" @click="submitData()">提交</div>
                 </div>
               </div>
 
 
             </form>
-           
+
           </div>
 
         </div>
@@ -79,144 +79,206 @@
 
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MainBody from '@/components/common/mainBody'
+
   export default {
-    data() {
-       return{
-                    imgs:['/static/img/zhan.png'],
-                    imgs1:['/static/img/zhan.png'],
-              }
+    data () {
+      return {
+        imgs: ['/static/img/zhan.png'],
+        imgs1: ['/static/img/zhan.png'],
+        form: {
+          userName: '',
+          idCardNumber: '',
+          idCardFrontPicUrl: '',
+          idCardOppositePicUrl: ''
+        }
+      }
     },
-     computed:{
-    },
+    computed: {},
     components: {
-      MainBody,
+      MainBody
     },
-    methods:{
-       delete_img(item){
-               this.imgs.splice(item,1);
-        },
-        add_img(event,index){
-          var reader =new FileReader();
-             var img1=event.target.files[0];
-             
-           if(!/image\/\w+/.test(img1.type)||!img1.type || !/\.(?:jpg|png|gif)$/.test(img1.name)){ 
-             this.$alert('图片只能是jpg,gif,png', '提示', {
-          confirmButtonText: '确定',
-        });
-              return false; 
-          } 
-          if(index==0&&this.imgs.length>0){
-            this.imgs.splice(0,1);
+    methods: {
+      submitData () {
+        this.$http({
+          url: this.$http.adornUrl('/user/au/auth'),
+          method: 'post',
+          data: this.$http.adornData({
+            'userName': this.form.userName,
+            'idCardNumber': this.form.idCardNumber,
+            'idCardFrontPicUrl': this.form.idCardFrontPicUrl,
+            'idCardOppositePicUrl': this.form.idCardOppositePicUrl
+          })
+        }).then(({data}) => {
+          if (data && data.code === '01307') {
+            this.$message.success('用户认证受理成功')
+          } else {
+            this.$message.error(data.msg)
           }
-          if(index==1&&this.imgs1.length>0){
-            this.imgs1.splice(0,1);
-          }
-            
-                  
-                   reader.readAsDataURL(img1);
-                   var that=this;
-                   reader.onloadend=function(){
-                     if (img1.size > 102400) {
-                                that.$alert('图片不能大于1m', '提示', {
-                                confirmButtonText: '确定',
-                              });
-                              return false
-                     }
-                     if(index==0){
-                       that.imgs.push(reader.result)
-                     }else{
-                        that.imgs1.push(reader.result)
-                     }
-                   }
-                  
+        })
+      },
+      add_img (event, index) {
+        var reader = new FileReader()
+        var img1 = event.target.files[0]
+
+        if (!/image\/\w+/.test(img1.type) || !img1.type || !/\.(?:jpg|png|gif)$/.test(img1.name)) {
+          this.$alert('图片只能是jpg,gif,png', '提示', {
+            confirmButtonText: '确定',
+          })
+          return false
+        }
+        if (index == 0 && this.imgs.length > 0) {
+          this.imgs.splice(0, 1)
+        }
+        if (index == 1 && this.imgs1.length > 0) {
+          this.imgs1.splice(0, 1)
         }
 
+        reader.readAsDataURL(img1)
+        var that = this
+        reader.onloadend = function () {
+          if (img1.size > 102400) {
+            that.$alert('图片不能大于1m', '提示', {
+              confirmButtonText: '确定',
+            })
+            return false
+
+          }
+          if (index == 0) {
+            that.imgs.push(reader.result)
+            let x = document.getElementById('saveImage').files[0];
+            let params = new FormData() ;
+            params.append('fileName',x);
+            console.log(params);
+            let config = { headers:{'Content-Type': 'multipart/form-data'}};
+            that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                'ACCESS_TOKEN' : that.$cookie.get('token')
+              }
+            }).then(({data}) => {
+              this.dataListLoading = false
+              console.log(data)
+              if (data && data.code === '0000') {
+                that.form.idCardFrontPicUrl = data.data
+              } else {
+                that.$message.error(data.msg)
+              }
+            }).catch(({error}) => {
+              that.dataListLoading = false
+              that.$message.error(error)
+            })
+
+          } else {
+            that.imgs1.push(reader.result)
+            let x = document.getElementById('saveImage1').files[0];
+            let params = new FormData() ;
+            params.append('fileName',x);
+            alert(that.$cookie.get('token'));
+            let config = { headers:{'Content-Type': 'multipart/form-data'}};
+            that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                'ACCESS_TOKEN' : that.$cookie.get('token')
+              }
+            }).then(({data}) => {
+              this.dataListLoading = false
+              console.log(data)
+              if (data && data.code === '0000') {
+                that.form.idCardOppositePicUrl = data.data
+              } else {
+                that.$message.error(data.msg)
+              }
+            }).catch(({error}) => {
+              that.dataListLoading = false
+              that.$message.error(error)
+            })
+          }
+        }
+
+      }
 
     }
   }
 </script>
 
 <style lang="scss" scoped>
-.finish_room{
-      width: 430px;
-      height: auto;
+  .finish_room {
+    width: 430px;
+    height: auto;
   }
 
-     .finish_room2{
-     width: 100%;
-     height: auto;
-     padding-top: 15px;
-     padding-bottom: 15px;
-     display: flex;
-     align-items: center;
-      border-bottom: 2px solid #e1e1e1;
-   }
-    
-   .finish_room2 .room_img{
-     width: 150px;
-     height: 100px;
-     margin-right: 10px;
-     position: relative;
-     overflow: hidden;
-   }
-   .finish_room2 .room_img img{
-     
-     width: 100%;
-     height: 100%;
-   }
-   .finish_room2>.room_img span{
-      position: absolute;
-      width: auto;
-      height: auto;
-      right: 5px;
-      bottom:3px;
-   }
- 
-
-
-   .room_add_img{
-     width: 148px;
-     height: 98px;
-     border:1px solid #e1e1e1;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     justify-content: space-between;
-     position: relative;
-   }
-   .room_add_img >span:nth-child(1){
-     margin-top: 20px;
-     width: 40px;
-     height: 40px;
-     overflow: hidden;
-   }
-   .room_add_img >span:nth-child(2){
-      margin-bottom: 10px;
-   }
-
-  .btn-chuan input,.room_add_img input{
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      width: 100%;
-      height: 100%;
-      z-index: 99999;
-      opacity: 0;
+  .finish_room2 {
+    width: 100%;
+    height: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #e1e1e1;
   }
 
+  .finish_room2 .room_img {
+    width: 150px;
+    height: 100px;
+    margin-right: 10px;
+    position: relative;
+    overflow: hidden;
+  }
 
+  .finish_room2 .room_img img {
 
+    width: 100%;
+    height: 100%;
+  }
 
+  .finish_room2 > .room_img span {
+    position: absolute;
+    width: auto;
+    height: auto;
+    right: 5px;
+    bottom: 3px;
+  }
 
+  .room_add_img {
+    width: 148px;
+    height: 98px;
+    border: 1px solid #e1e1e1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
 
+  .room_add_img > span:nth-child(1) {
+    margin-top: 20px;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+  }
 
+  .room_add_img > span:nth-child(2) {
+    margin-bottom: 10px;
+  }
 
+  .btn-chuan input, .room_add_img input {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    opacity: 0;
+  }
 
+  .upload-button {
+    height: 60px;
+    width: 60px;
+    background: red
+  }
 
-
-.upload-button{  height: 60px; width: 60px;background: red}
   .col-sm-3 {
     margin-right: 10px;
     width: 141px;
@@ -225,7 +287,7 @@
     vertical-align: top;
     line-height: 35px;
   }
-  
+
   .col-sm-4 {
     width: 371px;
     line-height: 35px;
@@ -237,30 +299,30 @@
       padding-left: 11px;
     }
   }
-  
+
   .col-sm-8 {
     display: inline-block;
     vertical-align: top;
   }
-  
+
   .combo-form {
     margin-bottom: 30px;
   }
-  
+
   .lh40 {
     line-height: 35px;
     display: inline-block;
     vertical-align: top;
   }
-  
+
   .red {
     color: #f43837;
   }
-  
+
   .tips {
     margin-left: 6px;
   }
-  
+
   .card-box {
     display: inline-block;
     vertical-align: top;
@@ -268,7 +330,7 @@
       margin-right: 45px;
     }
   }
-  
+
   .card-wrap {
     width: 310px;
     border: 1px solid #d1d1d1;
@@ -289,7 +351,7 @@
       margin-right: 45px;
     }
   }
-  
+
   .btn-chuan {
     position: relative;
     width: 150px;
@@ -304,7 +366,7 @@
     border-radius: 5px;
     cursor: pointer;
   }
-  
+
   .btn-ti {
     width: 121px;
     height: 36px;
