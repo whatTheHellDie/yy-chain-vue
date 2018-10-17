@@ -13,19 +13,24 @@
                 <span role="link" class="el-breadcrumb__inner">个人信息</span>
                 <i class="el-breadcrumb__separator el-icon-arrow-right"></i>
               </span> <span class="el-breadcrumb__item bold" aria-current="page">
-                <span role="link" class="el-breadcrumb__inner" style="font-weight: 800;">设置支付密码</span>
+                <span role="link" class="el-breadcrumb__inner" style="font-weight: 800;">重置登录密码</span>
                 <i class="el-breadcrumb__separator el-icon-arrow-right"></i></span></div>
           </div>
           <div class="box-body min425">
-            <div class="charge-coin set-password">
+            <div class="charge-coin set-password forget-password">
               <div class="form-group combo-form">
-                <label for="zhuan" class="col-sm-2 control-label">支付密码</label><input type="text" class="form-control input" placeholder="6位数字">
+                <label for="zhuan" class="col-sm-2 control-label">原登录密码</label><input type="password" class="form-control input" placeholder="请输入您绑定的手机号码"><span class="lh35 ml10 default">忘记原密码？</span>
+                <span class="tip max-220">格式有误，必须为数字、字母和符号两种以上组合！</span>
               </div>
               <div class="form-group combo-form">
-                <label for="zhuan" class="col-sm-2 control-label">确认支付密码</label><input type="text" class="form-control input" placeholder="6位数字">
+                <label for="zhuan" class="col-sm-2 control-label">新登录密码</label><input type="password" class="form-control input" placeholder="请输入短信验证码">
+                  <span class="tip">格式有误，必须为数字、字母和符号两种以上组合！</span>
               </div>
-
-
+              <div class="form-group combo-form">
+                <label for="zhuan" class="col-sm-2 control-label">确认新登录密码</label><input type="password" class="form-control input" placeholder="6位数字">
+                 <span class="tip">格式有误，必须为数字、字母和符号两种以上组合！</span>
+              </div>
+              <span class="tip"></span>
               <div class="gu-btn">提交</div>
             </div>
           </div>
@@ -36,11 +41,7 @@
   </div>
 </template>
 <style lang="scss" scoped>
-  .bold {
-    .el-breadcrumb__item:last-child .el-breadcrumb__inner {
-      font-weight: 800;
-    }
-  }
+
 </style>
 
 <script>

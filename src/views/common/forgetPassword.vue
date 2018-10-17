@@ -6,7 +6,7 @@
         <div class="login-main login-main2">
           <div class="login-title">忘记密码</div>
           <img :src="stepImg" alt="" class="block-progress" />
-          <el-form v-if="step==1" :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit(2)" status-icon>
+          <el-form v-if="step==1" :model="dataForm" ref="dataForm" @keyup.enter.native="dataFormSubmit(2)" status-icon>
             <el-form-item prop="userName">
               <label class="label" for="userName">会员编号 ：</label>
               <el-input v-model="dataForm.userName"></el-input>
@@ -35,7 +35,7 @@
               <el-button class="login-btn-submit mb124" type="primary" @click="dataFormSubmit(2)">立即验证</el-button>
             </el-form-item>
           </el-form>
-          <el-form v-else-if="step==2" :model="dataForm1" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit(2)" status-icon>
+          <el-form v-else-if="step==2" :model="dataForm1" ref="dataForm" @keyup.enter.native="dataFormSubmit(2)" status-icon>
             <el-form-item prop="password">
               <label class="label" for="password">设置新登录密码 ：</label>
               <el-input v-model="dataForm.password" type="password"></el-input>
@@ -80,6 +80,12 @@
         step:1,
 
         dataForm: {
+          userName: '',
+          password: '',
+          uuid: '',
+          captcha: ''
+        },
+        dataForm1: {
           userName: '',
           password: '',
           uuid: '',

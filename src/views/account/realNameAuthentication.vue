@@ -43,7 +43,7 @@
                   <div class="card-box mr45">
                     <div class="card-wrap">
                       <img :src="imgs[0]" class="img">
-                      <div class="btn btn-chuan">上传图片 <input @change='add_img($event,0)'  type="file"></div>
+                      <div class="btn btn-chuan">上传图片 <input @change='add_img($event,0)' accept="image/png,image/jpeg,image/gif" type="file"></div>
                       <div class="card-tip">上传的身份证照片必须与上面填写的身份信息一致 ，否则申请不能通过。
                       </div>
                     </div>
@@ -52,7 +52,7 @@
                   <div class="card-box">
                     <div class="card-wrap">
                       <img :src="imgs1[0]" class="img">
-                      <div class="btn btn-chuan">上传图片<input @change='add_img($event,1)'  type="file"></div>
+                      <div class="btn btn-chuan">上传图片<input @change='add_img($event,1)' accept="image/png,image/jpeg,image/gif" type="file"></div>
                       <div class="card-tip">上传的身份证照片必须与上面填写的身份信息一致，否则申请不能通过。</div>
                     </div>
                     <div class="text-center">（证件背面）</div>
@@ -118,7 +118,7 @@
                    reader.readAsDataURL(img1);
                    var that=this;
                    reader.onloadend=function(){
-                     if (img1.size > 102400) {
+                     if (img1.size > 1048576) {
                                 that.$alert('图片不能大于1m', '提示', {
                                 confirmButtonText: '确定',
                               });
