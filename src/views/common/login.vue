@@ -188,20 +188,20 @@
     methods: {
       // 切换注册登录
       createUserNumber () {
-          this.$http({
-            url: this.$http.adornUrl('/id/create'),
-            method: 'get'
-          }).then(({data}) => {
-            this.dataListLoading = false
-            if (data && data.code === '0000') {
-              this.registerForm.userNumber = data.data
-            } else {
-              this.$message.error(data.msg)
-            }
-          }).catch(({error}) => {
-            this.dataListLoading = false
-            this.$message.error(error)
-          })
+        this.$http({
+          url: this.$http.adornUrl('/id/create'),
+          method: 'get'
+        }).then(({data}) => {
+          this.dataListLoading = false
+          if (data && data.code === '0000') {
+            this.registerForm.userNumber = data.data
+          } else {
+            this.$message.error(data.msg)
+          }
+        }).catch(({error}) => {
+          this.dataListLoading = false
+          this.$message.error(error)
+        })
       },
       // 登录
       login () {
@@ -216,10 +216,13 @@
               })
             }).then(({data}) => {
               if (data && data.code === '01201') {
-                this.$cookie.set('token', data.token)
+                this.$cookie.set('token', data.data.token)
+                alert(data.data.token)
                 this.$router.replace({
                   name: 'index'
                 })
+
+                this.$message.success('登录成功')
               } else {
                 this.$message.error(data.msg)
               }

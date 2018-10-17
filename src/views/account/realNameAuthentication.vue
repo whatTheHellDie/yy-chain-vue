@@ -52,7 +52,7 @@
                   <div class="card-box">
                     <div class="card-wrap">
                       <img :src="imgs1[0]" class="img">
-                      <div class="btn btn-chuan">点击上传 <input @change='add_img($event,1)'  type="file"></div>
+                      <div class="btn btn-chuan">上传图片<input @change='add_img($event,1)'  type="file"></div>
                       <div class="card-tip">上传的身份证照片必须与上面填写的身份信息一致，否则申请不能通过。</div>
                     </div>
                     <div class="text-center">（证件背面）</div>
@@ -101,8 +101,10 @@
           var reader =new FileReader();
              var img1=event.target.files[0];
              
-           if(!/image\/\w+/.test(img1.type)){ 
-              alert("文件必须为图片！"); 
+           if(!/image\/\w+/.test(img1.type)||img1.type || /\.(?:jpg|png|gif)$/.test(img1.name)){ 
+             this.$alert('图片只能是jpg,gif,png', '提示', {
+          confirmButtonText: '确定',
+        });
               return false; 
           } 
           if(index==0&&this.imgs.length>0){
@@ -119,13 +121,9 @@
                      if (img1.size > 102400) {
                                 that.$alert('图片不能大于1m', '提示', {
                                 confirmButtonText: '确定',
-                                callback: action => {
-                                 
-                                }
                               });
                               return false
                      }
-                     alert(index)
                      if(index==0){
                        that.imgs.push(reader.result)
                      }else{
