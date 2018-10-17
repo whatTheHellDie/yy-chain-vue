@@ -9,12 +9,13 @@ import en from '@/language/en'               //网页英文
 import '@/element-ui'                         // api: https://github.com/ElemeFE/element
 import '@/icons'                              // api: http://www.iconfont.cn/
 import '@/element-ui-theme'
-import '@/assets/scss/index.scss'
 import httpRequest from '@/utils/httpRequest' // api: https://github.com/axios/axios
+import '@/assets/scss/index.scss'
 import { isAuth } from '@/utils'
 import cloneDeep from 'lodash/cloneDeep'
 import VueClipboard from 'vue-clipboard2'
-
+import axios from 'axios'
+Vue.prototype.$axios=axios;
 Vue.use(VueCookie)
 Vue.use(VueI18n)
 Vue.use(VueClipboard)
