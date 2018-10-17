@@ -151,15 +151,13 @@
         this.$router.push({ name: 'reChargeCoin' })
       }
     },
-    mounted() {
+    mounted () {
       //    var clipboard = new ClipboardJS('.copy');
       //
       //    clipboard.on('success', function(e) {
-      //        e.clearSelection();
-      //        
+      //        e.clearSelection()
       //    });
-      //    
-      //    clipboard.on('error', function(e) {
+     //    clipboard.on('error', function(e) {
       //        alert('该默认浏览器不支持点击复制,请长按选择复制钱包地址或选择分享二维码图片')
       //    });
     }

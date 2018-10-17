@@ -32,7 +32,7 @@ const globalRoutes = [
   { path: '/reChargeCoin', component: _import('order/reChargeCoin'), name: 'reChargeCoin', meta: { title: '重新提交' } },
   { path: '/investmentShareOrder', component: _import('order/investmentShareOrder'), name: 'investmentShareOrder', meta: { title: '入股订单' } },
   //账户
-  
+
   { path: '/accountIndex', component: _import('account/index'), name: 'accountIndex', meta: { title: '账户首页' } },
   { path: '/personalInformation', component: _import('account/personalInformation'), name: 'personalInformation', meta: { title: '个人信息' } },
   { path: '/CapitalDetails', component: _import('account/CapitalDetails'), name: 'CapitalDetails', meta: { title: '资金明细' } },
@@ -56,8 +56,8 @@ const mainRoutes = {
     // 2. iframeUrl: 是否通过iframe嵌套展示内容, '以http[s]://开头': 是, '': 否
     // 提示: 如需要通过iframe嵌套展示内容, 但不通过tab打开, 请自行创建组件使用iframe处理!
     { path: '/home', component: _import('common/home'), name: 'home', meta: { title: '首页' } },
-    
-    
+
+
   ],
   beforeEnter (to, from, next) {
     let token = Vue.cookie.get('token')
