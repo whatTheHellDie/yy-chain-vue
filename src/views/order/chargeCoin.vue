@@ -107,8 +107,12 @@
             'chargeVoucher': this.form.chargeVoucher
           })
         }).then(({data}) => {
-          console.log(data.data())
-            this.$message.success(data.data())
+          if (data && data.code === '0000') {
+            this.$message.success()
+            location.reload()
+          } else {
+            this.$message.error(data.msg)
+          }
         })
       },
       add_img(event,index){
@@ -137,29 +141,27 @@
           let x = document.getElementById('saveImage').files[0];
           let params = new FormData() ;
           params.append('fileName',x);
-          let config = { headers:{'Content-Type':'multipart/form-data'}};
+          alert(that.$cookie.get('token'));
+          let config = { headers:{'Content-Type': 'multipart/form-data'}};
           that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
             headers: {
-              "Content-Type": "multipart/form-data"
+              "Content-Type": "multipart/form-data",
+              'ACCESS_TOKEN' : that.$cookie.get('token')
             }
           }).then(({data}) => {
             this.dataListLoading = false
-            if (data && data.code === '0000') {
+            console.log(data)
+           if (data && data.code === '0000') {
               that.form.chargeVoucher = data.data
             } else {
-              this.$message.error(data.msg)
+              that.$message.error(data.msg)
             }
           }).catch(({error}) => {
             that.dataListLoading = false
             that.$message.error(error)
           })
-
         }
-
-
-
       }
-
     },
     mounted() {
       //    var clipboard = new ClipboardJS('.copy');
