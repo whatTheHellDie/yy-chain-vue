@@ -1,6 +1,6 @@
 <template>
   <div class="body-grey">
-    <main-body>
+    <main-body navIndex="1">
       <div slot="content">
         <div class="box-card2">
           <div class="top-nav">
@@ -101,7 +101,7 @@
           var reader =new FileReader();
              var img1=event.target.files[0];
              
-           if(!/image\/\w+/.test(img1.type)||img1.type || /\.(?:jpg|png|gif)$/.test(img1.name)){ 
+           if(!/image\/\w+/.test(img1.type)||!img1.type || !/\.(?:jpg|png|gif)$/.test(img1.name)){ 
              this.$alert('图片只能是jpg,gif,png', '提示', {
           confirmButtonText: '确定',
         });
