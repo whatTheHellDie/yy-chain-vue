@@ -6,8 +6,8 @@
         800-820-0000
         <div class="login-box clearfix">
           <div v-if="loginStatus==0"><span class="span cursor" @click="$router.push({ name: 'login' })">登录</span>|<span class="span cursor" @click="$router.push({ name: 'register' })">注册</span></div>
-          <div v-if="loginStatus==1">尊敬的<span class="white">YY12345678</span>用户，欢迎你来到易用链！<span class="logout cursor">注销</span>
-            
+          <div v-if="loginStatus==1">尊敬的<span class="white">YY12345678</span>用户，欢迎你来到易用链！
+            <span class="logout cursor" @click="logout()">注销</span>
           </div>
         </div>
       </div>
@@ -27,19 +27,43 @@
 
 <script>
   export default {
-    data() {
+    data () {
       return {
-        loginStatus: "1"
+        loginStatus: '0'
       }
     },
     props: ['navIndex'],
     computed: {
-      myNavIndex() {
-        if(!this.navIndex) {
+      myNavIndex () {
+        if (!this.navIndex) {
           return 0
         } else {
-          return this.navIndex;
+          return this.navIndex
         }
+      }
+    },
+    created () {
+      if (this.$cookie.get('token')) {
+        this.loginStatus = 1
+      }
+    },
+    methods: {
+      logout () {
+        this.$http({
+          url: this.$http.adornUrl('/user/logout'),
+          method: 'post'
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.$cookie.delete('token')
+            this.$router.replace({
+              name: 'index'
+            })
+
+            this.$message.success('注销成功')
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
       }
     }
   }
