@@ -56,7 +56,7 @@
             },
             {
               name: "资金明细",
-              routeName: ""
+              routeName: "CapitalDetails"
             }
           ],
         }

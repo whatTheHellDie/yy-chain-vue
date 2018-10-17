@@ -5,7 +5,10 @@
         <icon-svg name="phone" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
         800-820-0000
         <div class="login-box clearfix">
-          <span class="cursor" @click="$router.push({ name: 'login' })">登录</span>|<span class="cursor" @click="$router.push({ name: 'register' })">注册</span>
+          <div v-if="loginStatus==0"><span class="span cursor" @click="$router.push({ name: 'login' })">登录</span>|<span class="span cursor" @click="$router.push({ name: 'register' })">注册</span></div>
+          <div v-if="loginStatus==1">尊敬的<span class="white">YY12345678</span>用户，欢迎你来到易用链！<span class="logout cursor">注销</span>
+            
+          </div>
         </div>
       </div>
     </div>
@@ -23,13 +26,18 @@
 </template>
 
 <script>
-   export default {
-    props:['navIndex'],
-    computed:{
-      myNavIndex(){
-        if(!this.navIndex){
+  export default {
+    data() {
+      return {
+        loginStatus: "1"
+      }
+    },
+    props: ['navIndex'],
+    computed: {
+      myNavIndex() {
+        if(!this.navIndex) {
           return 0
-        }else{
+        } else {
           return this.navIndex;
         }
       }

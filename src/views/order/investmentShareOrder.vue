@@ -20,22 +20,12 @@
                 </li>
               </ul>
             </div>
-            <div class="charge-list">
-              <div class="choose-box">
-                <div class="choose-list">
-                  <div v-for="item,i in chooseList" class="box box1" @click="loadList(i)" :class="{active:i == activeNumber}"><span class="span">{{item.name}}</span></div>
-                </div>
-              </div>
-            </div>
             <div class="bechoose-list rugu-list">
               <dl>
                 <dd class="clearfix" v-for="item,i in chooseContent">
                   <div class="clearfix">
                     <div class="title clearfix">入股订单编号：{{item.orderNumber}}
-                      <span v-if="item.status==0" class="span active">待支付 </span>
-                      <span v-if="item.status==1" class="span active">已完成</span>
-                      <span v-if="item.status==2" class="span">交易关闭</span>
-                      <span v-if="item.status==3" class="span">交易取消</span>
+                      <span class="span active">已完成</span>
                     </div>
                     <div class="left">
                       <div class="yy-content">
@@ -59,16 +49,7 @@
                       </div>
                     </div>
                     <div class="right">
-                      <div v-if="item.status==0">
-                        <div class="gu-btn pull-right" @click="pay(item.id)">支付</div>
-                        <div class="clear"></div>
-                        <div class="cancel-btn" @click="cancelOrder(item.id)">取消订单</div>
-                      </div>
 
-                      <div v-else-if="item.status==1"></div>
-                      <div v-else>
-                        <div class="cancel-btn" @click="delOrder(item.id)">删除订单</div>
-                      </div>
                     </div>
                   </div>
                   <div class="not-pass xiadan">
@@ -125,22 +106,6 @@
     data() {
       return {
         activeNumber: 0,
-        chooseList: [{
-            name: '全部'
-          },
-          {
-            name: '待支付'
-          },
-          {
-            name: '已完成'
-          },
-          {
-            name: '交易关闭'
-          },
-          {
-            name: '交易取消'
-          }
-        ],
         chooseContent: [{
             id: "sdfsdfsfsdfsdfsd2323",
             orderNumber: '2018083161408819',
