@@ -30,7 +30,7 @@
           </div>
           <div class="default1 mt11">起配积分数额：{{sharesData.startYyiQuantity}}万个</div>
           <div class="add_one clearfix">
-            <div class="add reduce">-</div><input type="text" value="10"><div class="add">+</div>
+            <div class="add reduce" @click="subOrAdd(0)">-</div><input type="text"  v-model="yyiQuantity"><div class="add" @click="subOrAdd(1)">+</div>
           </div>
           <div style="padding-left: 92px;">约支付USDT(枚)：<span class="default">{{sharesData.payUsdtAmount}}</span></div>
           <div class="gu-btn cursor">立即入股</div>
@@ -69,7 +69,7 @@
   export default {
     data () {
       return {
-        sharesData : {
+        sharesData: {
           cnyPriceMyria: '',
           payUsdtAmount: '',
           roundAmountCurrent: '',
@@ -79,7 +79,8 @@
           startYyiQuantity: '',
           usdtPriceMyria: '',
           userUsdt: ''
-        }
+        },
+        yyiQuantity: 0
       }
     },
     components: {
@@ -87,15 +88,14 @@
       MyFooter
     },
     methods: {
-      handleChange(value) {
-        console.log(value);
+      handleChange (value) {
+        console.log(value)
       },
-      getSharesViweData() {
+      getSharesViweData () {
         this.$http({
           url: this.$http.adornUrl('/shares/getSharesViweData'),
           method: 'get'
         }).then(({data}) => {
-          console.log(data)
           if (data && data.code === '0000') {
             this.sharesData.cnyPriceMyria = data.data.cnyPriceMyria
             this.sharesData.payUsdtAmount = data.data.payUsdtAmount
@@ -106,14 +106,46 @@
             this.sharesData.startYyiQuantity = data.data.startYyiQuantity
             this.sharesData.usdtPriceMyria = data.data.usdtPriceMyria
             this.sharesData.userUsdt = data.data.userUsdt
+            this.yyiQuantity = data.data.startYyiQuantity
+            console.log(this.sharesData.stageCurrent);
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
+      },
+      subOrAdd (flag) {
+        if (flag === 0) {//减
+          this.yyiQuantity = Number(this.yyiQuantity) - 1
+        }
+
+        if (flag === 1) {//加
+          this.yyiQuantity = Number(this.yyiQuantity) + 1
+        }
+
+        if (this.yyiQuantity <= this.sharesData.startYyiQuantity) {
+          this.yyiQuantity = Number(this.sharesData.startYyiQuantity)
+        }
+        var that = this
+        this.$http({
+          url: this.$http.adornUrl('/shares/clickAddOrSub'),
+          method: 'post',
+          params: this.$http.adornParams({
+            'currentStage': that.sharesData.stageCurrent,
+            'currentRound': that.sharesData.roundCurrent,
+            'yyiQuantity': that.yyiQuantity
+          })
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.sharesData.payUsdtAmount = data.data
           } else {
             this.$message.error(data.msg)
           }
         })
       }
+
     },
-    created: function() {
+    created: function () {
       this.getSharesViweData()
-    },
+    }
   }
 </script>
