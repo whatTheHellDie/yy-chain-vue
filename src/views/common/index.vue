@@ -135,7 +135,7 @@
 </style>
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MyHeader from '@/components/common/header'
   import MyFooter from '@/components/common/footer'
   export default {
@@ -199,10 +199,10 @@
         this.$http({ 
           url: this.$http.adornUrl('/stageInfo/getAll'),
           method: 'get',
-          //params: this.$http.adornParams()
+          // params: this.$http.adornParams()
         }).then(({data}) => {
           if (data && data.code === '0000') {
-            
+
             console.log('data:'+ JSON.stringify(data))
             if (data.data.sendYyiIssueAmounts){
               _this.sendYyiIssueAmounts = _this.numberCalculation(data.data.sendYyiIssueAmounts);

@@ -24,17 +24,23 @@ const globalRoutes = [
   { path: '/forgetPassword', component: _import('common/forgetPassword'), name: 'forgetPassword', meta: { title: '忘记密码' } },
   //购买
   { path: '/buyPackage', component: _import('purchase/buyPackage'), name: 'buyPackage', meta: { title: '易用链订单' } },
+  { path: '/buyPackage-Pay', component: _import('purchase/buyPackage-Pay'), name: 'buyPackage-Pay', meta: { title: '支付页面' } },
+  { path: '/buyPackageStatus', component: _import('purchase/buyPackageStatus'), name: 'buyPackageStatus', meta: { title: '支付页面' } },
    //订单
   { path: '/chargeCoin', component: _import('order/chargeCoin'), name: 'chargeCoin', meta: { title: '充币' } },
   { path: '/chargeCoinOrder', component: _import('order/chargeCoinOrder'), name: 'chargeCoinOrder', meta: { title: '充币订单' } },
+  { path: '/reChargeCoin', component: _import('order/reChargeCoin'), name: 'reChargeCoin', meta: { title: '重新提交' } },
   { path: '/investmentShareOrder', component: _import('order/investmentShareOrder'), name: 'investmentShareOrder', meta: { title: '入股订单' } },
   //账户
-  
+
   { path: '/accountIndex', component: _import('account/index'), name: 'accountIndex', meta: { title: '账户首页' } },
   { path: '/personalInformation', component: _import('account/personalInformation'), name: 'personalInformation', meta: { title: '个人信息' } },
+  { path: '/CapitalDetails', component: _import('account/CapitalDetails'), name: 'CapitalDetails', meta: { title: '资金明细' } },
   { path: '/realNameAuthentication', component: _import('account/realNameAuthentication'), name: 'realNameAuthentication', meta: { title: '设置支付密码' } },
   { path: '/setPaymentPassword', component: _import('account/setPaymentPassword'), name: 'setPaymentPassword', meta: { title: '实名认证' } },
   { path: '/forgetPaymentPassword', component: _import('account/forgetPaymentPassword'), name: 'forgetPaymentPassword', meta: { title: '设置支付密码' } },
+  { path: '/resetPaymentPassword', component: _import('account/resetPaymentPassword'), name: 'resetPaymentPassword', meta: { title: '重置支付密码' } },
+  { path: '/resetLoginPassword', component: _import('account/resetLoginPassword'), name: 'resetLoginPassword', meta: { title: '重置登录密码' } },
 ]
 
 // 主入口路由(需嵌套上左右整体布局)
@@ -50,8 +56,8 @@ const mainRoutes = {
     // 2. iframeUrl: 是否通过iframe嵌套展示内容, '以http[s]://开头': 是, '': 否
     // 提示: 如需要通过iframe嵌套展示内容, 但不通过tab打开, 请自行创建组件使用iframe处理!
     { path: '/home', component: _import('common/home'), name: 'home', meta: { title: '首页' } },
-    
-    
+
+
   ],
   beforeEnter (to, from, next) {
     let token = Vue.cookie.get('token')

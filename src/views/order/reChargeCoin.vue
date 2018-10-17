@@ -3,38 +3,42 @@
     <main-body navIndex="1">
       <div slot="content">
         <div class="box-card2">
-          <div class="box-body no-padding">
-            <div class="index-i index-p">
-              <img src="/static/img/profile.png" alt="" class="tou">
-              <div class="title">
-                <span class="hao">YY15844551！</span>
-                <div class="level">会员身份：普通会员</div>
-                <div class="level">推荐人：YY12345698</div>
-              </div>
-              <div class="change-title">[更换头像]</div>
-            </div>
-            <div class="account-top">
-              <div class="title">账户信息</div>
-              <dl>
-                <dd class="clearfix">
-                  <icon-svg name="right" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
-                                                      手机号码<span class="pin">159 **** 1421</span>
-                </dd>
-                <dd class="clearfix">
-                  <icon-svg name="warning" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
-                                                      实名认证<span class="pin active">未认证</span>
-                  <div class="gu-btn">认证</div>
-                </dd>
-                <dd class="clearfix">
-                  <icon-svg name="right" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
-                                                      登录密码<span class="pin">已设置</span>
-                </dd>
-                <dd class="clearfix">
-                  <icon-svg name="warning" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
-                                                      实名认证<span class="pin active">未设置</span>
-                  <div class="gu-btn">设置</div>
-                </dd>
-              </dl>
+          <div class="top-nav">
+            <div aria-label="Breadcrumb" role="navigation" class="el-breadcrumb">
+              <span class="el-breadcrumb__item">
+                <span role="link" class="el-breadcrumb__inner">订单管理</span>
+                <i class="el-breadcrumb__separator el-icon-arrow-right"></i>
+              </span>
+              <span class="el-breadcrumb__item">
+                <span role="link" class="el-breadcrumb__inner">充币订单</span>
+                <i class="el-breadcrumb__separator el-icon-arrow-right"></i>
+              </span> <span class="el-breadcrumb__item bold" aria-current="page">
+                <span role="link" class="el-breadcrumb__inner" style="font-weight: 800;">重新提交</span>
+                <i class="el-breadcrumb__separator el-icon-arrow-right"></i></span></div>
+          </div>
+          <div class="box-body min425">
+            <div class="charge-coin set-password">
+              <div class="form-group combo-form">
+                  <label for="zhuan" class="col-sm-2 control-label">转账数额</label><input type="text" class="form-control input" placeholder="请输入转账LoveBird数额">
+                </div>
+                <div class="form-group combo-form">
+                  <label for="zhuan" class="col-sm-2 control-label">交易号</label><input type="text" class="form-control input" placeholder="请在钱包记录页面复制URL粘贴在这里">
+                </div>
+                
+                <div class="form-group combo-form">
+                  <label for="zhuan" class="col-sm-2 control-label">上传凭证</label>
+                  <div class="col-sm-4 pin">
+                    凭证为转账支付成功的订单详情图片，需包含以下四项内容：转账金额、转账用户钱包地址、收款方钱包地址、交易时间。
+                    <div class="clearfix">
+                      <div class="tou-s">
+                        <img src="/static/img/sub.png" class="img" />
+                        <div class="btn-sub">上传图片<input @change='add_img($event,0)' id="saveImage" accept="image/png,image/jpeg,image/gif" type="file"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="gu-btn">提交</div>
             </div>
           </div>
 
@@ -44,7 +48,10 @@
   </div>
 </template>
 <style lang="scss" scoped>
-
+.card-box {
+    display: inline-block;
+    vertical-align: top;
+  }
 </style>
 
 <script>
@@ -121,29 +128,18 @@
       MainBody
     },
     methods: {
-      resetVal(number) {
+      loadList(i) {
+        this.activeNumber = i;
+      },
+      pay(id) {
 
-        var mNumber = parseInt(number)
-        number = number.toString()
-        var point = number.split('.')[1]
-        console.log(point)
-        mNumber = mNumber.toString()
-        if(mNumber.length <= 3)
-          return(mNumber == '' ? '0' : mNumber) + '.' + point;
-        else {
-          var mod = mNumber.length % 3;
-          var output = (mod == 0 ? '' : (mNumber.substring(0, mod)));
-          for(var i = 0; i < Math.floor(mNumber.length / 3); i++) {
-            if((mod == 0) && (i == 0))
-              output += mNumber.substring(mod + 3 * i, mod + 3 * i + 3);
-            else
-              output += ',' + mNumber.substring(mod + 3 * i, mod + 3 * i + 3);
-          }
-          return(output + '.<span class="little-num">' + point + '</span>');
-        }
-        //      return `${val.parseInt}.<span class="little-word">${dian}</span>`
+      },
+      cancelOrder(id) {
+
+      },
+      delOrder(id) {
+
       }
-
     },
     mounted() {
       //    var clipboard = new ClipboardJS('.copy');

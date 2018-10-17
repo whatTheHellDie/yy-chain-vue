@@ -1,42 +1,6 @@
 <template>
   <div class="body-grey">
     <my-header></my-header>
-    <div class="box-card order-page">
-      <h1>入股</h1>
-      <div class="box-body box-body0">
-        <div class="left">
-          <div class="qi">第 <span>{{sharesData.roundCurrent}}</span> / {{sharesData.roundAmountCurrent}} 期</div>
-          <div class="intro">每期配送完毕，自动进入下一期，单价上涨0.1%。</div>
-          <div class="number">
-            <span class="span">{{sharesData.roundSendYyiBalance}}</span> 万个
-            <div class="mt14">本期剩余配送易用积分</div>
-          </div>
-          <div class="time-price">
-            <div class="title1">当前价格</div>
-            <div class="content1"><span class="span1">CNY：<span class="default">{{sharesData.cnyPriceMyria}}</span>元/万个</span>
-              <span class="span">USDT约：<span class="default">{{sharesData.usdtPriceMyria}}</span>枚/万个
-              <div class="propp-tip">
-                <img src="/static/img/tip.png" class="m" />
-                <img src="/static/img/biaozhun.png" class="img" />
-              </div>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="order-gradient"></div>
-        <div class="right">
-          <div>账户USDT余额：<span class="default">{{sharesData.userUsdt}}</span>
-            <el-button type="primary" class="charge-btn">充币</el-button>
-          </div>
-          <div class="default1 mt11">起配积分数额：{{sharesData.startYyiQuantity}}万个</div>
-          <div class="add_one clearfix">
-            <div class="add reduce" @click="subOrAdd(0)">-</div><input type="text"  v-model="yyiQuantity"><div class="add" @click="subOrAdd(1)">+</div>
-          </div>
-          <div style="padding-left: 92px;">约支付USDT(枚)：<span class="default">{{sharesData.payUsdtAmount}}</span></div>
-          <div class="gu-btn cursor">立即入股</div>
-        </div>
-      </div>
-    </div>
     <div class="box-card mb50">
       <h1>详细介绍</h1>
       <div class="box-body">

@@ -3,38 +3,35 @@
     <main-body navIndex="1">
       <div slot="content">
         <div class="box-card2">
-          <div class="box-body no-padding">
-            <div class="index-i index-p">
-              <img src="/static/img/profile.png" alt="" class="tou">
-              <div class="title">
-                <span class="hao">YY15844551！</span>
-                <div class="level">会员身份：普通会员</div>
-                <div class="level">推荐人：YY12345698</div>
+          <div class="top-nav">
+            <div aria-label="Breadcrumb" role="navigation" class="el-breadcrumb">
+              <span class="el-breadcrumb__item">
+                <span role="link" class="el-breadcrumb__inner">账户中心</span>
+                <i class="el-breadcrumb__separator el-icon-arrow-right"></i>
+              </span>
+              <span class="el-breadcrumb__item">
+                <span role="link" class="el-breadcrumb__inner">个人信息</span>
+                <i class="el-breadcrumb__separator el-icon-arrow-right"></i>
+              </span> <span class="el-breadcrumb__item bold" aria-current="page">
+                <span role="link" class="el-breadcrumb__inner" style="font-weight: 800;">重置登录密码</span>
+                <i class="el-breadcrumb__separator el-icon-arrow-right"></i></span></div>
+          </div>
+          <div class="box-body min425">
+            <div class="charge-coin set-password forget-password">
+              <div class="form-group combo-form">
+                <label for="zhuan" class="col-sm-2 control-label">原登录密码</label><input type="password" class="form-control input" placeholder="请输入您绑定的手机号码"><span class="lh35 ml10 default">忘记原密码？</span>
+                <span class="tip max-220">格式有误，必须为数字、字母和符号两种以上组合！</span>
               </div>
-              <div class="change-title">[更换头像]</div>
-            </div>
-            <div class="account-top">
-              <div class="title">账户信息</div>
-              <dl>
-                <dd class="clearfix">
-                  <icon-svg name="right" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
-                                                      手机号码<span class="pin">159 **** 1421</span>
-                </dd>
-                <dd class="clearfix">
-                  <icon-svg name="warning" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
-                                                      实名认证<span class="pin active">未认证</span>
-                  <div class="gu-btn">认证</div>
-                </dd>
-                <dd class="clearfix">
-                  <icon-svg name="right" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
-                                                      登录密码<span class="pin">已设置</span>
-                </dd>
-                <dd class="clearfix">
-                  <icon-svg name="warning" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
-                                                      实名认证<span class="pin active">未设置</span>
-                  <div class="gu-btn">设置</div>
-                </dd>
-              </dl>
+              <div class="form-group combo-form">
+                <label for="zhuan" class="col-sm-2 control-label">新登录密码</label><input type="password" class="form-control input" placeholder="请输入短信验证码">
+                  <span class="tip">格式有误，必须为数字、字母和符号两种以上组合！</span>
+              </div>
+              <div class="form-group combo-form">
+                <label for="zhuan" class="col-sm-2 control-label">确认新登录密码</label><input type="password" class="form-control input" placeholder="6位数字">
+                 <span class="tip">格式有误，必须为数字、字母和符号两种以上组合！</span>
+              </div>
+              <span class="tip"></span>
+              <div class="gu-btn">提交</div>
             </div>
           </div>
 
@@ -121,29 +118,18 @@
       MainBody
     },
     methods: {
-      resetVal(number) {
+      loadList(i) {
+        this.activeNumber = i;
+      },
+      pay(id) {
 
-        var mNumber = parseInt(number)
-        number = number.toString()
-        var point = number.split('.')[1]
-        console.log(point)
-        mNumber = mNumber.toString()
-        if(mNumber.length <= 3)
-          return(mNumber == '' ? '0' : mNumber) + '.' + point;
-        else {
-          var mod = mNumber.length % 3;
-          var output = (mod == 0 ? '' : (mNumber.substring(0, mod)));
-          for(var i = 0; i < Math.floor(mNumber.length / 3); i++) {
-            if((mod == 0) && (i == 0))
-              output += mNumber.substring(mod + 3 * i, mod + 3 * i + 3);
-            else
-              output += ',' + mNumber.substring(mod + 3 * i, mod + 3 * i + 3);
-          }
-          return(output + '.<span class="little-num">' + point + '</span>');
-        }
-        //      return `${val.parseInt}.<span class="little-word">${dian}</span>`
+      },
+      cancelOrder(id) {
+
+      },
+      delOrder(id) {
+
       }
-
     },
     mounted() {
       //    var clipboard = new ClipboardJS('.copy');

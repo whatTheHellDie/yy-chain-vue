@@ -38,6 +38,18 @@
               name: "设置支付密码",
               routeName: "setPaymentPassword"
             },
+            {
+              name: "忘记支付密码",
+              routeName: "forgetPaymentPassword"
+            },
+            {
+              name: "重置支付密码",
+              routeName: "resetPaymentPassword"
+            },
+            {
+              name: "重置登录密码",
+              routeName: "resetLoginPassword"
+            },
           ],
           order: [ //订单管理
             {
@@ -56,7 +68,7 @@
             },
             {
               name: "资金明细",
-              routeName: ""
+              routeName: "CapitalDetails"
             }
           ],
         }

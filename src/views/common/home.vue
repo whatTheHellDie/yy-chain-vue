@@ -1,11 +1,11 @@
 <template>
-<div>  
+<div>
   <div class="img-box">
     <img src="static/img/piture.png" alt="" />
     <div class="title">欢迎进入易用链后台管理系统</div>
   </div>
   <div class="main-content">
-    <div class="fengshui">易用币（FSC）众筹进度</div>
+    <div class="fengshui">易用币（YYC）众筹进度</div>
     <el-table
     :data="tableData"
     border
@@ -38,11 +38,11 @@
     </el-table-column>
     <el-table-column
       prop="progress3"
-      label="当前FSC价格（元/万个）">
+      label="当前YYC价格（元/万个）">
     </el-table-column>
     <el-table-column
       prop="progress4"
-      label="当前ETH价格（枚/万个）">
+      label="当前USDT价格（枚/万个）">
     </el-table-column>
     <el-table-column
       prop="progress5"
@@ -52,7 +52,7 @@
       prop="progress6"
       label="完成时间">
     </el-table-column>
-    
+
   </el-table>
   <div class="fengshui">人员数量</div>
   <el-table
@@ -174,7 +174,7 @@
   }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>  
+<style rel="stylesheet/scss" lang="scss" scoped>
   .img-box{position: relative;margin-bottom: 34px;background: #fff;margin-top: -40px;height: 135px;
     img{
       width: 100%;
@@ -183,8 +183,8 @@
     .title{position: absolute;top: 0;left: 0;line-height: 135px;font-size:30px;
 font-weight:bold;
 color:rgba(51,51,51,1);width: 100%;text-align: center;}
-  } 
-  
+  }
+
   .fengshui{font-size: 20px;line-height: 76px;}
   .el-table{margin-bottom: 14px;text-align: center;}
   .order-info{
@@ -196,7 +196,7 @@ color:rgba(51,51,51,1);width: 100%;text-align: center;}
     }
     .content{
       font-size: 30px;
-      
+
     }
   }
   .border-grey{height: 1px;background: #e9e9e9;margin: 20px 0 0;}
@@ -206,7 +206,7 @@ color:rgba(51,51,51,1);width: 100%;text-align: center;}
       width: 264px;
   height: 119px;
   background-color: #ffffff;
-  box-shadow: 0px 3px 6px 0px 
+  box-shadow: 0px 3px 6px 0px
     rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     padding:18px 0 0 24px;
