@@ -25,9 +25,11 @@ const globalRoutes = [
   //购买
   { path: '/buyPackage', component: _import('purchase/buyPackage'), name: 'buyPackage', meta: { title: '易用链订单' } },
   { path: '/buyPackage-Pay', component: _import('purchase/buyPackage-Pay'), name: 'buyPackage-Pay', meta: { title: '支付页面' } },
+  { path: '/buyPackageStatus', component: _import('purchase/buyPackageStatus'), name: 'buyPackageStatus', meta: { title: '支付页面' } },
    //订单
   { path: '/chargeCoin', component: _import('order/chargeCoin'), name: 'chargeCoin', meta: { title: '充币' } },
   { path: '/chargeCoinOrder', component: _import('order/chargeCoinOrder'), name: 'chargeCoinOrder', meta: { title: '充币订单' } },
+  { path: '/reChargeCoin', component: _import('order/reChargeCoin'), name: 'reChargeCoin', meta: { title: '重新提交' } },
   { path: '/investmentShareOrder', component: _import('order/investmentShareOrder'), name: 'investmentShareOrder', meta: { title: '入股订单' } },
   //账户
 
@@ -37,6 +39,8 @@ const globalRoutes = [
   { path: '/realNameAuthentication', component: _import('account/realNameAuthentication'), name: 'realNameAuthentication', meta: { title: '设置支付密码' } },
   { path: '/setPaymentPassword', component: _import('account/setPaymentPassword'), name: 'setPaymentPassword', meta: { title: '实名认证' } },
   { path: '/forgetPaymentPassword', component: _import('account/forgetPaymentPassword'), name: 'forgetPaymentPassword', meta: { title: '设置支付密码' } },
+  { path: '/resetPaymentPassword', component: _import('account/resetPaymentPassword'), name: 'resetPaymentPassword', meta: { title: '重置支付密码' } },
+  { path: '/resetLoginPassword', component: _import('account/resetLoginPassword'), name: 'resetLoginPassword', meta: { title: '重置登录密码' } },
 ]
 
 // 主入口路由(需嵌套上左右整体布局)

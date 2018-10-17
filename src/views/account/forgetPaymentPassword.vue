@@ -1,6 +1,6 @@
 <template>
   <div class="body-grey">
-    <main-body>
+    <main-body navIndex="1">
       <div slot="content">
         <div class="box-card2">
           <div class="top-nav">
@@ -17,12 +17,12 @@
                 <i class="el-breadcrumb__separator el-icon-arrow-right"></i></span></div>
           </div>
           <div class="box-body min425">
-            <div class="charge-coin set-password">
+            <div class="charge-coin set-password forget-password">
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">手机号码</label><input type="text" class="form-control input" placeholder="请输入您绑定的手机号码">
               </div>
               <div class="form-group combo-form">
-                <label for="zhuan" class="col-sm-2 control-label">短信验证码</label><input type="text" class="form-control input" placeholder="请输入短信验证码">
+                <label for="zhuan" class="col-sm-2 control-label">短信验证码</label><input type="text" class="form-control input" placeholder="请输入短信验证码"><div class="btn-sub">获取验证码</div>
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">新支付密码</label><input type="text" class="form-control input" placeholder="6位数字">
@@ -30,8 +30,6 @@
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">确认支付密码</label><input type="text" class="form-control input" placeholder="6位数字">
               </div>
-
-
               <div class="gu-btn">提交</div>
             </div>
           </div>
@@ -42,11 +40,7 @@
   </div>
 </template>
 <style lang="scss" scoped>
-  .bold {
-    .el-breadcrumb__item:last-child .el-breadcrumb__inner {
-      font-weight: 800;
-    }
-  }
+
 </style>
 
 <script>

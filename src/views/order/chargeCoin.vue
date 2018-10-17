@@ -1,6 +1,6 @@
 <template>
   <div class="body-grey">
-    <main-body>
+    <main-body navIndex="1">
       <div slot="content">
         <div class="box-card2">
           <h1>充币</h1>
