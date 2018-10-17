@@ -145,7 +145,10 @@
           client_money_name: '阅读币',
           text_roll: ['好消息好消息！风水链上线了！', '王五成功邀请小二，获1460阅读基金', '是游戏，获基金', 'XX']
         },
-        activeIndex: 0
+        activeIndex: 0,
+
+        stage1: null,   //第一阶段私募
+        stage2: null    //第二阶段私募
       }
     },
     components:{
@@ -168,10 +171,30 @@
       }, 3000);
     },
     created() {
-      //    this.getCaptcha()
+         this.getInfo()
     },
     methods: {
+      getInfo(){
+        let _this = this;
+        this.$http({
+          url: this.$http.adornUrl('/stageInfo/getAll'),
+          method: 'get',
+          //params: this.$http.adornParams()
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            
+            console.log('data:'+ JSON.stringify(data))
 
+            if (!data.data.stage1){
+              _this.stage1 = data.data.stage1;
+            }
+            if (!data.data.stage2){
+              _this.stage2 = data.data.stage2;
+            }
+
+          }
+        })
+      }
     }
   }
 </script>
