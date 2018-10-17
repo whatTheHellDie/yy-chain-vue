@@ -33,7 +33,7 @@
             <div class="add reduce" @click="subOrAdd(0)">-</div><input type="text"  v-model="yyiQuantity"><div class="add" @click="subOrAdd(1)">+</div>
           </div>
           <div style="padding-left: 92px;">约支付USDT(枚)：<span class="default">{{sharesData.payUsdtAmount}}</span></div>
-          <div class="gu-btn cursor">立即入股</div>
+          <div class="gu-btn cursor" @click="setShares()">立即入股</div>
         </div>
       </div>
     </div>
@@ -107,7 +107,6 @@
             this.sharesData.usdtPriceMyria = data.data.usdtPriceMyria
             this.sharesData.userUsdt = data.data.userUsdt
             this.yyiQuantity = data.data.startYyiQuantity
-            console.log(this.sharesData.stageCurrent);
           } else {
             this.$message.error(data.msg)
           }
@@ -139,6 +138,18 @@
             this.sharesData.payUsdtAmount = data.data
           } else {
             this.$message.error(data.msg)
+          }
+        })
+      },
+      setShares () {
+        var ddd = this.sharesData.stageCurrent;
+        this.$router.push({
+          name: 'buyPackage-Pay',
+          query: {
+            stageCurrent: this.sharesData.stageCurrent,
+            roundCurrent: this.sharesData.roundCurrent,
+            yyiQuantity: this.yyiQuantity,
+            payUsdtAmount: this.sharesData.payUsdtAmount
           }
         })
       }

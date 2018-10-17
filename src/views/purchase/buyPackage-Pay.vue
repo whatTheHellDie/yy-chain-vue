@@ -6,18 +6,19 @@
       <div class="box-body no-padding">
         <div class="buy-detail">
           <dl>
-          	<dd><label>交易数额（USDT）：</label><span class="span">0.12345123枚</span></dd>
-          	<dd><label>配送易用积分：</label><span class="span">1万个</span></dd>
+          	<dd><label>交易数额（USDT）：</label><span class="span">{{payUsdtAmount}}枚</span></dd>
+          	<dd><label>配送易用积分：</label><span class="span">{{yyiQuantity}}万个</span></dd>
           </dl>
         </div>
         <div class="buy-detail2">
         <h1>支付订单</h1>
           <dl>
-            <dd><label>需支付USDT(枚)：</label><span class="span">0.951115</span></dd>
+            <dd><label>需支付USDT(枚)：</label><span class="span">{{payUsdtAmount}}</span></dd>
             <form class="m-form" method="post">
-            	<input type="password" class="input" /> <span class="wang">忘记密码？</span>
+            	<input type="password" v-model="payPassword" class="input" />
+              <span class="wang">忘记密码？</span>
             	<div class="shu-tip">请输入6位数字支付密码</div>
-            	<div class="gu-btn">确认支付</div><span class="please">请在 <span class="time">120S</span> 内完成支付！</span>
+            	<div class="gu-btn" @click="pay()">确认支付</div><!--<span class="please">请在 <span class="time">120S</span> 内完成支付！</span>-->
             </form>
           </dl>
         </div>
@@ -27,7 +28,7 @@
   </div>
 </template>
 <style lang="scss" scoped>
-   
+
 </style>
 
 <script>
@@ -35,9 +36,13 @@
   import MyHeader from '@/components/common/header'
   import MyFooter from '@/components/common/footer'
   export default {
-    data() {
+    data () {
       return {
-        num1: 1
+        stageCurrent: 0,
+        roundCurrent: 0,
+        yyiQuantity: 0,
+        payUsdtAmount: 0,
+        payPassword: ''
       }
     },
     components: {
@@ -47,7 +52,32 @@
     methods: {
       handleChange(value) {
         console.log(value);
+      },
+      pay () {
+        this.$http({
+          url: this.$http.adornUrl('/shares/pay'),
+          method: 'post',
+          data: this.$http.adornData({
+            'currentStage': this.stageCurrent,
+            'currentRound': this.roundCurrent,
+            'sendYyiQuantity': this.yyiQuantity,
+            'payUsdtAmount': this.payUsdtAmount,
+            'payPassword': this.payPassword
+          })
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            alert("购买成功");
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
       }
+    },
+    created: function () {
+      this.stageCurrent = this.$route.query.stageCurrent
+      this.roundCurrent = this.$route.query.roundCurrent
+      this.yyiQuantity = this.$route.query.yyiQuantity
+      this.payUsdtAmount = this.$route.query.payUsdtAmount
     }
   }
 </script>
