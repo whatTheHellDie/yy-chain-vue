@@ -216,7 +216,8 @@
               })
             }).then(({data}) => {
               if (data && data.code === '01201') {
-                this.$cookie.set('token', data.token)
+                this.$cookie.set('token', data.data.token)
+                alert(data.data.token)
                 this.$router.replace({
                   name: 'index'
                 })
