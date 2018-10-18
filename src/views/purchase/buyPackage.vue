@@ -89,7 +89,7 @@
     },
     methods: {
       handleChange (value) {
-        console.log(value)
+        //console.log(value)
       },
       getSharesViweData () {
         this.$http({
@@ -142,7 +142,6 @@
         })
       },
       setShares () {
-        var ddd = this.sharesData.stageCurrent;
         this.$router.push({
           name: 'buyPackage-Pay',
           query: {

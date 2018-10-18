@@ -177,12 +177,16 @@
       resetVal (number) {
         var mNumber = parseInt(number)
         number = number.toString()
-        var point = number.split('.')[1]
+        var point = number.split('.')[1];
         console.log(point)
         mNumber = mNumber.toString()
-        if (mNumber.length <= 3)
-          return (mNumber == '' ? '0' : mNumber) + '.' + point
-        else {
+        if (mNumber.length <= 3){
+          if(!point) {
+            return (mNumber == '' ? '0' : mNumber)
+          }else{
+            return (mNumber == '' ? '0' : mNumber) + '.' + point
+          }
+        }else {
           var mod = mNumber.length % 3;
           var output = (mod == 0 ? '' : (mNumber.substring(0, mod)))
           for (var i = 0; i < Math.floor(mNumber.length / 3); i++) {
@@ -192,16 +196,24 @@
               output += ',' + mNumber.substring(mod + 3 * i, mod + 3 * i + 3)
             }
           }
+          console.log(typeof point)
+          if(!point){
+
+            return output
+          }else{
           return (output + '.<span class="little-num">' + point + '</span>')
+
+          }
         }
         //      return `${val.parseInt}.<span class="little-word">${dian}</span>`
       },
       personFund () {
         this.$http({
-          url: this.$http.adornUrl('fund/au/person'),
+          url: this.$http.adornUrl('/fund/au/person'),
           method: 'get'
         }).then(({data}) => {
           if (data && data.code === '0000') {
+            alert('34223')
             this.fund.yyc = data.data.yyc
             this.fund.yyi = data.data.yyi
             this.fund.usdt = data.data.usdt

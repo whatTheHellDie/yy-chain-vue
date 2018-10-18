@@ -66,7 +66,14 @@
           })
         }).then(({data}) => {
           if (data && data.code === '0000') {
-            alert("购买成功");
+            this.$message.success(data.msg)
+            //跳到支付成功页面
+            this.$router.push({
+              name: 'buyPackageStatus',
+              query: {
+                status: 0
+              }
+            })
           } else {
             this.$message.error(data.msg)
           }
