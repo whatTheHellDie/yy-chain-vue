@@ -36,11 +36,11 @@
             </el-form-item>
           </el-form>
           <el-form v-else-if="step==2" :model="dataForm1" ref="dataForm" @keyup.enter.native="dataFormSubmit(2)" status-icon>
-            <el-form-item prop="newPassword">
+            <el-form-item class="fixed-forget" prop="newPassword">
               <label class="label" for="newPassword">设置新登录密码 ：</label>
               <el-input v-model="dataForm1.newPassword" type="password"></el-input>
             </el-form-item>
-            <el-form-item prop="repeatPassword">
+            <el-form-item class="fixed-forget" prop="repeatPassword">
               <label class="label" for="repeatPassword">确认新登录密码 ：</label>
               <el-input v-model="dataForm1.repeatPassword" type="password"></el-input>
             </el-form-item>
