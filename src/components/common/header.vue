@@ -58,6 +58,7 @@
             this.$cookie.delete('token')
             this.$message.success('注销成功')
             this.loginStatus = '0'
+            this.$router.push({name:'login'})
           } else {
             this.$message.error(data.msg)
           }
