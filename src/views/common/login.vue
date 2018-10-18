@@ -16,11 +16,11 @@
               <label class="label" for="password">登录密码 ：</label>
               <el-input v-model="loginForm.password" type="password"></el-input>
             </el-form-item>
-            <el-form-item prop="captcha">
-              <label class="label" for="captcha">图形验证 ：</label>
-              <el-input v-model="loginForm.captcha"></el-input>
-              <div class="captcha">FLJE </div>
-            </el-form-item>
+            <!--<el-form-item prop="captcha">-->
+              <!--<label class="label" for="captcha">图形验证 ：</label>-->
+              <!--<el-input v-model="loginForm.captcha"></el-input>-->
+              <!--<div class="captcha">FLJE </div>-->
+            <!--</el-form-item>-->
             <!--<el-form-item prop="captcha">
               <el-row :gutter="20">
                 <el-col :span="14">
@@ -33,7 +33,7 @@
               </el-row>
             </el-form-item>-->
             <div class="remember-pass clearfix">
-              <el-checkbox v-model="rememberPass">记住账号</el-checkbox>
+              <!--<el-checkbox v-model="rememberPass">记住账号</el-checkbox>-->
               <span class="cursor default pull-right" @click="$router.push({name:'forgetPassword'})">忘记密码 ？</span>
 
             </div>
@@ -117,7 +117,7 @@
         loginRule: {
           userNumber: [{
             required: true,
-            message: '帐号不能为空',
+            message: '账号不能为空',
             trigger: 'blur'
           }],
           password: [{
@@ -134,7 +134,7 @@
         registerRule: {
           userNumber: [{
             required: true,
-            message: '帐号不能为空',
+            message: '账号不能为空',
             trigger: 'blur'
           }],
           password: [{
@@ -247,11 +247,9 @@
                 'captcha': this.registerForm.captcha
               })
             }).then(({data}) => {
-              if (data && data.code === 0) {
-                this.$cookie.set('token', data.token)
-                this.$router.replace({name: 'index'})
+              if (data && data.code === '01107') {
+                this.$message.success(data.msg)
               } else {
-                //              this.getCaptcha()
                 this.$message.error(data.msg)
               }
             })

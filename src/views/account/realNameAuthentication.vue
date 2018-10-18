@@ -138,7 +138,7 @@
         reader.readAsDataURL(img1)
         var that = this
         reader.onloadend = function () {
-          if (img1.size > 102400) {
+          if (img1.size > 1048576) {
             that.$alert('图片不能大于1m', '提示', {
               confirmButtonText: '确定',
             })

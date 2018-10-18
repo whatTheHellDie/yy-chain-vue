@@ -8,17 +8,17 @@
           <img :src="stepImg" alt="" class="block-progress" />
           <el-form v-if="step==1" :model="dataForm" ref="dataForm" @keyup.enter.native="dataFormSubmit(2)" status-icon>
             <el-form-item prop="userName">
-              <label class="label" for="userName">会员编号 ：</label>
-              <el-input v-model="dataForm.userName"></el-input>
+              <label class="label" for="userNumber">会员编号 ：</label>
+              <el-input v-model="dataForm.userNumber"></el-input>
             </el-form-item>
             <el-form-item prop="password">
-              <label class="label" for="password">手机号码 ：</label>
-              <el-input v-model="dataForm.password" type="password"></el-input>
+              <label class="label" for="phone">手机号码 ：</label>
+              <el-input v-model="dataForm.phone"></el-input>
             </el-form-item>
            <el-form-item prop="captcha">
               <label class="label" for="captcha">短信验证 ：</label>
-              <el-input v-model="dataForm1.captcha" placeholder="请输入短信验证码"></el-input>
-              <el-button class="captcha captcha1">获取验证码</el-button>
+              <el-input v-model="dataForm.captcha" placeholder="请输入短信验证码"></el-input>
+              <el-button class="captcha captcha1" @click="getCaptcha()">获取验证码</el-button>
             </el-form-item>
             <!--<el-form-item prop="captcha">
               <el-row :gutter="20">
@@ -36,13 +36,13 @@
             </el-form-item>
           </el-form>
           <el-form v-else-if="step==2" :model="dataForm1" ref="dataForm" @keyup.enter.native="dataFormSubmit(2)" status-icon>
-            <el-form-item prop="password">
-              <label class="label" for="password">设置新登录密码 ：</label>
-              <el-input v-model="dataForm.password" type="password"></el-input>
+            <el-form-item prop="newPassword">
+              <label class="label" for="newPassword">设置新登录密码 ：</label>
+              <el-input v-model="dataForm1.newPassword" type="password"></el-input>
             </el-form-item>
-            <el-form-item prop="password">
-              <label class="label" for="password">确认新登录密码 ：</label>
-              <el-input v-model="dataForm.password" type="password"></el-input>
+            <el-form-item prop="repeatPassword">
+              <label class="label" for="repeatPassword">确认新登录密码 ：</label>
+              <el-input v-model="dataForm1.repeatPassword" type="password"></el-input>
             </el-form-item>
             <!--<el-form-item prop="captcha">
               <el-row :gutter="20">
@@ -75,21 +75,18 @@
   import MyHeader from '@/components/common/header'
   import MyFooter from '@/components/common/footer'
   export default {
-    data() {
+    data () {
       return {
-        step:1,
+        step: 1,
 
         dataForm: {
-          userName: '',
-          password: '',
-          uuid: '',
+          userNumber: '',
+          phone: '',
           captcha: ''
         },
         dataForm1: {
-          userName: '',
-          password: '',
-          uuid: '',
-          captcha: ''
+          newPassword: '',
+          repeatPassword: ''
         },
         registerForm: {
           userName: 'FS00000001',
@@ -100,14 +97,14 @@
         registerRule: {
           userName: [{
             required: true,
-            message: '帐号不能为空',
+            message: '账号不能为空',
             trigger: 'blur'
           }],
           password: [{
             required: true,
             message: '密码不能为空',
             trigger: 'blur'
-          }],
+          }]
 
           //        captcha: [
           //          { required: true, message: '验证码不能为空', trigger: 'blur' }
@@ -117,10 +114,10 @@
         //      captchaPath: ''
       }
     },
-    computed:{
-      stepImg(){
+    computed: {
+      stepImg () {
         return '/static/img/progress'+this.step+'.png'
-        }
+      }
     },
     components: {
       MyHeader,
@@ -130,48 +127,106 @@
       //    this.getCaptcha()
     },
     methods: {
-      //切换注册登录
+      // 切换注册登录
       switchForm(status) {
         this.checkStatus = status;
         console.log(this.checkStatus)
       },
       // 提交表单
-      dataFormSubmit(step) {
-        console.log(step)
-        this.step=step;
-        this.stepImg='/static/img/progress'+step+'.png'
-//      this.$refs['dataForm'].validate((valid) => {
-//        if(valid) {
-//          this.$http({
-//            url: this.$http.adornUrl('/sys/login'),
-//            method: 'post',
-//            data: this.$http.adornData({
-//              'username': this.dataForm.userName,
-//              'password': this.dataForm.password,
-//              //              'uuid': this.dataForm.uuid,
-//              //              'captcha': this.dataForm.captcha
-//            })
-//          }).then(({
-//            data
-//          }) => {
-//            if(data && data.code === 0) {
-//              this.$cookie.set('token', data.token)
-//              this.$router.replace({
-//                name: 'home'
-//              })
-//            } else {
-//              //              this.getCaptcha()
-//              this.$message.error(data.msg)
-//            }
-//          })
-//        }
-//      })
+      dataFormSubmit () {
+        if (this.step === 1) {
+          this.valid()
+        } else if (this.step === 2) {
+          this.reset()
+        }
       },
       // 获取验证码
-      //    getCaptcha () {
-      //      this.dataForm.uuid = getUUID()
-      //      this.captchaPath = this.$http.adornUrl(`/captcha.jpg?uuid=${this.dataForm.uuid}`)
-      //    }
+      getCaptcha () {
+        let phone = this.dataForm.phone
+        if (phone == null || phone === '') {
+          this.$message.error('请先填写手机号')
+          return
+        }
+        this.$http({
+          url: this.$http.adornUrl('/sms/sendMSM'),
+          method: 'get',
+          params: this.$http.adornParams({
+            'phoneNumber': this.dataForm.phone,
+            'countryCode': '86'
+          })
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.$message.success('验证码已发送')
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
+      },
+      valid (step) {
+        let userNumber = this.dataForm.userNumber
+        if (userNumber == null || userNumber === '') {
+          this.$message.error('请先填写会员编号')
+          return
+        }
+        let phone = this.dataForm.phone
+        if (phone == null || phone === '') {
+          this.$message.error('请先填写手机号')
+          return
+        }
+        let captcha = this.dataForm.captcha
+        if (captcha == null || captcha === '') {
+          this.$message.error('请先填写验证码')
+          return
+        }
+        this.$http({
+          url: this.$http.adornUrl('/user/reset/pwd/valid'),
+          method: 'post',
+          data: this.$http.adornData({
+            'userNumber': this.dataForm.userNumber,
+            'phone': this.dataForm.phone,
+            'captcha': this.dataForm.captcha
+          })
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            // this.$message.success('验证通过')
+            this.step = 2
+            this.stepImg = '/static/img/progress' + 2 + '.png'
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
+      },
+      reset (step) {
+        let newPassword = this.dataForm1.newPassword
+        if (newPassword == null || newPassword === '') {
+          this.$message.error('请先填写新密码')
+          return
+        }
+        let repeatPassword = this.dataForm1.repeatPassword
+        if (repeatPassword == null || repeatPassword === '') {
+          this.$message.error('请再次填写新密码')
+          return
+        }
+        if (newPassword !== repeatPassword) {
+          this.$message.error('两次输入的密码不一样')
+          return
+        }
+        this.$http({
+          url: this.$http.adornUrl('/user/reset/pwd'),
+          method: 'post',
+          params: this.$http.adornParams({
+            'userNumber': this.dataForm.userNumber,
+            'password': this.dataForm1.newPassword
+          })
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.step = 3
+            this.stepImg = '/static/img/progress' + 3 + '.png'
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
+      }
     }
   }
 </script>
