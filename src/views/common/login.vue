@@ -67,7 +67,7 @@
             <el-form-item prop="captcha">
               <label class="label" for="captcha">短信验证 ：</label>
               <el-input v-model="registerForm.captcha" placeholder="请输入短信验证码"></el-input>
-              <el-button class="captcha captcha1">获取验证码</el-button>
+              <el-button class="captcha captcha1" @click="getCaptcha()">获取验证码</el-button>
             </el-form-item>
             <!--<el-form-item prop="captcha">
               <el-row :gutter="20">
@@ -257,12 +257,24 @@
             })
           }
         })
-      }
+      },
       // 获取验证码
-      //    getCaptcha () {
-      //      this.dataForm.uuid = getUUID()
-      //      this.captchaPath = this.$http.adornUrl(`/captcha.jpg?uuid=${this.dataForm.uuid}`)
-      //    }
+      getCaptcha () {
+        this.$http({
+          url: this.$http.adornUrl('/sms/sendMSM'),
+          method: 'get',
+          params: this.$http.adornParams({
+            'phoneNumber': this.registerForm.phone,
+            'countryCode': '86'
+          })
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.$message.success('验证码发送成功')
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
+      }
     }
   }
 </script>
