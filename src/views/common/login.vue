@@ -43,7 +43,7 @@
             </el-form-item>
           </el-form>
 
-          <el-form v-else :model="registerForm" :rules="registerRule" ref="registerForm" @keyup.enter.native="register()" status-icon>
+          <el-form v-show="!this.checkStatus" :model="registerForm" :rules="registerRule" ref="registerForm" @keyup.enter.native="register()" status-icon>
             <el-form-item prop="userNumber">
               <label class="label" for="userNumber">会员编号 ：</label>
               <el-input v-model="registerForm.userNumber" readonly></el-input>
@@ -58,7 +58,7 @@
             </el-form-item>
             <el-form-item prop="referrerNumber">
               <label class="label" for="referrerNumber">推荐会员 ：</label>
-              <el-input v-model="registerForm.referrerNumber" placeholder="请输入推荐人帐号"></el-input>
+              <el-input v-model="registerForm.referrerNumber" placeholder="请输入推荐人账号"></el-input>
             </el-form-item>
             <el-form-item prop="phone">
               <label class="label" for="phone">手机号码 ：</label>

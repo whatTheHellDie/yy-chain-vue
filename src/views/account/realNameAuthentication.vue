@@ -18,10 +18,10 @@
             </div>
           </div>
           <div class="box-body min425">
-            <form class="form-horizontal" role="form">
-              <div class="form-group combo-form">
+            <form class="form-horizontal"  role="form">
+              <div class="form-group combo-form" v-if="reason">
                 <label for="zhuan" class="col-sm-3 control-label red">认证不通过原因：</label>
-                <div class="lh40 red">填写姓名与证件图片中的姓名不一致</div>
+                <div class="lh40 red">{{reason}}</div>
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-3 control-label">真实姓名</label>
@@ -87,6 +87,7 @@
       return {
         imgs: ['/static/img/zhan.png'],
         imgs1: ['/static/img/zhan.png'],
+        reason: '',
         form: {
           userName: '',
           idCardNumber: '',
@@ -143,7 +144,6 @@
               confirmButtonText: '确定',
             })
             return false
-
           }
           if (index == 0) {
             that.imgs.push(reader.result)
@@ -193,23 +193,23 @@
               that.$message.error(error)
             })
           }
-           // reader.readAsDataURL(img1);
-           // var that=this;
-           // reader.onloadend=function(){
-           //   if (img1.size > 1048576) {
-           //              that.$alert('图片不能大于1m', '提示', {
-           //              confirmButtonText: '确定',
-           //            });
-           //            return false
-           //   }
-           //   if(index==0){
-           //     that.imgs.push(reader.result)
-           //   }else{
-           //      that.imgs1.push(reader.result)
-           //   }
-           // }
         }
+      },
+      lastReason () {
+        this.$http({
+          url: this.$http.adornUrl('/user/au/nopass/remark'),
+          method: 'get'
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.reason = data.data
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
       }
+    },
+    created: function () {
+      this.lastReason()
     }
   }
 </script>

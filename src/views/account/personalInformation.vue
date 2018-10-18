@@ -7,9 +7,9 @@
             <div class="index-i index-p">
               <img src="/static/img/profile.png" alt="" class="tou">
               <div class="title">
-                <span class="hao">YY15844551！</span>
-                <div class="level">会员身份：普通会员</div>
-                <div class="level">推荐人：YY12345698</div>
+                <span class="hao">{{personInfo.userNumber}}</span>
+                <div class="level">会员身份：{{personInfo.userType}}</div>
+                <div class="level">推荐人：{{personInfo.referrerNumber}}</div>
               </div>
               <div class="change-title">[更换头像]</div>
             </div>
@@ -18,7 +18,7 @@
               <dl>
                 <dd class="clearfix">
                   <icon-svg name="right" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
-                                                      手机号码<span class="pin">159 **** 1421</span>
+                                                      手机号码<span class="pin">{{personInfo.phone}}</span>
                 </dd>
                 <dd class="clearfix">
                   <icon-svg name="warning" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
@@ -48,114 +48,52 @@
 </style>
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MainBody from '@/components/common/mainBody'
   export default {
-    data() {
+    data () {
       return {
         activeNumber: 0,
-        chooseList: [{
-            name: '全部'
-          },
-          {
-            name: '待支付'
-          },
-          {
-            name: '已完成'
-          },
-          {
-            name: '交易关闭'
-          },
-          {
-            name: '交易取消'
-          }
-        ],
-        chooseContent: [{
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 0, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 1, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 2, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 3, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-        ]
+        personInfo: {
+          userNumber: '',
+          userType: '',
+          referrerNumber: '',
+          phone: '',
+          auth: '',
+          loginPwd: '',
+          payPwd: ''
+        },
+        chooseContent: []
       }
     },
     components: {
       MainBody
     },
     methods: {
-      resetVal(number) {
-
-        var mNumber = parseInt(number)
-        number = number.toString()
-        var point = number.split('.')[1]
-        console.log(point)
-        mNumber = mNumber.toString()
-        if(mNumber.length <= 3)
-          return(mNumber == '' ? '0' : mNumber) + '.' + point;
-        else {
-          var mod = mNumber.length % 3;
-          var output = (mod == 0 ? '' : (mNumber.substring(0, mod)));
-          for(var i = 0; i < Math.floor(mNumber.length / 3); i++) {
-            if((mod == 0) && (i == 0))
-              output += mNumber.substring(mod + 3 * i, mod + 3 * i + 3);
-            else
-              output += ',' + mNumber.substring(mod + 3 * i, mod + 3 * i + 3);
+      getPersonInfo () {
+        this.$http({
+          url: this.$http.adornUrl('/user/query/one'),
+          method: 'get'
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.personInfo.userNumber = data.data.userNumber
+            this.personInfo.userType = data.data.userType
+            this.personInfo.referrerNumber = data.data.referrerNumber
+            this.personInfo.phone = data.data.phone
+            this.personInfo.auth = data.data.auth
+            this.personInfo.phone = data.data.phone
+            this.personInfo.phone = data.data.phone
+          } else {
+            this.$message.error(data.msg)
           }
-          return(output + '.<span class="little-num">' + point + '</span>');
-        }
-        //      return `${val.parseInt}.<span class="little-word">${dian}</span>`
+        }).catch(({error}) => {
+          this.dataListLoading = false
+          this.$message.error(error)
+        })
       }
-
     },
-    mounted() {
-      //    var clipboard = new ClipboardJS('.copy');
-      //
-      //    clipboard.on('success', function(e) {
-      //        e.clearSelection();
-      //        
-      //    });
-      //    
-      //    clipboard.on('error', function(e) {
-      //        alert('该默认浏览器不支持点击复制,请长按选择复制钱包地址或选择分享二维码图片')
-      //    });
+    mounted: function () {
+      this.getPersonInfo()
     }
   }
 </script>
