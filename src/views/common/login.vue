@@ -260,6 +260,11 @@
       },
       // 获取验证码
       getCaptcha () {
+        let phone = this.registerForm.phone
+        if (phone == null || phone === '') {
+          this.$message.error('请先填写手机号')
+          return
+        }
         this.$http({
           url: this.$http.adornUrl('/sms/sendMSM'),
           method: 'get',
