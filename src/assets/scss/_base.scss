@@ -461,6 +461,7 @@ overflow: hidden;text-align: center;background: #000;color: #fff;}
 .xiangxi-intro{
     li{font-size: 16px;margin-bottom: 16px;}
 }
+.mt40{margin-top: 40px;}
 .mb50{margin-bottom: 50px;}
 //充币
 .left-navbar{
@@ -1005,3 +1006,21 @@ overflow: hidden;text-align: center;background: #000;color: #fff;}
     .max-220{max-width: 220px;}
 }
 .lh35{line-height: 35px;}
+
+.pay-status{
+    text-align: center;
+    padding: 140px 0;
+    .title{
+        display: inline-block;
+        vertical-align: top;
+        line-height: 60px;
+        font-size: 16px;
+        font-weight: 800;
+        color: #000;
+        margin-left: 20px;
+    }
+    .gu-btn{width: 100px;height: 35px;line-height: 35px;display: inline-block;vertical-align: top;margin-top: 77px;margin-right: 0;}
+    .back-index{
+        color: #000;background: #fff;margin-right: 0;border: 1px #000 solid;margin-left: 70px;
+    }
+}
