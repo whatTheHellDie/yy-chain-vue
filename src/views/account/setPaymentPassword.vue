@@ -19,12 +19,14 @@
           <div class="box-body min425">
             <div class="charge-coin set-password">
               <div class="form-group combo-form">
-                <label for="zhuan" class="col-sm-2 control-label">支付密码</label><input type="text" class="form-control input" placeholder="6位数字">
+                <label for="zhuan" class="col-sm-2 control-label">支付密码</label>
+                <input type="text" class="form-control input" placeholder="6位数字" v-model="newPwd">
               </div>
               <div class="form-group combo-form">
-                <label for="zhuan" class="col-sm-2 control-label">确认支付密码</label><input type="text" class="form-control input" placeholder="6位数字">
+                <label for="zhuan" class="col-sm-2 control-label">确认支付密码</label>
+                <input type="text" class="form-control input" placeholder="6位数字" v-model="repeatPwd">
               </div>
-              <div class="gu-btn" @click="resetPayPwd()">提交</div>
+              <div class="gu-btn" @click="payPwd()">提交</div>
             </div>
           </div>
         </div>
@@ -44,19 +46,32 @@
   // import { getUUID } from '@/utils'
   import MainBody from '@/components/common/mainBody'
   export default {
-    data() {
+    data () {
       return {
         activeNumber: 0,
-        chooseList: []
+        newPwd: '',
+        repeatPwd: ''
       }
     },
     components: {
       MainBody
     },
     methods: {
-      resetPayPwd () {
-
-  }
+      payPwd () {
+        this.$http({
+          url: this.$http.adornUrl('/user/pay/pwd'),
+          method: 'post',
+          params: this.$http.adornParams({
+            'newPwd': this.newPwd
+          })
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.$message.success('修改密码成功')
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
+      }
     },
     mounted () {
     }
