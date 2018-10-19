@@ -98,6 +98,19 @@
   import MyFooter from '@/components/common/footer'
   export default {
     data () {
+      var checkPhone = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('手机号不能为空'));
+        } else {
+          const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
+          console.log(reg.test(value));
+          if (reg.test(value)) {
+            callback();
+          } else {
+            return callback(new Error('请输入正确的手机号'));
+          }
+        }
+      }; 
       return {
 
         loginForm: {
@@ -153,18 +166,20 @@
             trigger: 'blur'
           }],
           phone: [{
-            required: true,
-            message: '电话不能为空',
+            // required: true,
+            // message: '电话不能为空',
+            validator: checkPhone,
             trigger: 'blur'
-          }]
+          }],
 
-          //        captcha: [
-          //          { required: true, message: '验证码不能为空', trigger: 'blur' }
-          //        ]
-        },
+          captcha: [
+            { required: true, message: '验证码不能为空', trigger: 'blur' }
+          ]
+        },  
         rememberPass: false
         //      captchaPath: ''
       }
+      
     },
     components: {
       MyHeader,
@@ -238,6 +253,12 @@
       register () {
         this.$refs['registerForm'].validate((valid) => {
           if (valid) {
+            
+            if (this.registerForm.password != this.registerForm.rePassword){
+              this.$message.error('两次输入的密码不一致');
+              return;
+            } 
+
             this.$http({
               url: this.$http.adornUrl('/user/register'),
               method: 'post',
