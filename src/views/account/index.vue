@@ -37,6 +37,24 @@
                 </div>
               </div>
             </div>
+            <div class="my-zichang hei212" style="border-top: 0;">
+              <div class="title">直推概况</div>
+              <div class="clear"></div>
+              <div class="money-list clearfix">
+                <div class="w33">
+                  <div class="name">直推会员人数</div>
+                  <div class="content" v-html="resetVal(fund.yyc)"></div>
+                </div>
+                <div class="w33">
+                  <div class="name">累计获得USDT数额</div>
+                  <div class="content" v-html="resetVal(fund.usdt)"></div>
+                </div>
+                <div class="w33">
+                  <div class="name">累计获得奖励易用积分数额</div>
+                  <div class="content" v-html="resetVal(fund.yyi)"></div>
+                </div>
+              </div>
+            </div>
             <div class="my-zichang">
               <div class="title">团队概况</div>
               <div class="clear"></div>
