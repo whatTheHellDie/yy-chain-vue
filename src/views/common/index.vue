@@ -8,13 +8,13 @@
     </el-carousel>
     <div class="bdc">
       <div class="wrap">
-        <div class="scroll_bg">
+        <!--<div class="scroll_bg">
           <icon-svg name="laba" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>公告：
           <ul class="scroll_content" :style="{ top }">
             <li v-for="(item,index) in invit_info.text_roll">{{item}}</li>
           </ul>
           <span class="more cursor" @click="$router.push({ name: 'more' })">更多 ></span>
-        </div>
+        </div>-->
       </div>
     </div>
     <div class="sell-list">

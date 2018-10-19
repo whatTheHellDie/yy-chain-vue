@@ -32,7 +32,7 @@
               </el-row>
             </el-form-item>-->
             <el-form-item>
-              <el-button class="login-btn-submit mb124" type="primary" @click="dataFormSubmit(2)">立即验证</el-button>
+              <el-button class="login-btn-submit mb124" type="primary" @click="dataFormSubmit(2)">提交</el-button>
             </el-form-item>
           </el-form>
           <el-form v-else-if="step==2" :model="dataForm1" ref="dataForm" @keyup.enter.native="dataFormSubmit(2)" status-icon>

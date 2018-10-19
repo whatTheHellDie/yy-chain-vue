@@ -47,6 +47,8 @@
       if (this.$cookie.get('token')) {
         this.loginStatus = 1
       }
+      this.$store.commit('user/updateName',"haha")
+      console.log(this.$store.state.user.name)
     },
     methods: {
       logout () {
@@ -65,16 +67,17 @@
         })
       },
       toAccount(){
+        this.$router.push({name:'accountIndex'})
         if(this.$cookie.get('token')){
           this.$router.push({name:'accountIndex'})
         }else{
-          this.$confirm('您还没有登录，请登录', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.$router.push({name:'login'})
-          })
+//        this.$confirm('您还没有登录，请登录', '提示', {
+//          confirmButtonText: '确定',
+//          cancelButtonText: '取消',
+//          type: 'warning'
+//        }).then(() => {
+            
+//        })
         }
       }
     }

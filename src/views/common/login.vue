@@ -114,7 +114,7 @@
           phone: '',
           captcha: ''
         },
-        loginRule: {
+        loginFormRule: {
           userNumber: [{
             required: true,
             message: '账号不能为空',
