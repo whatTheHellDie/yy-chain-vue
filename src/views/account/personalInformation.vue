@@ -11,7 +11,7 @@
                 <div class="level">会员身份：{{personInfo.userType}}</div>
                 <div class="level">推荐人：{{personInfo.referrerNumber}}</div>
               </div>
-              <div class="change-title">[更换头像]</div>
+              <!-- <div class="change-title">[更换头像]</div> -->
             </div>
             <div class="account-top">
               <div class="title">账户信息</div>
@@ -84,7 +84,8 @@
             this.personInfo.phone = data.data.phone
             this.personInfo.phone = data.data.phone
           } else {
-            this.$message.error(data.msg)
+            // this.$message.error(data.msg)
+            this.$message.error('提交失败')
           }
         }).catch(({error}) => {
           this.dataListLoading = false

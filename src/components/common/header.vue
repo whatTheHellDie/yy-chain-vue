@@ -44,7 +44,7 @@
       }
     },
     created () {
-      if (this.$cookie.get('token')) {
+      if (this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
         this.loginStatus = 1
       }
       this.$store.commit('user/updateName',"haha")
