@@ -212,11 +212,11 @@
           return
         }
         this.$http({
-          url: this.$http.adornUrl('/user/reset/pwd'),
+          url: this.$http.adornUrl('/user/set/longPwd'),
           method: 'post',
           params: this.$http.adornParams({
             'userNumber': this.dataForm.userNumber,
-            'password': this.dataForm1.newPassword
+            'newPwd': this.dataForm1.repeatPassword
           })
         }).then(({data}) => {
           if (data && data.code === '0000') {
