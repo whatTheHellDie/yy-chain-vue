@@ -113,7 +113,7 @@
           })
         }).then(({data}) => {
           if (data && data.code === '01307') {
-            this.$message.success('用户认证受理成功')
+            this.$message.success('提交成功')
           } else {
             this.$message.error(data.msg)
           }
