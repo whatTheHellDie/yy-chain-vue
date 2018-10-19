@@ -59,7 +59,7 @@
     vertical-align: top;
     background-image: url(/static/img/gradient.png);
   }
-.wan{line-height: 50px;margin-right: 11px;}
+.wan{width: 27px;line-height: 50px;}
 </style>
 
 <script>
