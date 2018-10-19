@@ -30,7 +30,7 @@
           </div>
           <div class="default1 mt11">起配积分数额：{{sharesData.startYyiQuantity}}万个</div>
           <div class="add_one clearfix">
-            <div class="add reduce" @click="subOrAdd(0)">-</div><input type="text"  v-model="yyiQuantity"><div class="add" @click="subOrAdd(1)">+</div>
+            <div class="add reduce" @click="subOrAdd(0)">-</div><input type="text"  v-model="yyiQuantity"><div class="pull-left wan">万</div><div class="add" @click="subOrAdd(1)">+</div>
           </div>
           <div style="padding-left: 92px;">约支付USDT(枚)：<span class="default">{{sharesData.payUsdtAmount}}</span></div>
           <div class="gu-btn cursor" @click="setShares()">立即入股</div>
@@ -59,7 +59,7 @@
     vertical-align: top;
     background-image: url(/static/img/gradient.png);
   }
-
+.wan{line-height: 50px;margin-right: 11px;}
 </style>
 
 <script>

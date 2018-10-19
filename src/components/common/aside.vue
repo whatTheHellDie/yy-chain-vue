@@ -1,7 +1,10 @@
 <template>
   <div class="left-navbar">
     <dl>
-      <dt><icon-svg name="index" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>账户中心</dt>
+      <dt class="cursor" @click="$router.push({ name: 'accountIndex' })"><icon-svg name="index" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>账户首页</dt>
+    </dl>
+    <dl>
+      <dt><icon-svg name="person" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>个人中心</dt>
       <dd v-for="item in sideNav.account" :class="{active:$route.name == item.routeName }" @click="$router.push({ name: item.routeName })">{{item.name}}</dd>
     </dl>
     <dl>
@@ -22,10 +25,6 @@
         num1: 1,
         sideNav: {
           account: [ //账户管理
-            {
-              name: "账户首页",
-              routeName: "accountIndex"
-            },
             {
               name: "个人信息",
               routeName: "personalInformation"

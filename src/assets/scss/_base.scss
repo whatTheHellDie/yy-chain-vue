@@ -432,7 +432,7 @@ display: none;
     color: #ee9d0e;
 }
 .in-b{display: inline-block;vertical-align: top;}
-.add_one{overflow: hidden;border: 1px solid #ccc;width: 197px;margin: 36px auto;border-radius: 5px;}
+.add_one{overflow: hidden;border: 1px solid #ccc;width: 202px;margin: 36px auto;border-radius: 5px;}
 .add_one span{float: left;line-height: 36px;padding: 0 5px;}
 .add_one .add{padding-top: 15px;line-height: 19px;
 float: left;cursor:pointer;font-size: 40px;
@@ -442,11 +442,13 @@ overflow: hidden;text-align: center;background: #000;color: #fff;}
 .add_one .reduce{    vertical-align: top;
     border-left: none;border-right: 1px solid #cccccc;background: transparent;
     padding-top: 11px;color: #e2e2e2;}
-.add_one input{    border-style: none;
+.add_one input{    
+        border-style: none;
     float: left;
     display: block;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    width: 95px;
+    width: 73px;
     height: 50px;
     border: 1px solid #ccc;
     border-left: none;
@@ -456,7 +458,8 @@ overflow: hidden;text-align: center;background: #000;color: #fff;}
     font-size: 18px;
     text-align: center;
     border: none;
-    
+    text-align: left;
+    padding-left: 11px;
     }
 .xiangxi-intro{
     li{font-size: 16px;margin-bottom: 16px;}
