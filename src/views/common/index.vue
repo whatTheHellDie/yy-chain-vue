@@ -24,14 +24,14 @@
           <div class="right">
             <!-- <div class="title">240,000万个</div> -->
             <div class="title">{{ sendYyiIssueAmounts }}万个</div>
-            <div class="content">计划配送风水积分</div>
+            <div class="content">计划配送易用积分</div>
           </div>
         </dd>
         <dd>
           <img src="/static/img/x2.png" />
           <div class="right">
             <div class="title">{{ incentiveYyiIssueAmounts }}万个</div>
-            <div class="content">计划奖励风水积分</div>
+            <div class="content">计划奖励易用积分</div>
           </div>
         </dd>
         <dd class="dd3">
@@ -150,14 +150,14 @@
         }],
         invit_info: {
           client_money_name: '阅读币',
-          text_roll: ['好消息好消息！风水链上线了！', '王五成功邀请小二，获1460阅读基金', '是游戏，获基金', 'XX']
+          text_roll: ['好消息好消息！易用链上线了！', '王五成功邀请小二，获1460阅读基金', '是游戏，获基金', 'XX']
         },
         activeIndex: 0,
 
         stage1: null,   //第一阶段私募
         stage2: null,    //第二阶段私募
-        sendYyiIssueAmounts: 0, //计划配送风水积分
-        incentiveYyiIssueAmounts: 0, //计划奖励风水积分
+        sendYyiIssueAmounts: 0, //计划配送易用积分
+        incentiveYyiIssueAmounts: 0, //计划奖励易用积分
         yyiUserCount: 0, //入股总人数
 
         statusOne: true,        //第一阶段根据状态是否启用样式

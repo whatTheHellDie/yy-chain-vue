@@ -144,6 +144,7 @@
           let x = document.getElementById('saveImage').files[0];
           let params = new FormData() ;
           params.append('fileName',x);
+          // alert(that.$cookie.get('token'));
           let config = { headers:{'Content-Type': 'multipart/form-data'}};
           that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
             headers: {
