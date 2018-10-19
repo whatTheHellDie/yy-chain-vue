@@ -58,7 +58,7 @@
                 <svg viewBox="0 0 100 100">
                   <path d="M 50 50 m 0 -47 a 47 47 0 1 1 0 94 a 47 47 0 1 1 0 -94" stroke="#e5e9f2" stroke-width="4.5" fill="none" class="el-progress-circle__track"></path>
                   <path d="M 50 50 m 0 -47 a 47 47 0 1 1 0 94 a 47 47 0 1 1 0 -94" stroke-linecap="round" stroke="#ed9e0d" stroke-width="4.5" fill="none" class="el-progress-circle__path" 
-                      style="stroke-dasharray: 269px, 300.022px; stroke-dashoffset: 270.02px; transition: stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease;"></path>
+                    :style="{'stroke-dasharray': w1}"  style=" stroke-dashoffset: 270.02px; transition: stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease;"></path>
                 </svg>
               </div> 
               <div class="el-progress__text">{{allocationRatio1}}<span class="size">%</span>
@@ -69,7 +69,7 @@
           </div>
           <div class="right">
             <dl>
-              <dt>入股分配易用积分，并赠送100%易用积分</dt>
+              <dt>入股分配易用积分，并赠送{{giveRatio1}}%易用积分</dt>
               <dd>
                 <icon-svg name="target" class="site-sidebar__menu-icon"></icon-svg>目标配送：{{ sendYyiIssueAmount1 }}万个</dd>
               <dd>
@@ -99,7 +99,9 @@
               <div class="el-progress-circle" style="height: 220px; width: 220px;">
                 <svg viewBox="0 0 100 100">
                   <path d="M 50 50 m 0 -47 a 47 47 0 1 1 0 94 a 47 47 0 1 1 0 -94" stroke="#e5e9f2" stroke-width="4.5" fill="none" class="el-progress-circle__track"></path>
-                  <path d="M 50 50 m 0 -47 a 47 47 0 1 1 0 94 a 47 47 0 1 1 0 -94" stroke-linecap="round" stroke="#ed9e0d" stroke-width="4.5" fill="none" class="el-progress-circle__path" style="stroke-dasharray: 300.022px, 300.022px; stroke-dashoffset: 270.02px; transition: stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease;"></path>
+                  <path d="M 50 50 m 0 -47 a 47 47 0 1 1 0 94 a 47 47 0 1 1 0 -94" stroke-linecap="round" stroke="#ed9e0d" stroke-width="4.5" fill="none" class="el-progress-circle__path" 
+                    :style="{'stroke-dasharray': w2}" style="stroke-dashoffset: 270.02px; transition: stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease;"></path>
+                <!-- style="stroke-dasharray: 300.022px, 300.022px; -->
                 </svg>
               </div>
               <div class="el-progress__text">{{ allocationRatio2 }}<span class="size">%</span>
@@ -110,7 +112,7 @@
           </div>
           <div class="right">
             <dl>
-              <dt>入股分配易用积分，并赠送30%易用积分</dt>
+              <dt>入股分配易用积分，并赠送{{giveRatio2}}%易用积分</dt>
               <dd>
                 <icon-svg name="target" class="site-sidebar__menu-icon"></icon-svg>目标配送：{{ sendYyiIssueAmount2 }}万个</dd>
               <dd>
@@ -191,6 +193,9 @@
         textBtn2: '即将开始', //第二阶段入股操作按钮显示文本
 
         usdtPrice: 1,  //美元价格
+ 
+        w1: '270px,300.022px',  //默认样式 第一阶段已分配比例的画图样式【0% = '270px,300.022px'，100% = '564px,300.022px'，564 = (100 * 2.94) + 270】
+        w2: '270px,300.022px' , //默认样式 第二阶段已分配比例的画图样式【0% = '270px,300.022px'，100% = '564px,300.022px'，564 = (100 * 2.94) + 270】
       }
     },
     components:{
@@ -254,6 +259,10 @@
               _this.usdtPrice = _this.stage1.usdtPrice;
               _this.disBtn1 = _this.stage1.status == 0 ? true : _this.stage1.status == 1 ? false : _this.stage1.status == 2 ? true : true;
               _this.textBtn1 = _this.stage1.status == 0 ? '即将开始' : _this.stage1.status == 1 ? '我要入股' : _this.stage1.status == 2 ? '已结束' : '即将开始';
+              //已分配百分率样式计算（获取百分率所在的分辨率）
+              let h1 = (_this.allocationRatio1 * 2.94) + 270;
+              // _this.h1 = (100 * 2.94) + 270; //100%
+              _this.w1 = h1 + ',300.022px';
             }
             //第二阶段
             if (data.data.stage2){
@@ -274,7 +283,9 @@
               _this.usdtPrice = _this.stage2.usdtPrice;
               _this.disBtn2 = _this.stage2.status == 0 ? true : _this.stage2.status == 1 ? false : _this.stage2.status == 2 ? true : true;
               _this.textBtn2 = _this.stage2.status == 0 ? '即将开始' : _this.stage2.status == 1 ? '我要入股' : _this.stage2.status == 2 ? '已结束' : '即将开始';
-            
+              //已分配百分率样式计算
+              let h2 = (_this.allocationRatio2 * 2.94) + 270;
+              _this.w2 = h2 + ',300.022px';
             }
 
           }
@@ -314,12 +325,9 @@
           if(!point){ 
             return output
           }else{
-            return output + '.' + point
-          //return (output + '.<span class="little-num">' + point + '</span>')
-
+            return output + '.' + point 
           }
-        }
-        //      return `${val.parseInt}.<span class="little-word">${dian}</span>`
+        } 
       },
     }
   }

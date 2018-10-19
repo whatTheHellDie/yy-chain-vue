@@ -6,7 +6,7 @@
           <div class="box-body no-padding">
             <div class="index-i">
               <img src="/static/img/profile.png" alt="" class="tou">
-              <div class="title">{{}}
+              <div class="title">{{userNumber}}
                 <div class="renzheng">
                   <div class="icon" style="background-image:url(/static/img/i1.png) ;" title="身份未认证"></div> |
                   <div class="icon active" style="background-image:url(/static/img/i2.png) ;" title="手机已认证"></div> |
@@ -125,9 +125,7 @@
                 </div>
               </div>
             </div>
-
           </div>
-
         </div>
       </div>
     </main-body>
@@ -160,6 +158,7 @@
           name: '交易取消'
         }],
         todayGet: '234.001233',
+        userNumber: '',
         fund: {
           yyc: '',
           yyi: '',
@@ -213,7 +212,7 @@
           method: 'get'
         }).then(({data}) => {
           if (data && data.code === '0000') {
-            alert('34223')
+            this.userNumber = data.data.userNumber
             this.fund.yyc = data.data.yyc
             this.fund.yyi = data.data.yyi
             this.fund.usdt = data.data.usdt
