@@ -7,15 +7,15 @@
             <div class="charge-order">
               <ul class="order-number">
                 <li>
-                  <div class="number">2</div>
+                  <div class="number">{{totalNumberOrder}}</div>
                   <div class="content">订单总数（笔）</div>
                 </li>
                 <li>
-                  <div class="number">20.213511</div>
+                  <div class="number">{{totalNumberUsdtAmount}}</div>
                   <div class="content">累计入股USDT数额（枚）</div>
                 </li>
                 <li>
-                  <div class="number">20</div>
+                  <div class="number">{{totalNumberYyiAmount}}</div>
                   <div class="content">累计分配易用积分（万个）</div>
                 </li>
               </ul>
@@ -24,27 +24,27 @@
               <dl>
                 <dd class="clearfix" v-for="item,i in chooseContent">
                   <div class="clearfix">
-                    <div class="title clearfix">入股订单编号：{{item.orderNumber}}
+                    <div class="title clearfix">入股订单编号：{{item.number}}
                       <span class="span active">已完成</span>
                     </div>
                     <div class="left">
                       <div class="yy-content">
                         <div class="yy-title">分配易用积分单价</div>
                         <div class="y-content w402 clearfix">
-                          <span class="cny">CNY: {{item.cny}}元/万个</span>
-                          <span class="usdt">USDT: {{item.usdt}}枚/万个</span>
+                          <span class="cny">CNY: {{item.sendYyiPrice*10000}}元/万个</span>
+                          <span class="usdt">USDT: {{item.usdtPrice}}枚/万个</span>
                         </div>
                       </div>
                       <div class="yy-content">
                         <div class="yy-title">数量</div>
                         <div class="y-content min60 clearfix">
-                          <span>{{item.number}}</span>
+                          <span>{{item.sendYyiQuantity}}</span>
                         </div>
                       </div>
                       <div class="yy-content">
                         <div class="yy-title">合计(USDT)</div>
                         <div class="y-content min230 clearfix">
-                          <span class="default he-usdt">{{item.total}}</span>
+                          <span class="default he-usdt">{{item.usdtAmount}}</span>
                         </div>
                       </div>
                     </div>
@@ -53,43 +53,25 @@
                     </div>
                   </div>
                   <div class="not-pass xiadan">
-                    <span>下单时间：2018-09-22 11:00:02</span><span class="pull-right">支付时间：2018-09-22 11:00:02</span>
+                    <span>下单时间：{{item.createTime}}</span><span class="pull-right">支付时间：{{item.payTime}}</span>
                   </div>
                 </dd>
               </dl>
             </div>
-            <div class="m-page mb40">
-              <ul class="pagination">
-                <li>
-                  <a href="javascript:void(0)">&lt;</a>
-                </li>
-                <li class="active">
-                  <a href="javascript:void(0)">1</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">2</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">3</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">4</a>
-                </li>
-                ...
-                <li>
-                  <a href="javascript:void(0)">5</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">&gt;</a>
-                </li>
-              </ul>
-              <div class="turn-to">
-                跳至<input type="text" value="1">页
-                <a href="javascript:void(0)" class="btn btn-turn">跳转</a>
-              </div>
-            </div>
-          </div>
 
+            <div class="block" style="text-align: center;margin: 30px 0 40px">
+              <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                background=""
+                :current-page="pageNum"
+                :page-size="pageSize"
+                layout="prev, pager, next, jumper"
+                :total="elementTotal">
+              </el-pagination>
+            </div>
+
+          </div>
         </div>
       </div>
     </main-body>
@@ -100,84 +82,70 @@
 </style>
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MainBody from '@/components/common/mainBody'
   export default {
-    data() {
+    data () {
       return {
+        totalNumberYyiAmount: '',
+        totalNumberOrder: '',
+        totalNumberUsdtAmount: '',
+        pageNum: 1,
+        pageSize: 5,
+        elementTotal: "",
+        currentPage3: 5,
         activeNumber: 0,
-        chooseContent: [{
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 0, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 1, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 2, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 3, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-        ]
+        chooseContent: []
       }
     },
     components: {
       MainBody
     },
+    created () {
+      this.loadList()
+    },
     methods: {
-      loadList(i) {
-        this.activeNumber = i;
+      loadList (i) {
+        this.activeNumber = i
+        this.$http({
+          url: this.$http.adornUrl('/shares/order/information'),
+          method: 'post',
+          data: this.$http.adornData({
+            'pageNum': 1,
+            'pageSize': 5,
+            'status': 1
+          })
+        }).then(({data}) => {
+          console.log(data)
+          debugger
+          if (data && data.code === '0000') {
+            this.totalNumberYyiAmount = data.data.totalNumberYyiAmount
+            this.totalNumberOrder = data.data.totalNumberOrder
+            this.totalNumberUsdtAmount = data.data.totalNumberUsdtAmount
+            this.pageNum = data.data.pageResponse.pageNum
+            this.pageSize = data.data.pageResponse.pageSize
+            this.elementTotal = data.data.pageResponse.elementTotal
+            this.chooseContent = data.data.pageResponse.dataList
+          } else {
+            this.dataList = []
+            this.totalPage = 0
+          }
+          this.dataListLoading = false
+        })
       },
-      pay(id) {
-
+      pay (id) {
       },
-      cancelOrder(id) {
-
+      cancelOrder (id) {
       },
-      delOrder(id) {
-
+      delOrder (id) {
       }
     },
-    mounted() {
+    mounted () {
       //    var clipboard = new ClipboardJS('.copy');
       //
       //    clipboard.on('success', function(e) {
       //        e.clearSelection();
-      //        
       //    });
-      //    
       //    clipboard.on('error', function(e) {
       //        alert('该默认浏览器不支持点击复制,请长按选择复制钱包地址或选择分享二维码图片')
       //    });
