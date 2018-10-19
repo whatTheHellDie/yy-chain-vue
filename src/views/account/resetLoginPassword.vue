@@ -19,19 +19,23 @@
           <div class="box-body min425">
             <div class="charge-coin set-password forget-password">
               <div class="form-group combo-form">
-                <label for="zhuan" class="col-sm-2 control-label">原登录密码</label><input type="password" class="form-control input" placeholder="请输入您绑定的手机号码"><span class="lh35 ml10 default">忘记原密码？</span>
-                <span class="tip max-220">格式有误，必须为数字、字母和符号两种以上组合！</span>
+                <label for="zhuan" class="col-sm-2 control-label">原登录密码</label>
+                <input type="password" class="form-control input" placeholder="请输入原始密码" v-model="oldPwd">
+                <!--<span class="lh35 ml10 default">忘记原密码？</span>-->
+                <!--<span class="tip max-220">格式有误，必须为数字、字母和符号两种以上组合！</span>-->
               </div>
               <div class="form-group combo-form">
-                <label for="zhuan" class="col-sm-2 control-label">新登录密码</label><input type="password" class="form-control input" placeholder="请输入短信验证码">
-                  <span class="tip">格式有误，必须为数字、字母和符号两种以上组合！</span>
+                <label for="zhuan" class="col-sm-2 control-label">新登录密码</label>
+                <input type="password" class="form-control input" placeholder="请输入新密码" v-model="newPwd">
+                  <!--<span class="tip">格式有误，必须为数字、字母和符号两种以上组合！</span>-->
               </div>
               <div class="form-group combo-form">
-                <label for="zhuan" class="col-sm-2 control-label">确认新登录密码</label><input type="password" class="form-control input" placeholder="6位数字">
-                 <span class="tip">格式有误，必须为数字、字母和符号两种以上组合！</span>
+                <label for="zhuan" class="col-sm-2 control-label">确认新登录密码</label>
+                <input type="password" class="form-control input" placeholder="重复输入新密码" v-model="repeatPwd">
+                 <!--<span class="tip">格式有误，必须为数字、字母和符号两种以上组合！</span>-->
               </div>
               <span class="tip"></span>
-              <div class="gu-btn">提交</div>
+              <div class="gu-btn" @click="reset()">提交</div>
             </div>
           </div>
 
@@ -45,103 +49,44 @@
 </style>
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MainBody from '@/components/common/mainBody'
   export default {
     data() {
       return {
         activeNumber: 0,
-        chooseList: [{
-            name: '全部'
-          },
-          {
-            name: '待支付'
-          },
-          {
-            name: '已完成'
-          },
-          {
-            name: '交易关闭'
-          },
-          {
-            name: '交易取消'
-          }
-        ],
-        chooseContent: [{
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 0, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 1, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 2, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 3, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-        ]
+        oldPwd: '',
+        newPwd: '',
+        repeatPwd: ''
       }
     },
     components: {
       MainBody
     },
     methods: {
-      loadList(i) {
-        this.activeNumber = i;
-      },
-      pay(id) {
-
-      },
-      cancelOrder(id) {
-
-      },
-      delOrder(id) {
-
+      reset () {
+        this.$http({
+          url: this.$http.adornUrl('/user/reset/pwd'),
+          method: 'post',
+          params: this.$http.adornParams({
+            'oldPwd': this.oldPwd,
+            'newPwd': this.newPwd
+          })
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.$cookie.delete('token')
+            window.sessionStorage.removeItem('userNumber')
+            this.$message.success('修改密码成功')
+            this.$router.replace({
+              name: 'login'
+            })
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
       }
     },
-    mounted() {
-      //    var clipboard = new ClipboardJS('.copy');
-      //
-      //    clipboard.on('success', function(e) {
-      //        e.clearSelection();
-      //        
-      //    });
-      //    
-      //    clipboard.on('error', function(e) {
-      //        alert('该默认浏览器不支持点击复制,请长按选择复制钱包地址或选择分享二维码图片')
-      //    });
+    mounted () {
     }
   }
 </script>
