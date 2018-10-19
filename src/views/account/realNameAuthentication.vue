@@ -113,7 +113,9 @@
           })
         }).then(({data}) => {
           if (data && data.code === '01307') {
-            this.$message.success('提交成功')
+            this.$message.success('提交成功');
+            this.$router.push('/personalInformation');
+            // window.location.href='/personalInformation';
           } else {
             this.$message.error(data.msg)
           }
@@ -162,7 +164,8 @@
               if (data && data.code === '0000') {
                 that.form.idCardFrontPicUrl = data.data
               } else {
-                that.$message.error(data.msg)
+                // that.$message.error(data.msg) 
+                that.$message.error('上传失败')
               }
             }).catch(({error}) => {
               that.dataListLoading = false
@@ -186,7 +189,8 @@
               if (data && data.code === '0000') {
                 that.form.idCardOppositePicUrl = data.data
               } else {
-                that.$message.error(data.msg)
+                // that.$message.error(data.msg) 
+                that.$message.error('上传失败')
               }
             }).catch(({error}) => {
               that.dataListLoading = false
