@@ -8,9 +8,9 @@
               <img src="/static/img/profile.png" alt="" class="tou">
               <div class="title">{{userNumber}}
                 <div class="renzheng">
-                  <div class="icon" style="background-image:url(/static/img/i1.png) ;" title="身份未认证"></div> |
-                  <div class="icon active" style="background-image:url(/static/img/i2.png) ;" title="手机已认证"></div> |
-                  <div class="icon" style="background-image:url(/static/img/i3.png) ;" title="银行卡未认证"></div>
+                  <div class="icon" :class="{active:checkPerson}" style="background-image:url(/static/img/i1.png) ;" title="person"></div> |
+                  <div class="icon" :class="{active:checkPaymentPassword}" style="background-image:url(/static/img/i2.png) ;" title="PaymentPassword"></div> |
+                  <div class="icon active" style="background-image:url(/static/img/i3.png) ;" title="手机已认证"></div>
                 </div>
               </div>
             </div>
@@ -34,6 +34,24 @@
                     <div class="clearfix">激励易用积分<span class="pull-right">{{fund.incentiveYyi}}</span></div>
                     <div class="clearfix">未到账易用积分<span class="pull-right">{{fund.frozenYyi}}</span></div>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="my-zichang hei212" style="border-top: 0;">
+              <div class="title">直推概况</div>
+              <div class="clear"></div>
+              <div class="money-list clearfix">
+                <div class="w33">
+                  <div class="name">直推会员人数</div>
+                  <div class="content" v-html="resetVal(fund.yyc)"></div>
+                </div>
+                <div class="w33">
+                  <div class="name">累计获得USDT数额</div>
+                  <div class="content" v-html="resetVal(fund.usdt)"></div>
+                </div>
+                <div class="w33">
+                  <div class="name">累计获得奖励易用积分数额</div>
+                  <div class="content" v-html="resetVal(fund.yyi)"></div>
                 </div>
               </div>
             </div>
@@ -145,6 +163,10 @@
   export default {
     data () {
       return {
+        checkPerson: false,
+        person: '身份未认证',
+        checkPaymentPassword: false,
+        paymentPassword: '支付密码未认证',
         activeNumber: 0,
         chooseList: [{
           name: '全部'
