@@ -248,9 +248,9 @@
               })
             }).then(({data}) => {
               if (data && data.code === '01107') {
-                alert(1)
+                // alert(1)
                 this.$message.success(data.msg)
-                alert(2)
+                // alert(2)
                 this.$router.push({name: 'login'})
               } else {
                 this.$message.error(data.msg)
