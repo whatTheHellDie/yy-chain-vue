@@ -118,18 +118,21 @@
       add_img(event,index){
         var reader =new FileReader();
         var img1=event.target.files[0];
-
+        if (window.sessionStorage.getItem("auth") == null) {
+          this.$alert('用户未认证', '提示', {
+            confirmButtonText: '确定',
+          });
+          return false
+        }
         if(index==0&&this.imgs.length>0){
           this.imgs.splice(0,1);
         }
         if(index==1&&this.imgs1.length>0){
           this.imgs1.splice(0,1);
         }
-
-
         reader.readAsDataURL(img1);
         var that = this;
-        reader.onloadend=function(){
+        reader.onloadend = function(){
           if (img1.size > 1048576) {
             that.$alert('图片不能大于1m', '提示', {
               confirmButtonText: '确定',
@@ -141,11 +144,10 @@
           let x = document.getElementById('saveImage').files[0];
           let params = new FormData() ;
           params.append('fileName',x);
-          alert(that.$cookie.get('token'));
           let config = { headers:{'Content-Type': 'multipart/form-data'}};
           that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
             headers: {
-              "Content-Type": "multipart/form-data",
+              "Content-Type" : "multipart/form-data",
               'ACCESS_TOKEN' : that.$cookie.get('token')
             }
           }).then(({data}) => {
