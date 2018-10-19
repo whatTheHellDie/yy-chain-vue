@@ -8,9 +8,9 @@
               <img src="/static/img/profile.png" alt="" class="tou">
               <div class="title">{{userNumber}}
                 <div class="renzheng">
-                  <div class="icon" style="background-image:url(/static/img/i1.png) ;" title="身份未认证"></div> |
-                  <div class="icon active" style="background-image:url(/static/img/i2.png) ;" title="手机已认证"></div> |
-                  <div class="icon" style="background-image:url(/static/img/i3.png) ;" title="银行卡未认证"></div>
+                  <div class="icon" :class="{active:checkPerson}" style="background-image:url(/static/img/i1.png) ;" title="person"></div> |
+                  <div class="icon" :class="{active:checkPaymentPassword}" style="background-image:url(/static/img/i2.png) ;" title="PaymentPassword"></div> |
+                  <div class="icon active" style="background-image:url(/static/img/i3.png) ;" title="手机已认证"></div>
                 </div>
               </div>
             </div>
@@ -145,6 +145,10 @@
   export default {
     data () {
       return {
+        checkPerson: false,
+        person: '身份未认证',
+        checkPaymentPassword: false,
+        paymentPassword: '支付密码未认证',
         activeNumber: 0,
         chooseList: [{
           name: '全部'
