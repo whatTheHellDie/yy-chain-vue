@@ -75,7 +75,7 @@
               <dd>
                 <icon-svg name="qipei" class="site-sidebar__menu-icon"></icon-svg>起配积分：{{ startSendYyi1 }}万个</dd>
               <dd>
-                <icon-svg name="present" class="site-sidebar__menu-icon"></icon-svg>赠送积分：赠送{{giveRatio1}}%激励易用积分（{{incentiveYyiRateRate1}}%/{{incentiveYyiUnit1}}，共奖励{{incentiveYyiAmount1}}{{incentiveYyiUnit1}}）</dd>
+                <icon-svg name="present" class="site-sidebar__menu-icon"></icon-svg>赠送积分：赠送{{giveRatio1}}%激励易用积分（{{incentiveYyiRate1}}%/{{incentiveYyiUnit1}}，共奖励{{incentiveYyiAmount1}}{{incentiveYyiUnit1}}）</dd>
             </dl>
             <div class="time-price">
               <div class="title">当前价格</div>
