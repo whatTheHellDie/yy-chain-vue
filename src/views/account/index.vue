@@ -8,8 +8,8 @@
               <img src="/static/img/profile.png" alt="" class="tou">
               <div class="title">{{userNumber}}
                 <div class="renzheng">
-                  <div class="icon" :class="{active:checkPerson}" style="background-image:url(/static/img/i1.png) ;" title="person"></div> |
-                  <div class="icon" :class="{active:checkPaymentPassword}" style="background-image:url(/static/img/i2.png) ;" title="PaymentPassword"></div> |
+                  <div class="icon" :class="{active:checkPerson}" style="background-image:url(/static/img/i1.png) ;" :title="person"></div> |
+                  <div class="icon" :class="{active:checkPaymentPassword}" style="background-image:url(/static/img/i2.png) ;" :title="paymentPassword"></div> |
                   <div class="icon active" style="background-image:url(/static/img/i3.png) ;" title="手机已认证"></div>
                 </div>
               </div>
@@ -43,7 +43,7 @@
               <div class="money-list clearfix">
                 <div class="w33">
                   <div class="name">直推会员人数</div>
-                  <div class="content" v-html="resetVal(fund.yyc)"></div>
+                  <div class="content" v-html="resetVal(fund.directlyUserCount)"></div>
                 </div>
                 <div class="w33">
                   <div class="name">累计获得USDT数额</div>
@@ -63,21 +63,21 @@
                   <div class="population">
                     团队总人数(人)
                   </div>
-                  <div class="number">80</div>
+                  <div class="number">0</div>
 
                 </div>
                 <div class="right clearfix">
                   <div class="w33">
                     <div class="population">vip会员(人)</div>
-                    <div class="s-number">60</div>
+                    <div class="s-number">0</div>
                   </div>
                   <div class="w33">
                     <div class="population">普通会员(人)</div>
-                    <div class="s-number">10</div>
+                    <div class="s-number">0</div>
                   </div>
                   <div class="w33">
                     <div class="population">其他(人)</div>
-                    <div class="s-number">10</div>
+                    <div class="s-number">0</div>
                   </div>
                 </div>
               </div>
@@ -86,21 +86,20 @@
                   <div class="population">
                     累计获得奖励易用积分数(个)
                   </div>
-                  <div class="number" v-html="resetVal(234.03)"></div>
-
+                  <div class="number" v-html="resetVal(0)"></div>
                 </div>
                 <div class="right clearfix">
                   <div class="w33">
                     <div class="population">今日获得(个)</div>
-                    <div class="s-number" v-html="resetVal(234.02)"></div>
+                    <div class="s-number" v-html="resetVal(0)"></div>
                   </div>
                   <div class="w33">
                     <div class="population">本月获得(个)</div>
-                    <div class="s-number" v-html="resetVal(234.01)"></div>
+                    <div class="s-number" v-html="resetVal(0)"></div>
                   </div>
                   <div class="w33">
                     <div class="population">其他(人)</div>
-                    <div class="s-number">10</div>
+                    <div class="s-number">0</div>
                   </div>
                 </div>
               </div>
@@ -109,17 +108,17 @@
                   <div class="population">
                   累计获得USDT数额(枚)
                   </div>
-                  <div class="number">234.00</div>
+                  <div class="number">0</div>
 
                 </div>
                 <div class="right clearfix">
                   <div class="w33 w50">
                     <div class="population">今日获得(枚)</div>
-                    <div class="s-number" v-html="resetVal(todayGet)"></div>
+                    <div class="s-number" v-html="resetVal(0)"></div>
                   </div>
                   <div class="w33 w50">
                     <div class="population">本月获得(枚)</div>
-                    <div class="s-number" v-html="resetVal(234.001233)"></div>
+                    <div class="s-number" v-html="resetVal(0)"></div>
                   </div>
                 </div>
               </div>
@@ -128,21 +127,23 @@
                   <div class="population">
                     团队总人数(人)
                   </div>
-                  <div class="number">80</div>
+                  <div class="number">0</div>
 
                 </div>
                 <div class="right clearfix">
                   <div class="w33 w50">
                     <div class="population">今日业绩(个)</div>
-                    <div class="s-number" v-html="resetVal(234.001233)"></div>
+                    <div class="s-number" v-html="resetVal(0)"></div>
                   </div>
                   <div class="w33 w50">
                     <div class="population">本月业绩(个)</div>
-                    <div class="s-number" v-html="resetVal(234.001233)"></div>
+                    <div class="s-number" v-html="resetVal(0)"></div>
                   </div>
                 </div>
               </div>
             </div>
+
+
           </div>
         </div>
       </div>
@@ -187,7 +188,8 @@
           usdt: '',
           sendYyi: '',
           incentiveYyi: '',
-          frozenYyi: ''
+          frozenYyi: '',
+          directlyUserCount: ''
         }
       }
     },
@@ -241,6 +243,16 @@
             this.fund.sendYyi = data.data.sendYyi
             this.fund.incentiveYyi = data.data.incentiveYyi
             this.fund.frozenYyi = data.data.frozenYyi
+            this.fund.directlyUserCount = data.data.directlyUserCount
+
+            if (data.data.payPassword !== '') {
+              this.checkPaymentPassword = true
+              this.paymentPassword = '支付密码已认证'
+            }
+            if (data.data.auth === '3') {
+              this.checkPerson = true
+              this.person = '支付密码已认证'
+            }
           } else {
             this.$message.error(data.msg)
           }
