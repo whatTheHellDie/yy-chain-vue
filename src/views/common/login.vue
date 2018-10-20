@@ -162,14 +162,7 @@
             required: true,
             message: '密码不能为空',
             trigger: 'blur'
-          },
-          {
-            min:8,
-            max:16,
-           message:'请输入8-16位，数字、字符组合密码',
-           trigger: 'blur'
-          },
-          { validator: checkPass, trigger: 'blur' },
+          }
           ],
 //        captcha: [{
 //          required: true,
