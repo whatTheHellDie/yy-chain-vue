@@ -10,7 +10,7 @@
                 <div class="renzheng">
                   <div class="icon" :class="{active:checkPerson}" style="background-image:url(/static/img/i1.png) ;" :title="person"></div> |
                   <div class="icon" :class="{active:checkPaymentPassword}" style="background-image:url(/static/img/i2.png) ;" :title="paymentPassword"></div> |
-                  <div class="icon active" style="background-image:url(/static/img/i3.png) ;" title="手机已认证"></div>
+                  <div class="icon active" style="background-image:url(/static/img/i3.png) ;" title="手机号码已设置"></div>
                 </div>
               </div>
             </div>
