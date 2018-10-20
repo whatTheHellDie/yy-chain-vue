@@ -247,7 +247,7 @@
             }
             if (data.data.auth === '3') {
               this.checkPerson = true
-              this.person = '支付密码已认证'
+              this.person = '身份已认证'
             }
           } else {
             this.$message.error(data.msg)
