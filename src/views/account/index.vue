@@ -89,17 +89,13 @@
                   <div class="number" v-html="resetVal(0)"></div>
                 </div>
                 <div class="right clearfix">
-                  <div class="w33">
+                  <div class="w50">
                     <div class="population">今日获得(个)</div>
                     <div class="s-number" v-html="resetVal(0)"></div>
                   </div>
-                  <div class="w33">
+                  <div class="w50">
                     <div class="population">本月获得(个)</div>
                     <div class="s-number" v-html="resetVal(0)"></div>
-                  </div>
-                  <div class="w33">
-                    <div class="population">其他(人)</div>
-                    <div class="s-number">0</div>
                   </div>
                 </div>
               </div>

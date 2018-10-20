@@ -71,13 +71,13 @@
         if(this.$cookie.get('token')){
           this.$router.push({name:'accountIndex'})
         }else{
-//        this.$confirm('您还没有登录，请登录', '提示', {
-//          confirmButtonText: '确定',
-//          cancelButtonText: '取消',
-//          type: 'warning'
-//        }).then(() => {
-            
-//        })
+       this.$confirm('您还没有登录，请登录', '提示', {
+         confirmButtonText: '确定',
+         cancelButtonText: '取消',
+         type: 'warning'
+       }).then(() => {
+
+       })
         }
       }
     }

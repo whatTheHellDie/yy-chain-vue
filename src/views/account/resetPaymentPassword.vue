@@ -19,16 +19,16 @@
           <div class="box-body min425">
             <div class="charge-coin set-password forget-password">
               <div class="form-group combo-form">
-                <label for="zhuan" class="col-sm-2 control-label">原支付密码</label><input type="password" class="form-control input" placeholder="请输入您绑定的手机号码"><span class="lh35 ml10 default">忘记原密码？</span>
-                <span class="tip max-220">格式有误，必须为数字、字母和符号两种以上组合！</span>
+                <label for="zhuan" class="col-sm-2 control-label">原支付密码</label><input type="password" class="form-control input" placeholder="请输入您绑定的手机号码"><span class="lh35 ml10 default" @click="$router.push({name:'forgetPaymentPassword'})">忘记原密码？</span>
+                <span class="tip max-220"></span>
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">新支付密码</label><input type="password" class="form-control input" placeholder="请输入短信验证码">
-                  <span class="tip">格式有误，必须为数字、字母和符号两种以上组合！</span>
+                  <span class="tip"></span>
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">确认新支付密码</label><input type="password" class="form-control input" placeholder="6位数字">
-                 <span class="tip">格式有误，必须为数字、字母和符号两种以上组合！</span>
+                 <span class="tip"></span>
               </div>
               <span class="tip"></span>
               <div class="gu-btn">提交</div>
@@ -136,9 +136,9 @@
       //
       //    clipboard.on('success', function(e) {
       //        e.clearSelection();
-      //        
+      //
       //    });
-      //    
+      //
       //    clipboard.on('error', function(e) {
       //        alert('该默认浏览器不支持点击复制,请长按选择复制钱包地址或选择分享二维码图片')
       //    });
