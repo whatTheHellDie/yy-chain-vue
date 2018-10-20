@@ -31,7 +31,7 @@
                  <span class="tip"></span>
               </div>
               <span class="tip"></span>
-              <div class="gu-btn">提交</div>
+              <div class="gu-btn" @click="resetPayPwd()">提交</div>
             </div>
           </div>
 
@@ -118,6 +118,10 @@
       MainBody
     },
     methods: {
+      //重置支付密码
+      resetPayPwd(){
+
+      },
       loadList(i) {
         this.activeNumber = i;
       },
