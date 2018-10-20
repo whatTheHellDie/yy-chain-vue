@@ -149,13 +149,13 @@
         loginFormRule: {
           userNumber: [{
             required: true,
-            message: '用户编号不能为空',
+            message: '会员编号不能为空',
             trigger: 'blur'
           },
           {
            required: true,
            min:10,
-           message:'用户编号长度应为10位',
+           message:'会员编号长度应为10位',
            trigger: 'blur'}
           ],
           password: [{
