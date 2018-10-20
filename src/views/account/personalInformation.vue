@@ -23,16 +23,26 @@
                 <dd class="clearfix">
                   <icon-svg name="warning" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
                                                       实名认证<span class="pin active">未认证</span>
-                  <div class="gu-btn">认证</div>
+                  <div class="gu-btn" @click="$router.push({name:'realNameAuthentication'})">认证</div>
+                </dd>
+                <dd class="clearfix">
+                  <icon-svg name="right" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
+                  实名认证<span class="pin">已认证</span>
                 </dd>
                 <dd class="clearfix">
                   <icon-svg name="right" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
                                                       登录密码<span class="pin">已设置</span>
+                  <div class="gu-btn" @click="$router.push({name:'resetLoginPassword'})">重置</div>
                 </dd>
                 <dd class="clearfix">
                   <icon-svg name="warning" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
-                                                      实名认证<span class="pin active">未设置</span>
-                  <div class="gu-btn">设置</div>
+                                                      支付密码<span class="pin active">未设置</span>
+                  <div class="gu-btn" @click="$router.push({name:'setPaymentPassword'})">设置</div>
+                </dd>
+                <dd class="clearfix">
+                  <icon-svg name="right" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
+                  支付密码<span class="pin">已设置</span>
+                  <div class="gu-btn" @click="$router.push({name:'resetPaymentPassword'})">重置</div>
                 </dd>
               </dl>
             </div>

@@ -92,7 +92,7 @@
         totalNumberUsdtAmount: '',
         pageNum: 1,
         pageSize: 5,
-        elementTotal: "",
+        elementTotal: '',
         currentPage3: 5,
         activeNumber: 0,
         chooseContent: []
