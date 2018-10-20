@@ -163,7 +163,7 @@
         checkPerson: false,
         person: '身份未认证',
         checkPaymentPassword: false,
-        paymentPassword: '支付密码未认证',
+        paymentPassword: '支付密码未设置',
         activeNumber: 0,
         chooseList: [{
           name: '全部'
@@ -243,7 +243,7 @@
 
             if (data.data.payPassword !== '') {
               this.checkPaymentPassword = true
-              this.paymentPassword = '支付密码已认证'
+              this.paymentPassword = '支付密码已设置'
             }
             if (data.data.auth === '3') {
               this.checkPerson = true
