@@ -71,12 +71,11 @@
             'type': 2 //支付密码
           })
         }).then(({data}) => {
-          if (data && data.code === '0000') {
-            this.$cookie.delete('token')
-            window.sessionStorage.removeItem('userNumber')
-            this.$message.success('修改密码成功')
+          if (data && data.code === '0000') { 
+            // window.location.href='/personalInformation';
+            this.$message.success('修改密码成功')  
             this.$router.replace({
-              name: 'login'
+              name: 'personalInformation'
             })
           } else {
             this.$message.error(data.msg)
