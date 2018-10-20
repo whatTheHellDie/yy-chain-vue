@@ -114,7 +114,7 @@
       return {
 
         loginForm: {
-          userNumber: '',
+          userNumber: 'YY',
           password: '',
           uuid: '',
           captcha: ''
@@ -132,17 +132,30 @@
             required: true,
             message: '账号不能为空',
             trigger: 'blur'
-          }],
+          },
+          {
+           required: true,
+           min:10,
+           message:'账号长度应为10位',
+           trigger: 'blur'}
+          ],
           password: [{
             required: true,
             message: '密码不能为空',
             trigger: 'blur'
-          }],
-          captcha: [{
-            required: true,
-            message: '验证码不能为空',
-            trigger: 'blur'
-          }]
+          },
+          {
+            min:8,
+            max:16,
+           message:'请输入8-16位，数字、字符组合密码',
+           trigger: 'blur'
+          }
+          ],
+//        captcha: [{
+//          required: true,
+//          message: '验证码不能为空',
+//          trigger: 'blur'
+//        }]
         },
         registerRule: {
           userNumber: [{
@@ -154,12 +167,27 @@
             required: true,
             message: '密码不能为空',
             trigger: 'blur'
+          },
+          {
+            required: true,
+            min:8,
+            max:16,
+           message:'请输入8-16位，数字、字符组合密码',
+           trigger: 'blur'
           }],
           rePassword: [{
             required: true,
             message: '确认密码不能为空',
             trigger: 'blur'
-          }],
+          },
+          {
+            required: true,
+            min:8,
+            max:16,
+           message:'请输入8-16位，数字、字符组合密码',
+           trigger: 'blur'
+          }
+          ],
           referrerNumber: [{
             required: true,
             message: '推荐人不能为空',
