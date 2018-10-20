@@ -127,7 +127,7 @@
           phone: '',
           captcha: ''
         },
-        loginRule: {
+        loginFormRule: {
           userNumber: [{
             required: true,
             message: '账号不能为空',
@@ -240,7 +240,7 @@
                 })
                 window.sessionStorage.removeItem('userNumber')
                 window.sessionStorage.removeItem('auth')
-                window.sessionStorage.setItem('auth' , data.data.auth );
+                window.sessionStorage.setItem('auth', data.data.auth )
                 window.sessionStorage.setItem('userNumber', data.data.userNumber)
                 this.$message.success('登录成功')
               } else {
