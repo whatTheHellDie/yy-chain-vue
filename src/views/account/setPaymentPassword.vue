@@ -58,6 +58,18 @@
     },
     methods: {
       payPwd () {
+        
+        if (this.newPwd != this.repeatPwd){
+          this.$message.error('两次密码输入不一致')
+          return;
+        }
+
+        const regPsw = /^[0-9]\d{5}$/ 
+        if (!regPsw.test(this.newPwd) || !regPsw.test(this.repeatPwd)){
+          this.$message.error('请输入6位数字密码')
+          return;
+        }
+ 
         this.$http({
           url: this.$http.adornUrl('/user/pay/pwd'),
           method: 'post',
