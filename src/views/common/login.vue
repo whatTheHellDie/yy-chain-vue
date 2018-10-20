@@ -118,7 +118,7 @@
           if (reg.test(value)) {
             callback();
           } else {
-            return callback(new Error('请输入8-16位数字、字符组合密码'));
+            return callback(new Error('请输入8-16位数字、字母组合密码'));
           }
       };
       var validatePass2 = (rule, value, callback) => {

@@ -65,13 +65,28 @@
     },
     methods: {
       reset () {
+          
+        if (this.newPwd != this.repeatPwd){
+          this.$message.error('两次密码输入不一致')
+          return;
+        }
+
+        const regPsw = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/
+        if (!regPsw.test(this.oldPwd) || !regPsw.test(this.newPwd) || !regPsw.test(this.repeatPwd)){
+          this.$message.error('请输入8-16位数字、字母组合密码')
+          return;
+        }
+ 
         this.$http({
           url: this.$http.adornUrl('/user/reset/pwd'),
           method: 'post',
           params: this.$http.adornParams({
             'oldPwd': this.oldPwd,
             'newPwd': this.newPwd,
-            'type': 1
+            'type': 1,
+            
+            'phone': '',
+            'captcha': ''
           })
         }).then(({data}) => {
           if (data && data.code === '0000') {

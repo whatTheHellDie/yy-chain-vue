@@ -62,13 +62,28 @@
     methods: {
       //重置支付密码
       resetPayPwd() {
+          
+        if (this.newPwd != this.repeatPwd){
+          this.$message.error('两次密码输入不一致')
+          return;
+        }
+
+        const regPsw = /^[0-9]\d{5}$/ 
+        if (!regPsw.test(this.newPwd) || !regPsw.test(this.repeatPwd)){
+          this.$message.error('请输入6位数字密码')
+          return;
+        }
+ 
         this.$http({
           url: this.$http.adornUrl('/user/reset/pwd'),
           method: 'post',
           params: this.$http.adornParams({
             'oldPwd': this.oldPwd,
             'newPwd': this.newPwd,
-            'type': 2 //支付密码
+            'type': 2, //支付密码
+               
+            'phone': '',
+            'captcha': ''
           })
         }).then(({data}) => {
           if (data && data.code === '0000') { 
