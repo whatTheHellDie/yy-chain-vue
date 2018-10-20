@@ -10,7 +10,7 @@
                 <div class="renzheng">
                   <div class="icon" :class="{active:checkPerson}" style="background-image:url(/static/img/i1.png) ;" :title="person"></div> |
                   <div class="icon" :class="{active:checkPaymentPassword}" style="background-image:url(/static/img/i2.png) ;" :title="paymentPassword"></div> |
-                  <div class="icon active" style="background-image:url(/static/img/i3.png) ;" title="手机已认证"></div>
+                  <div class="icon active" style="background-image:url(/static/img/i3.png) ;" title="手机号码已设置"></div>
                 </div>
               </div>
             </div>
@@ -247,7 +247,7 @@
             }
             if (data.data.auth === '3') {
               this.checkPerson = true
-              this.person = '支付密码已认证'
+              this.person = '身份已认证'
             }
           } else {
             this.$message.error(data.msg)

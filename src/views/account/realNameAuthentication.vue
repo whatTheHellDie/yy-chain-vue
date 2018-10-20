@@ -102,10 +102,20 @@
     },
     methods: {
       submitData () {
-        if(this.form.idCardNumber.length<=16){
+        if (this.form.idCardNumber.length < 16) {
           this.$alert('所输入的身份证号不能低于十六位', '提示', {
-          confirmButtonText: '确定',
-        });
+            confirmButtonText: '确定'
+          })
+        }
+        if (this.form.idCardFrontPicUrl.length <= 0) {
+          this.$alert('请先上传身份证正面图片', '提示', {
+            confirmButtonText: '确定'
+          })
+        }
+        if (this.form.idCardOppositePicUrl.length <= 0) {
+          this.$alert('请先上传身份证反面图片', '提示', {
+            confirmButtonText: '确定'
+          })
         }
         this.$http({
           url: this.$http.adornUrl('/user/au/auth'),
@@ -169,7 +179,7 @@
               if (data && data.code === '0000') {
                 that.form.idCardFrontPicUrl = data.data
               } else {
-                // that.$message.error(data.msg) 
+                // that.$message.error(data.msg)
                 that.$message.error('上传失败')
               }
             }).catch(({error}) => {
@@ -194,7 +204,7 @@
               if (data && data.code === '0000') {
                 that.form.idCardOppositePicUrl = data.data
               } else {
-                // that.$message.error(data.msg) 
+                // that.$message.error(data.msg)
                 that.$message.error('上传失败')
               }
             }).catch(({error}) => {
