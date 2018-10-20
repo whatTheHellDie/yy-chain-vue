@@ -67,7 +67,7 @@
             <el-form-item prop="captcha">
               <label class="label" for="captcha">短信验证 ：</label>
               <el-input v-model="registerForm.captcha" placeholder="请输入短信验证码"></el-input>
-              <el-button class="captcha captcha1" @click="getCaptcha()">获取验证码</el-button>
+              <el-button class="captcha captcha1" @click="getCaptcha()">{{computeTime}}</el-button>
             </el-form-item>
             <!--<el-form-item prop="captcha">
               <el-row :gutter="20">
@@ -111,10 +111,29 @@
           }
         }
       }; 
+      
+      var checkPass = (rule, value, callback) => {
+        const reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/
+          console.log(reg.test(value));
+          if (reg.test(value)) {
+            callback();
+          } else {
+            return callback(new Error('请输入8-16位数字、字符组合密码'));
+          }
+      };
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.registerForm.password) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
       return {
-
+        computeTime:'获取验证码',
         loginForm: {
-          userNumber: '',
+          userNumber: 'YY',
           password: '',
           uuid: '',
           captcha: ''
@@ -130,19 +149,33 @@
         loginFormRule: {
           userNumber: [{
             required: true,
-            message: '账号不能为空',
+            message: '会员编号不能为空',
             trigger: 'blur'
-          }],
+          },
+          {
+           required: true,
+           min:10,
+           message:'会员编号长度应为10位',
+           trigger: 'blur'}
+          ],
           password: [{
             required: true,
             message: '密码不能为空',
             trigger: 'blur'
-          }],
-          captcha: [{
-            required: true,
-            message: '验证码不能为空',
-            trigger: 'blur'
-          }]
+          },
+          {
+            min:8,
+            max:16,
+           message:'请输入8-16位，数字、字符组合密码',
+           trigger: 'blur'
+          },
+          { validator: checkPass, trigger: 'blur' },
+          ],
+//        captcha: [{
+//          required: true,
+//          message: '验证码不能为空',
+//          trigger: 'blur'
+//        }]
         },
         registerRule: {
           userNumber: [{
@@ -154,12 +187,30 @@
             required: true,
             message: '密码不能为空',
             trigger: 'blur'
-          }],
+          },
+          {
+            required: true,
+            min:8,
+            max:16,
+           message:'请输入8-16位，数字、字符组合密码',
+           trigger: 'blur'
+          },
+          { required: true,validator: checkPass, trigger: 'blur' },
+          ],
           rePassword: [{
             required: true,
             message: '确认密码不能为空',
             trigger: 'blur'
-          }],
+          },
+          {
+            required: true,
+            min:8,
+            max:16,
+           message:'请输入8-16位，数字、字符组合密码',
+           trigger: 'blur'
+          },
+          { validator: validatePass2, trigger: 'blur' },
+          ],
           referrerNumber: [{
             required: true,
             message: '推荐人不能为空',
@@ -171,9 +222,8 @@
             validator: checkPhone,
             trigger: 'blur'
           }],
-
           captcha: [
-            { required: true, message: '验证码不能为空', trigger: 'blur' }
+            {  required: true,message: '验证码不能为空', trigger: 'blur' }
           ]
         },  
         rememberPass: false
@@ -284,6 +334,10 @@
       },
       // 获取验证码
       getCaptcha () {
+        if(this.computeTime!="获取验证码"){
+          //处于倒计时
+          return false;
+        }
         let phone = this.registerForm.phone
         if (phone == null || phone === '') {
           this.$message.error('请先填写手机号')
@@ -299,7 +353,21 @@
         }).then(({data}) => {
           if (data && data.code === '0000') {
             this.$message.success('验证码发送成功')
+            var second=60;
+            var that=this;
+            this.computeTime="剩余"+second--+"秒"
+        var time=setInterval(() => {
+          if(second==0){
+            console.log(this.computeTime)
+            that.computeTime="获取验证码"
+            clearInterval(time)
+            return false;
+          }
+             this.computeTime="剩余"+second+"秒"
+             second--;
+        },1000)
           } else {
+            
             this.$message.error(data.msg)
           }
         })
