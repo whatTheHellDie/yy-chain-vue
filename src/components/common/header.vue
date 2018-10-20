@@ -27,7 +27,7 @@
 
 <script>
   export default {
-    data () {
+    data() {
       return {
         loginStatus: '0',
         loginUserNumber: window.sessionStorage.getItem('userNumber')
@@ -35,51 +35,70 @@
     },
     props: ['navIndex'],
     computed: {
-      myNavIndex () {
-        if (!this.navIndex) {
+      myNavIndex() {
+        if(!this.navIndex) {
           return 0
         } else {
           return this.navIndex
         }
       }
     },
-    created () {
-      if (this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
+    created() {
+      if(this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
         this.loginStatus = 1
       }
-      if(this.$route.name == 'register' ||this.$route.name == 'login'){
+      if(this.$route.name == 'register' || this.$route.name == 'login') {
         this.loginStatus = 2
       }
-      this.$store.commit('user/updateName',"haha")
+      this.$store.commit('user/updateName', "haha")
       console.log(this.$store.state.user.name)
     },
     methods: {
-      logout () {
+      logout() {
         this.$http({
           url: this.$http.adornUrl('/user/logout'),
           method: 'get'
-        }).then(({data}) => {
-          if (data && data.code === '0000') {
+        }).then(({
+          data
+        }) => {
+          if(data && data.code === '0000') {
             this.$cookie.delete('token')
             this.$message.success('注销成功')
             this.loginStatus = '0'
-            this.$router.push({name:'login'})
+            this.$router.push({
+              name: 'login'
+            })
           } else {
             this.$message.error(data.msg)
           }
         })
       },
-      toAccount(){
-        if(this.$cookie.get('token')){
-          this.$router.push({name:'accountIndex'})
-        }else{
-       this.$confirm('您还没有登录，请登录', '提示', {
-         confirmButtonText: '去登录',
-         cancelButtonText: '取消',
-         type: 'warning'
-       }).then(() => {
-          this.$router.push({name:'login'})
-       })
+      toAccount() {
+        if(this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
+          this.$router.push({
+            name: 'accountIndex'
+          })
+        } else if(window.sessionStorage.getItem('userNumber')) {
+          window.sessionStorage.setItem('userNumber')
+          this.$confirm('您还没有登录，请登录', '提示', {
+            confirmButtonText: '去登录',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$router.push({
+              name: 'login'
+            })
+          })
+        } else {
+          this.$confirm('您还没有登录，请登录', '提示', {
+            confirmButtonText: '去登录',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$router.push({
+              name: 'login'
+            })
+          })
         }
       }
     }
