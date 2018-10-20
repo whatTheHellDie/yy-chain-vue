@@ -70,7 +70,8 @@
           method: 'post',
           params: this.$http.adornParams({
             'oldPwd': this.oldPwd,
-            'newPwd': this.newPwd
+            'newPwd': this.newPwd,
+            'type': 1
           })
         }).then(({data}) => {
           if (data && data.code === '0000') {

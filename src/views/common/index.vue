@@ -80,7 +80,7 @@
             <div class="time-price">
               <div class="title">当前价格</div>
               <div class="content"><span class="span">CNY：{{price1}}元/万个</span><span class="span">USDT约：{{usdtPrice}}枚/万个</span>
-                <el-button class="gu-btn pull-right" @click="$router.push({name:'buyPackage'})" :disabled="disBtn1">{{textBtn1}}</el-button>
+                <el-button class="gu-btn pull-right" @click="setBuyPackage()" :disabled="disBtn1">{{textBtn1}}</el-button>
               </div>
             </div>
           </div>
@@ -124,7 +124,7 @@
               <div class="title">当前价格</div>
               <div class="content"><span class="span">CNY：{{price2}}元/万个</span><span class="span">USDT约：{{usdtPrice}}枚/万个</span>
                 <!-- <el-button class="gu-btn no-use pull-right">即将开始</el-button> -->
-                <el-button class="gu-btn pull-right" @click="$router.push({name:'buyPackage'})" :disabled="disBtn2">{{textBtn2}}</el-button>
+                <el-button class="gu-btn pull-right" @click="setBuyPackage()" :disabled="disBtn2">{{textBtn2}}</el-button>
               </div>
             </div>
           </div>
@@ -328,6 +328,29 @@
             return output + '.' + point 
           }
         } 
+      },
+      setBuyPackage() {
+        if(this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
+          this.$router.push({name:'buyPackage'});
+        } else if(window.sessionStorage.getItem('userNumber')) {
+          window.sessionStorage.setItem('userNumber')
+          this.$confirm('您还没有登录，请登录', '提示', {
+            confirmButtonText: '去登录',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$router.push({ name: 'login' })
+          })
+        } else {
+          this.$confirm('您还没有登录，请登录', '提示', {
+            confirmButtonText: '去登录',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$router.push({ name: 'login' })
+          })
+        }
+ 
       },
     }
   }
