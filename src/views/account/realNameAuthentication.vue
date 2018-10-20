@@ -102,6 +102,11 @@
     },
     methods: {
       submitData () {
+        if(this.form.idCardNumber.length<=16){
+          this.$alert('所输入的身份证号不能低于十六位', '提示', {
+          confirmButtonText: '确定',
+        });
+        }
         this.$http({
           url: this.$http.adornUrl('/user/au/auth'),
           method: 'post',
