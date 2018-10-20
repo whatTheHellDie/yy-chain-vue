@@ -47,6 +47,9 @@
       if (this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
         this.loginStatus = 1
       }
+      if(this.$route.name == 'register' ||this.$route.name == 'login'){
+        this.loginStatus = 2
+      }
       this.$store.commit('user/updateName',"haha")
       console.log(this.$store.state.user.name)
     },
@@ -67,16 +70,15 @@
         })
       },
       toAccount(){
-        this.$router.push({name:'accountIndex'})
         if(this.$cookie.get('token')){
           this.$router.push({name:'accountIndex'})
         }else{
        this.$confirm('您还没有登录，请登录', '提示', {
-         confirmButtonText: '确定',
+         confirmButtonText: '去登录',
          cancelButtonText: '取消',
          type: 'warning'
        }).then(() => {
-
+          this.$router.push({name:'login'})
        })
         }
       }
