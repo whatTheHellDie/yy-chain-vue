@@ -80,7 +80,7 @@
             <div class="time-price">
               <div class="title">当前价格</div>
               <div class="content"><span class="span">CNY：{{price1}}元/万个</span><span class="span">USDT约：{{usdtPrice1}}枚/万个</span>
-                <el-button class="gu-btn pull-right" @click="setBuyPackage()" :disabled="disBtn1">{{textBtn1}}</el-button>
+                <el-button class="gu-btn pull-right" :class="{'no-use':disBtn1}"  @click="setBuyPackage()">{{textBtn1}}</el-button>
               </div>
             </div>
           </div>
@@ -124,7 +124,7 @@
               <div class="title">当前价格</div>
               <div class="content"><span class="span">CNY：{{price2}}元/万个</span><span class="span">USDT约：{{usdtPrice2}}枚/万个</span>
                 <!-- <el-button class="gu-btn no-use pull-right">即将开始</el-button> -->
-                <el-button class="gu-btn pull-right" @click="setBuyPackage()" :disabled="disBtn2">{{textBtn2}}</el-button>
+                <el-button class="gu-btn pull-right" :class="{'no-use':disBtn2}" @click="setBuyPackage()">{{textBtn2}}</el-button>
               </div>
             </div>
           </div>
