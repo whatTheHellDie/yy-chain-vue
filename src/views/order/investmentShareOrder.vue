@@ -32,7 +32,7 @@
                         <div class="yy-title">分配易用积分单价</div>
                         <div class="y-content w402 clearfix">
                           <span class="cny">CNY: {{item.sendYyiPrice*10000}}元/万个</span>
-                          <span class="usdt">USDT: {{item.usdtPrice}}枚/万个</span>
+                          <span class="usdt">USDT: {{item.usdtPrice*10000}}枚/万个</span>
                         </div>
                       </div>
                       <div class="yy-content">

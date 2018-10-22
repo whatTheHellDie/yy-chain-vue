@@ -28,14 +28,14 @@
                 <div class="col-sm-4">
                   <input class="form-control input" placeholder="请输入真实姓名" v-model="form.userName">
                 </div>
-                <div class="tips lh40 red">* 只包含字母和中文,并且不能低于两位</div>
+                <div class="tips lh40 red">* </div>
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-3 control-label">身份证号</label>
                 <div class="col-sm-4">
                   <input class="form-control input" placeholder="请输入身份证号" v-model="form.idCardNumber">
                 </div>
-                <div class="tips lh40 red">* 所输入的身份证号不能低于十六位</div>
+                <div class="tips lh40 red">* 所输入的身份证号只能是15位或者是18位</div>
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-3 control-label">上传证件图片:</label>
@@ -102,8 +102,14 @@
     },
     methods: {
       submitData () {
-        if (this.form.idCardNumber.length < 16) {
-          this.$alert('所输入的身份证号不能低于十六位', '提示', {
+        if (!this.form.userName) {
+          this.$alert('真实姓名不能为空', '提示', {
+            confirmButtonText: '确定'
+          })
+          return
+        }
+        if (this.form.idCardNumber.length !== 15 && this.form.idCardNumber.length !== 18) {
+          this.$alert('所输入的身份证号只能是15位或者是18位', '提示', {
             confirmButtonText: '确定'
           })
           return
