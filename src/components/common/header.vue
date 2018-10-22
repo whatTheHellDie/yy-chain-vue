@@ -6,7 +6,7 @@
         800-820-0000
         <div class="login-box clearfix">
           <div v-if="loginStatus==0"><span class="span cursor" @click="$router.push({ name: 'login' })">登录</span>|<span class="span cursor" @click="$router.push({ name: 'register' })">注册</span></div>
-          <div v-if="loginStatus==1">尊敬的<span class="white">{{loginUserNumber}}</span>用户，欢迎你来到易用链！
+          <div v-if="loginStatus==1">尊敬的<span class="white">{{loginUserNumber}}</span>用户，欢迎您来到易用链！
             <span class="logout cursor" @click="logout()">注销</span>
           </div>
         </div>

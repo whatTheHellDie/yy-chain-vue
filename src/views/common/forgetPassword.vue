@@ -18,7 +18,7 @@
            <el-form-item prop="captcha">
               <label class="label" for="captcha">短信验证 ：</label>
               <el-input v-model="dataForm.captcha" placeholder="请输入短信验证码"></el-input>
-              <el-button class="captcha captcha1" @click="getCaptcha()">获取验证码</el-button>
+              <el-button class="captcha captcha1" :class="{active:computeTime!='获取验证码'}" @click="getCaptcha()">{{computeTime}}</el-button>
             </el-form-item>
             <!--<el-form-item prop="captcha">
               <el-row :gutter="20">
@@ -32,7 +32,7 @@
               </el-row>
             </el-form-item>-->
             <el-form-item>
-              <el-button class="login-btn-submit mb124" type="primary" @click="dataFormSubmit(2)">提交</el-button>
+              <el-button class="login-btn-submit mb124" type="primary" @click="dataFormSubmit(2)">立即验证</el-button>
             </el-form-item>
           </el-form>
           <el-form v-else-if="step==2" :model="dataForm1" ref="dataForm" @keyup.enter.native="dataFormSubmit(2)" status-icon>
@@ -56,7 +56,7 @@
               </el-row>
             </el-form-item>-->
             <el-form-item>
-              <el-button class="login-btn-submit mb124" type="primary" @click="dataFormSubmit(3)">立即验证</el-button>
+              <el-button class="login-btn-submit mb124" type="primary" @click="dataFormSubmit(3)">提交</el-button>
             </el-form-item>
           </el-form>
           <div class="login-main2 pb124" v-else>
@@ -78,7 +78,7 @@
     data () {
       return {
         step: 1,
-
+        computeTime:"获取验证码",
         dataForm: {
           userNumber: '',
           phone: '',
@@ -142,6 +142,10 @@
       },
       // 获取验证码
       getCaptcha () {
+        if(this.computeTime!="获取验证码"){
+          //处于倒计时
+          return false;
+        }
         let phone = this.dataForm.phone
         if (phone == null || phone === '') {
           this.$message.error('请先填写手机号')
@@ -156,7 +160,20 @@
           })
         }).then(({data}) => {
           if (data && data.code === '0000') {
-            this.$message.success('验证码已发送')
+            this.$message.success('验证码已发送');
+             var second=60;
+            var that=this;
+            this.computeTime="剩余"+second--+"秒"
+        var time=setInterval(() => {
+          if(second==0){
+            console.log(this.computeTime)
+            that.computeTime="获取验证码"
+            clearInterval(time)
+            return false;
+          }
+             this.computeTime="剩余"+second+"秒"
+             second--;
+        },1000)
           } else {
             this.$message.error(data.msg)
           }
