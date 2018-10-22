@@ -219,9 +219,22 @@
       }, 3000);
     },
     created() {
-         this.getInfo()
+         this.getInfo();
+         this.getUsdtPrice();
     },
     methods: {
+      getUsdtPrice() {
+        this.$http({
+          url: this.$http.adornUrl('/stageInfo/getUsdtPrice'),
+          method: 'get',
+          // params: this.$http.adornParams()
+        }).then(({data}) => {
+          if (data.data && data.code === '0000') {
+              this.usdtPrice1 = data.data.usdtPrice1;
+              this.usdtPrice2 = data.data.usdtPrice2;
+          } 
+        })
+      },
       getInfo(){
         let _this = this;
         this.$http({
@@ -257,7 +270,7 @@
               _this.incentiveYyiAmount1 = _this.stage1.incentiveYyiAmount;
               _this.incentiveYyiUnit1 = _this.returnUnit(_this.stage1.incentiveYyiUnit);
               _this.price1 = _this.stage1.price;
-              _this.usdtPrice1 = _this.stage1.usdtPrice;
+              // _this.usdtPrice1 = _this.stage1.usdtPrice;
               _this.disBtn1 = _this.stage1.status == 0 ? true : _this.stage1.status == 1 ? false : _this.stage1.status == 2 ? true : true;
               _this.textBtn1 = _this.stage1.status == 0 ? '即将开始' : _this.stage1.status == 1 ? '我要入股' : _this.stage1.status == 2 ? '已结束' : '即将开始';
               //已分配百分率样式计算（获取百分率所在的分辨率）
@@ -281,7 +294,7 @@
               _this.incentiveYyiAmount2 = _this.stage2.incentiveYyiAmount;
               _this.incentiveYyiUnit2 = _this.returnUnit(_this.stage2.incentiveYyiUnit);
               _this.price2 = _this.stage2.price;
-              _this.usdtPrice2 = _this.stage2.usdtPrice;
+              // _this.usdtPrice2 = _this.stage2.usdtPrice;
               _this.disBtn2 = _this.stage2.status == 0 ? true : _this.stage2.status == 1 ? false : _this.stage2.status == 2 ? true : true;
               _this.textBtn2 = _this.stage2.status == 0 ? '即将开始' : _this.stage2.status == 1 ? '我要入股' : _this.stage2.status == 2 ? '已结束' : '即将开始';
               //已分配百分率样式计算
