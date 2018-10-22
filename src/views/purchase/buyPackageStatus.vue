@@ -7,8 +7,8 @@
         <div class="pay-status">
           <img src="/static/img/success.png"/><span class="title">恭喜您，您已成功支付订单！</span>
           <div class="to">
-            <div class="gu-btn">查看订单</div>
-            <div class="gu-btn back-index">返回首页</div>
+            <div class="gu-btn" @click="toOrderViwe()">查看订单</div>
+            <div class="gu-btn back-index" @click="toIndexViwe()">返回首页</div>
           </div>
         </div>
       </div>
@@ -49,6 +49,21 @@
     created: function () {
       this.status = this.$route.query.status
     },
-    methods: {}
+    methods: {
+      toOrderViwe () {
+        //跳到订单页面
+        this.$router.push({
+          name: 'investmentShareOrder',
+          query: {}
+        })
+      },
+      toIndexViwe () {
+        //跳到主页
+        this.$router.push({
+          name: 'index',
+          query: {}
+        })
+      }
+    }
   }
 </script>

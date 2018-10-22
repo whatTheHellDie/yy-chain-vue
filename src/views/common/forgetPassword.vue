@@ -9,11 +9,11 @@
           <el-form v-if="step==1" :model="dataForm" ref="dataForm" @keyup.enter.native="dataFormSubmit(2)" status-icon>
             <el-form-item prop="userName">
               <label class="label" for="userNumber">会员编号 ：</label>
-              <el-input v-model="dataForm.userNumber"></el-input>
+              <el-input v-model="dataForm.userNumber" @blur="getPhoneByNumber(dataForm.userNumber)"></el-input>
             </el-form-item>
             <el-form-item prop="password">
               <label class="label" for="phone">手机号码 ：</label>
-              <el-input v-model="dataForm.phone"></el-input>
+              <el-input v-model="dataForm.phone" readonly="true"></el-input>
             </el-form-item>
            <el-form-item prop="captcha">
               <label class="label" for="captcha">短信验证 ：</label>
@@ -77,8 +77,10 @@
   export default {
     data () {
       return {
-        step: 1,
-        computeTime:"获取验证码",
+        step: 1, 
+        phoneNo: '',  //用于接收手机号，以防格式化后获取到不正确的号码
+        computeTime:"获取验证码", 
+
         dataForm: {
           userNumber: '',
           phone: '',
@@ -141,21 +143,27 @@
         }
       },
       // 获取验证码
-      getCaptcha () {
+      getCaptcha () { 
         if(this.computeTime!="获取验证码"){
           //处于倒计时
           return false;
         }
-        let phone = this.dataForm.phone
-        if (phone == null || phone === '') {
-          this.$message.error('请先填写手机号')
+        // let phone = this.dataForm.phone
+        let phone = this.phoneNo; 
+        if (!phone) {
+          this.$message.error('手机号为空')
           return
+        } 
+        // 验证是否未正确的手机号
+        if (!this.vaildPhone(phone)){
+          this.$message.error('手机号格式不正确')
+          return;
         }
         this.$http({
           url: this.$http.adornUrl('/sms/sendMSM'),
           method: 'get',
           params: this.$http.adornParams({
-            'phoneNumber': this.dataForm.phone,
+            'phoneNumber': phone,
             'countryCode': '86'
           })
         }).then(({data}) => {
@@ -185,13 +193,19 @@
           this.$message.error('请先填写会员编号')
           return
         }
-        let phone = this.dataForm.phone
-        if (phone == null || phone === '') {
-          this.$message.error('请先填写手机号')
+        // let phone = this.dataForm.phone
+        let phone = this.phoneNo;
+        if (!phone) {
+          this.$message.error('手机号为空')
           return
+        } 
+        //验证是否未正确的手机号
+        if (!this.vaildPhone(phone)){
+          this.$message.error('手机号格式不正确')
+          return;
         }
         let captcha = this.dataForm.captcha
-        if (captcha == null || captcha === '') {
+        if (!captcha) {
           this.$message.error('请先填写验证码')
           return
         }
@@ -200,7 +214,7 @@
           method: 'post',
           data: this.$http.adornData({
             'userNumber': this.dataForm.userNumber,
-            'phone': this.dataForm.phone,
+            'phone': phone,
             'captcha': this.dataForm.captcha
           })
         }).then(({data}) => {
@@ -228,6 +242,13 @@
           this.$message.error('两次输入的密码不一样')
           return
         }
+        
+        const regPsw = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/
+        if (!regPsw.test(this.newPassword) || !regPsw.test(this.repeatPassword)){
+          this.$message.error('请输入8-16位数字、字母组合密码')
+          return;
+        }
+ 
         this.$http({
           url: this.$http.adornUrl('/user/set/longPwd'),
           method: 'post',
@@ -243,6 +264,41 @@
             this.$message.error(data.msg)
           }
         })
+      },
+      vaildPhone(value){
+          const reg = /^1[3|4|5|7|8|6|9][0-9]\d{8}$/ 
+          if (reg.test(value)) { 
+            // this.$message.error('请输入正确的手机号')
+            return true;
+          }
+          return false;
+      },
+      getPhoneByNumber(number){
+        
+        if (!number){
+          return;
+        }
+        
+        this.$http({
+          url: this.$http.adornUrl('/user/getPhoneByNumber'),
+          method: 'post',
+          params: this.$http.adornParams({
+            'userNumber': number 
+          })
+        }).then(({data}) => {
+          if (data && data.code === '0000') { 
+            this.phoneNo = data.data;
+            this.dataForm.phone = this.formatPhone(data.data); 
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
+      },
+      formatPhone(value){
+        if(value.length > 8) {
+          return value =  value.substr(0, 3) + '****' + value.substr(7);
+        }
+        return value;
       }
     }
   }
