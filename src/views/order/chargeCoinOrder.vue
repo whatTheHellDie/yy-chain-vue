@@ -7,15 +7,15 @@
             <div class="charge-order">
               <ul class="order-number">
                 <li>
-                  <div class="number">2</div>
+                  <div class="number">0</div>
                   <div class="content">订单总数（笔）</div>
                 </li>
                 <li>
-                  <div class="number">20.213511</div>
+                  <div class="number">0</div>
                   <div class="content">累计充值USDT数额（枚）</div>
                 </li>
                 <li>
-                  <div class="number">20</div>
+                  <div class="number">0</div>
                   <div class="content">当前可用USDT余额（枚）</div>
                 </li>
               </ul>
@@ -54,38 +54,19 @@
                 </dd>
               </dl>
             </div>
-            <div class="m-page mb40">
-              <ul class="pagination">
-                <li>
-                  <a href="javascript:void(0)">&lt;</a>
-                </li>
-                <li class="active">
-                  <a href="javascript:void(0)">1</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">2</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">3</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">4</a>
-                </li>
-                ...
-                <li>
-                  <a href="javascript:void(0)">5</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">&gt;</a>
-                </li>
-              </ul>
-              <div class="turn-to">
-                跳至<input type="text" value="1">页
-                <a href="javascript:void(0)" class="btn btn-turn">跳转</a>
-              </div>
+            <div class="block" style="text-align: center;margin: 30px 0 40px">
+              <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                background=""
+                :current-page="pageNum"
+                :page-size="pageSize"
+                layout="prev, pager, next, jumper"
+                :total="elementTotal">
+              </el-pagination>
             </div>
+            
           </div>
-
         </div>
       </div>
     </main-body>
@@ -103,6 +84,10 @@
   export default {
     data() {
       return {
+        pageNum: 1,
+        pageSize: 5,
+        elementTotal: '',
+        currentPage3: 5,
         activeNumber: 0,
         chooseList: [{
             name: '全部'
@@ -117,7 +102,7 @@
             name: '不受理'
           },
         ],
-        chooseContent: [{
+        chooseContent: [/*{
             id: "sdfsdfsfsdfsdfsd2323",
             orderNumber: '2018083161408819',
             status: 0, //0待受理，1已受理，2不受理
@@ -135,7 +120,7 @@
             time: "2018-09-22 11:00:02",
             usdt: "2.123452",
             reason: "XXXXXXXXXXXXXXXXXXX"
-          }
+          }*/
         ]
       }
     },
