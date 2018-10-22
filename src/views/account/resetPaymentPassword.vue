@@ -19,15 +19,18 @@
           <div class="box-body min425">
             <div class="charge-coin set-password forget-password">
               <div class="form-group combo-form">
-                <label for="zhuan" class="col-sm-2 control-label">原支付密码</label><input type="password" class="form-control input" placeholder="请输入您绑定的手机号码"><span class="lh35 ml10 default" @click="$router.push({name:'forgetPaymentPassword'})">忘记原密码？</span>
+                <label for="zhuan" class="col-sm-2 control-label">原支付密码</label>
+                <input type="password" class="form-control input" placeholder="请输入原密码" v-model="oldPwd"><span class="lh35 ml10 default" @click="$router.push({name:'forgetPaymentPassword'})">忘记原密码？</span>
                 <span class="tip max-220"></span>
               </div>
               <div class="form-group combo-form">
-                <label for="zhuan" class="col-sm-2 control-label">新支付密码</label><input type="password" class="form-control input" placeholder="请输入短信验证码">
-                  <span class="tip"></span>
+                <label for="zhuan" class="col-sm-2 control-label">新支付密码</label>
+                <input type="password" class="form-control input" placeholder="请输入新密码" v-model="newPwd">
+                <span class="tip"></span>
               </div>
               <div class="form-group combo-form">
-                <label for="zhuan" class="col-sm-2 control-label">确认新支付密码</label><input type="password" class="form-control input" placeholder="6位数字">
+                <label for="zhuan" class="col-sm-2 control-label">确认新支付密码</label>
+                <input type="password" class="form-control input" placeholder="6位数字" v-model="repeatPwd">
                  <span class="tip"></span>
               </div>
               <span class="tip"></span>
@@ -47,105 +50,55 @@
 <script>
   //import { getUUID } from '@/utils'
   import MainBody from '@/components/common/mainBody'
-  export default {
+  export default { 
+    components: { MainBody },
     data() {
       return {
-        activeNumber: 0,
-        chooseList: [{
-            name: '全部'
-          },
-          {
-            name: '待支付'
-          },
-          {
-            name: '已完成'
-          },
-          {
-            name: '交易关闭'
-          },
-          {
-            name: '交易取消'
-          }
-        ],
-        chooseContent: [{
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 0, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 1, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 2, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 3, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-        ]
+        oldPwd: '',
+        newPwd: '',
+        repeatPwd: ''
       }
-    },
-    components: {
-      MainBody
     },
     methods: {
       //重置支付密码
-      resetPayPwd(){
+      resetPayPwd() {
+          
+        if (this.newPwd != this.repeatPwd){
+          this.$message.error('两次密码输入不一致')
+          return;
+        }
 
+        const regPsw = /^[0-9]\d{5}$/ 
+        if (!regPsw.test(this.newPwd) || !regPsw.test(this.repeatPwd)){
+          this.$message.error('请输入6位数字密码')
+          return;
+        }
+ 
+        this.$http({
+          url: this.$http.adornUrl('/user/reset/pwd'),
+          method: 'post',
+          params: this.$http.adornParams({
+            'oldPwd': this.oldPwd,
+            'newPwd': this.newPwd,
+            'type': 2, //支付密码
+               
+            'phone': '',
+            'captcha': ''
+          })
+        }).then(({data}) => {
+          if (data && data.code === '0000') { 
+            // window.location.href='/personalInformation';
+            this.$message.success('修改密码成功')  
+            this.$router.replace({
+              name: 'personalInformation'
+            })
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
       },
-      loadList(i) {
-        this.activeNumber = i;
-      },
-      pay(id) {
-
-      },
-      cancelOrder(id) {
-
-      },
-      delOrder(id) {
-
-      }
     },
     mounted() {
-      //    var clipboard = new ClipboardJS('.copy');
-      //
-      //    clipboard.on('success', function(e) {
-      //        e.clearSelection();
-      //
-      //    });
-      //
-      //    clipboard.on('error', function(e) {
-      //        alert('该默认浏览器不支持点击复制,请长按选择复制钱包地址或选择分享二维码图片')
-      //    });
     }
   }
 </script>

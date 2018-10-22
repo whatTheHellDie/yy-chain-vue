@@ -57,10 +57,10 @@
               <div class="el-progress-circle" style="height: 220px; width: 220px;">
                 <svg viewBox="0 0 100 100">
                   <path d="M 50 50 m 0 -47 a 47 47 0 1 1 0 94 a 47 47 0 1 1 0 -94" stroke="#e5e9f2" stroke-width="4.5" fill="none" class="el-progress-circle__track"></path>
-                  <path d="M 50 50 m 0 -47 a 47 47 0 1 1 0 94 a 47 47 0 1 1 0 -94" stroke-linecap="round" stroke="#ed9e0d" stroke-width="4.5" fill="none" class="el-progress-circle__path" 
+                  <path d="M 50 50 m 0 -47 a 47 47 0 1 1 0 94 a 47 47 0 1 1 0 -94" stroke-linecap="round" stroke="#ed9e0d" stroke-width="4.5" fill="none" class="el-progress-circle__path"
                     :style="{'stroke-dasharray': w1}"  style=" stroke-dashoffset: 270.02px; transition: stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease;"></path>
                 </svg>
-              </div> 
+              </div>
               <div class="el-progress__text">{{allocationRatio1}}<span class="size">%</span>
                 <div class="pei">已分配</div>
               </div>
@@ -79,7 +79,7 @@
             </dl>
             <div class="time-price">
               <div class="title">当前价格</div>
-              <div class="content"><span class="span">CNY：{{price1}}元/万个</span><span class="span">USDT约：{{usdtPrice}}枚/万个</span>
+              <div class="content"><span class="span">CNY：{{price1}}元/万个</span><span class="span">USDT约：{{usdtPrice1}}枚/万个</span>
                 <el-button class="gu-btn pull-right" @click="setBuyPackage()" :disabled="disBtn1">{{textBtn1}}</el-button>
               </div>
             </div>
@@ -90,7 +90,7 @@
         <img src="/static/img/jieduan2.png" alt="" class="progress-title" />
         <div class="progress-one progress-two clearfix">
           <div class="hang clearfix">
-            <!-- <div class="status status1 pull-left">{{ statusStr2 }}</div> --> 
+            <!-- <div class="status status1 pull-left">{{ statusStr2 }}</div> -->
             <div class="status pull-left" :class="{status1:statusTow}">{{ statusStr2 }}</div>
             <div class="qi pull-right">第 <span class="default">{{roundCurrent2}}</span> / {{roundAmount2}} 期</div>
           </div>
@@ -99,7 +99,7 @@
               <div class="el-progress-circle" style="height: 220px; width: 220px;">
                 <svg viewBox="0 0 100 100">
                   <path d="M 50 50 m 0 -47 a 47 47 0 1 1 0 94 a 47 47 0 1 1 0 -94" stroke="#e5e9f2" stroke-width="4.5" fill="none" class="el-progress-circle__track"></path>
-                  <path d="M 50 50 m 0 -47 a 47 47 0 1 1 0 94 a 47 47 0 1 1 0 -94" stroke-linecap="round" stroke="#ed9e0d" stroke-width="4.5" fill="none" class="el-progress-circle__path" 
+                  <path d="M 50 50 m 0 -47 a 47 47 0 1 1 0 94 a 47 47 0 1 1 0 -94" stroke-linecap="round" stroke="#ed9e0d" stroke-width="4.5" fill="none" class="el-progress-circle__path"
                     :style="{'stroke-dasharray': w2}" style="stroke-dashoffset: 270.02px; transition: stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease;"></path>
                 <!-- style="stroke-dasharray: 300.022px, 300.022px; -->
                 </svg>
@@ -122,7 +122,7 @@
             </dl>
             <div class="time-price">
               <div class="title">当前价格</div>
-              <div class="content"><span class="span">CNY：{{price2}}元/万个</span><span class="span">USDT约：{{usdtPrice}}枚/万个</span>
+              <div class="content"><span class="span">CNY：{{price2}}元/万个</span><span class="span">USDT约：{{usdtPrice2}}枚/万个</span>
                 <!-- <el-button class="gu-btn no-use pull-right">即将开始</el-button> -->
                 <el-button class="gu-btn pull-right" @click="setBuyPackage()" :disabled="disBtn2">{{textBtn2}}</el-button>
               </div>
@@ -169,13 +169,13 @@
         sendYyiIssueAmount1: 0,  //第一阶段目标配送
         startSendYyi1: 0,//第一阶段起配积分
         giveRatio1: 0, //第一阶段赠送比例
-        incentiveYyiRate1: 0, //第一阶段赠送率 
+        incentiveYyiRate1: 0, //第一阶段赠送率
         price1: 0, //第一阶段价格
         incentiveYyiAmount1: 0, //第一阶段共奖励？天或周
         incentiveYyiUnit1: '天', //第一阶段激励易用积分赠送单位1=每天，2=每周
         disBtn1: true,  //第一阶段入股操作按钮是否可用
         textBtn1: '即将开始', //第一阶段入股操作按钮显示文本
-        
+
         statusTow: true,        //第二阶段根据状态是否启用样式
         statusStr2: '即将开始',  //第二阶段状态
         roundCurrent2: 0, //第二阶段当前期数
@@ -185,15 +185,16 @@
         sendYyiIssueAmount2: 210000,  //第二阶段目标配送
         startSendYyi2: 1,//第二阶段起配积分
         giveRatio2: 30, //第二阶段赠送比例
-        incentiveYyiRate2: 3, //第二阶段赠送率 
+        incentiveYyiRate2: 3, //第二阶段赠送率
         price2: 3000, //第二阶段价格
         incentiveYyiAmount2: 10, //第二阶段共奖励？天或周
         incentiveYyiUnit2: '周', //第二阶段激励易用积分赠送单位1=每天，2=每周
         disBtn2: true,  //第二阶段入股操作按钮是否可用
         textBtn2: '即将开始', //第二阶段入股操作按钮显示文本
 
-        usdtPrice: 1,  //美元价格
- 
+        usdtPrice1: 1,  //美元价格
+        usdtPrice2: 0,
+
         w1: '270px,300.022px',  //默认样式 第一阶段已分配比例的画图样式【0% = '270px,300.022px'，100% = '564px,300.022px'，564 = (100 * 2.94) + 270】
         w2: '270px,300.022px' , //默认样式 第二阶段已分配比例的画图样式【0% = '270px,300.022px'，100% = '564px,300.022px'，564 = (100 * 2.94) + 270】
       }
@@ -223,7 +224,7 @@
     methods: {
       getInfo(){
         let _this = this;
-        this.$http({ 
+        this.$http({
           url: this.$http.adornUrl('/stageInfo/getAll'),
           method: 'get',
           // params: this.$http.adornParams()
@@ -232,31 +233,31 @@
 
             console.log('data:'+ JSON.stringify(data))
             if (data.data.sendYyiIssueAmounts){
-              _this.sendYyiIssueAmounts = this.resetVal(data.data.sendYyiIssueAmounts); 
+              _this.sendYyiIssueAmounts = this.resetVal(data.data.sendYyiIssueAmounts);
             }
             if (data.data.incentiveYyiIssueAmounts){
-              _this.incentiveYyiIssueAmounts = this.resetVal(data.data.incentiveYyiIssueAmounts);  
+              _this.incentiveYyiIssueAmounts = this.resetVal(data.data.incentiveYyiIssueAmounts);
             }
             if (data.data.yyiUserCount){
               _this.yyiUserCount = data.data.yyiUserCount;
             }
             //第一阶段
             if (data.data.stage1){
-              _this.stage1 = data.data.stage1; 
+              _this.stage1 = data.data.stage1;
               _this.statusOne = _this.stage1.status == 0 ? true : _this.stage1.status == 1 ? false : _this.stage1.status == 2 ? true : true;
-              _this.statusStr1 = _this.statusZh(_this.stage1.status); 
+              _this.statusStr1 = _this.statusZh(_this.stage1.status);
               _this.roundCurrent1 = _this.stage1.roundCurrent;
               _this.roundAmount1 = _this.stage1.roundAmount;
               _this.roundSendYyiBalance1 = this.resetVal(_this.stage1.roundSendYyiBalance);
-              _this.sendYyiIssueAmount1 = this.resetVal(_this.stage1.sendYyiIssueAmount);  
-              _this.allocationRatio1 = _this.stage1.allocationRatio; 
-              _this.startSendYyi1 = _this.stage1.startSendYyi;  
+              _this.sendYyiIssueAmount1 = this.resetVal(_this.stage1.sendYyiIssueAmount);
+              _this.allocationRatio1 = _this.stage1.allocationRatio;
+              _this.startSendYyi1 = _this.stage1.startSendYyi;
               _this.giveRatio1 = _this.stage1.giveRatio;
               _this.incentiveYyiRate1 = _this.stage1.incentiveYyiRate;
               _this.incentiveYyiAmount1 = _this.stage1.incentiveYyiAmount;
               _this.incentiveYyiUnit1 = _this.returnUnit(_this.stage1.incentiveYyiUnit);
               _this.price1 = _this.stage1.price;
-              _this.usdtPrice = _this.stage1.usdtPrice;
+              _this.usdtPrice1 = _this.stage1.usdtPrice;
               _this.disBtn1 = _this.stage1.status == 0 ? true : _this.stage1.status == 1 ? false : _this.stage1.status == 2 ? true : true;
               _this.textBtn1 = _this.stage1.status == 0 ? '即将开始' : _this.stage1.status == 1 ? '我要入股' : _this.stage1.status == 2 ? '已结束' : '即将开始';
               //已分配百分率样式计算（获取百分率所在的分辨率）
@@ -268,19 +269,19 @@
             if (data.data.stage2){
               _this.stage2 = data.data.stage2;
               _this.statusTow = _this.stage2.status == 0 ? true : _this.stage2.status == 1 ? false : _this.stage2.status == 2 ? true : true;
-              _this.statusStr2 = _this.statusZh(_this.stage2.status); 
+              _this.statusStr2 = _this.statusZh(_this.stage2.status);
               _this.roundCurrent2 = _this.stage2.roundCurrent;
               _this.roundAmount2 = _this.stage2.roundAmount;
               _this.roundSendYyiBalance2 = this.resetVal(_this.stage2.roundSendYyiBalance);
-              _this.sendYyiIssueAmount2 = this.resetVal(_this.stage2.sendYyiIssueAmount);  
-              _this.allocationRatio2 = _this.stage2.allocationRatio; 
-              _this.startSendYyi2 = _this.stage2.startSendYyi;  
+              _this.sendYyiIssueAmount2 = this.resetVal(_this.stage2.sendYyiIssueAmount);
+              _this.allocationRatio2 = _this.stage2.allocationRatio;
+              _this.startSendYyi2 = _this.stage2.startSendYyi;
               _this.giveRatio2 = _this.stage2.giveRatio;
               _this.incentiveYyiRate2 = _this.stage2.incentiveYyiRate;
               _this.incentiveYyiAmount2 = _this.stage2.incentiveYyiAmount;
               _this.incentiveYyiUnit2 = _this.returnUnit(_this.stage2.incentiveYyiUnit);
               _this.price2 = _this.stage2.price;
-              _this.usdtPrice = _this.stage2.usdtPrice;
+              _this.usdtPrice2 = _this.stage2.usdtPrice;
               _this.disBtn2 = _this.stage2.status == 0 ? true : _this.stage2.status == 1 ? false : _this.stage2.status == 2 ? true : true;
               _this.textBtn2 = _this.stage2.status == 0 ? '即将开始' : _this.stage2.status == 1 ? '我要入股' : _this.stage2.status == 2 ? '已结束' : '即将开始';
               //已分配百分率样式计算
@@ -293,7 +294,7 @@
       },
       returnUnit(unit){
         return unit == 1 ? '天' : unit == 2 ? '周' : '天';
-      }, 
+      },
       //状态类型转换为明文显示
       statusZh(status){
         return status == 0 ? '即将开始' : status == 1 ? '进行中' : status == 2 ? '已结束' : '即将开始';
@@ -322,12 +323,12 @@
             }
           }
           console.log(typeof point)
-          if(!point){ 
+          if(!point){
             return output
           }else{
-            return output + '.' + point 
+            return output + '.' + point
           }
-        } 
+        }
       },
       setBuyPackage() {
         if(this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
@@ -350,7 +351,7 @@
             this.$router.push({ name: 'login' })
           })
         }
- 
+
       },
     }
   }

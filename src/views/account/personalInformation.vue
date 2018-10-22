@@ -104,7 +104,7 @@
             this.personInfo.phone = data.data.phone
           } else {
             // this.$message.error(data.msg)
-            this.$message.error('提交失败')
+            this.$message.error('刷新失败')
           }
         }).catch(({error}) => {
           this.dataListLoading = false

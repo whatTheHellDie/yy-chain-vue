@@ -50,11 +50,11 @@
             </el-form-item>
             <el-form-item prop="password">
               <label class="label" for="password">登录密码 ：</label>
-              <el-input v-model="registerForm.password" placeholder="请输入8-16位数字、字符组合密码" type="password"></el-input>
+              <el-input v-model="registerForm.password" placeholder="请输入8-16位数字、字母组合密码" type="password"></el-input>
             </el-form-item>
             <el-form-item prop="rePassword">
               <label class="label" for="rePassword">确认密码 ：</label>
-              <el-input v-model="registerForm.rePassword" placeholder="请输入8-16位数字、字符组合密码" type="password"></el-input>
+              <el-input v-model="registerForm.rePassword" placeholder="请输入8-16位数字、字母组合密码" type="password"></el-input> 
             </el-form-item>
             <el-form-item prop="referrerNumber">
               <label class="label" for="referrerNumber">推荐会员 ：</label>
@@ -121,7 +121,7 @@
           if (reg.test(value)) {
             callback();
           } else {
-            return callback(new Error('请输入8-16位数字、字符组合密码'));
+            return callback(new Error('请输入8-16位数字、字母组合密码'));
           }
       };
       var validatePass2 = (rule, value, callback) => {
@@ -188,7 +188,7 @@
             required: true,
             min:8,
             max:16,
-           message:'请输入8-16位，数字、字符组合密码',
+           message:'请输入8-16位，数字、字母组合密码',
            trigger: 'blur'
           },
           { required: true,validator: checkPass, trigger: 'blur' },
@@ -202,7 +202,7 @@
             required: true,
             min:8,
             max:16,
-           message:'请输入8-16位，数字、字符组合密码',
+           message:'请输入8-16位，数字、字母组合密码',
            trigger: 'blur'
           },
           { validator: validatePass2, trigger: 'blur' },

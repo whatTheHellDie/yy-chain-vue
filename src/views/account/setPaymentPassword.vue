@@ -20,11 +20,11 @@
             <div class="charge-coin set-password">
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">支付密码</label>
-                <input type="text" class="form-control input" placeholder="6位数字" v-model="newPwd">
+                <input type="password" class="form-control input" placeholder="6位数字" v-model="newPwd">
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">确认支付密码</label>
-                <input type="text" class="form-control input" placeholder="6位数字" v-model="repeatPwd">
+                <input type="password" class="form-control input" placeholder="6位数字" v-model="repeatPwd">
               </div>
               <div class="gu-btn" @click="payPwd()">提交</div>
             </div>
@@ -58,6 +58,18 @@
     },
     methods: {
       payPwd () {
+        
+        if (this.newPwd != this.repeatPwd){
+          this.$message.error('两次密码输入不一致')
+          return;
+        }
+
+        const regPsw = /^[0-9]\d{5}$/ 
+        if (!regPsw.test(this.newPwd) || !regPsw.test(this.repeatPwd)){
+          this.$message.error('请输入6位数字密码')
+          return;
+        }
+ 
         this.$http({
           url: this.$http.adornUrl('/user/pay/pwd'),
           method: 'post',
@@ -67,6 +79,9 @@
         }).then(({data}) => {
           if (data && data.code === '0000') {
             this.$message.success('设置密码成功')
+            this.$router.replace({
+              name: 'personalInformation'
+            })
           } else {
             this.$message.error(data.msg)
           }
