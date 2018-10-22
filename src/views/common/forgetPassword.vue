@@ -242,6 +242,13 @@
           this.$message.error('两次输入的密码不一样')
           return
         }
+        
+        const regPsw = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/
+        if (!regPsw.test(this.newPassword) || !regPsw.test(this.repeatPassword)){
+          this.$message.error('请输入8-16位数字、字母组合密码')
+          return;
+        }
+ 
         this.$http({
           url: this.$http.adornUrl('/user/set/longPwd'),
           method: 'post',
