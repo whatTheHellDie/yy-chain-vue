@@ -67,7 +67,7 @@
             <el-form-item prop="captcha">
               <label class="label" for="captcha">短信验证 ：</label>
               <el-input v-model="registerForm.captcha" placeholder="请输入短信验证码"></el-input>
-              <el-button class="captcha captcha1" @click="getCaptcha()">{{computeTime}}</el-button>
+              <el-button class="captcha captcha1" :class="{active:computeTime!='获取验证码'}" @click="getCaptcha()">{{computeTime}}</el-button>
             </el-form-item>
             <!--<el-form-item prop="captcha">
               <el-row :gutter="20">
@@ -110,6 +110,9 @@
             return callback(new Error('请输入正确的手机号'));
           }
         }
+      }; 
+      var validateReffer = (rule, value, callback) => {
+        
       }; 
       
       var checkPass = (rule, value, callback) => {
