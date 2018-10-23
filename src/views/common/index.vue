@@ -80,7 +80,7 @@
             <div class="time-price">
               <div class="title">当前价格</div>
               <div class="content"><span class="span">CNY：{{price1}}元/万个</span><span class="span">USDT约：{{usdtPrice1}}枚/万个</span>
-                <el-button class="gu-btn pull-right" :class="{'no-use':disBtn1}"  @click="setBuyPackage()">{{textBtn1}}</el-button>
+                <el-button class="gu-btn pull-right" :class="{'no-use':disBtn1}"  @click="setBuyPackage(1)">{{textBtn1}}</el-button>
               </div>
             </div>
           </div>
@@ -124,7 +124,7 @@
               <div class="title">当前价格</div>
               <div class="content"><span class="span">CNY：{{price2}}元/万个</span><span class="span">USDT约：{{usdtPrice2}}枚/万个</span>
                 <!-- <el-button class="gu-btn no-use pull-right">即将开始</el-button> -->
-                <el-button class="gu-btn pull-right" :class="{'no-use':disBtn2}" @click="setBuyPackage()">{{textBtn2}}</el-button>
+                <el-button class="gu-btn pull-right" :class="{'no-use':disBtn2}" @click="setBuyPackage(2)">{{textBtn2}}</el-button>
               </div>
             </div>
           </div>
@@ -219,9 +219,22 @@
       }, 3000);
     },
     created() {
-         this.getInfo()
+         this.getInfo();
+         this.getUsdtPrice();
     },
     methods: {
+      getUsdtPrice() {
+        this.$http({
+          url: this.$http.adornUrl('/stageInfo/getUsdtPrice'),
+          method: 'get',
+          // params: this.$http.adornParams()
+        }).then(({data}) => {
+          if (data.data && data.code === '0000') {
+              this.usdtPrice1 = data.data.usdtPrice1;
+              this.usdtPrice2 = data.data.usdtPrice2;
+          } 
+        })
+      },
       getInfo(){
         let _this = this;
         this.$http({
@@ -257,7 +270,7 @@
               _this.incentiveYyiAmount1 = _this.stage1.incentiveYyiAmount;
               _this.incentiveYyiUnit1 = _this.returnUnit(_this.stage1.incentiveYyiUnit);
               _this.price1 = _this.stage1.price;
-              _this.usdtPrice1 = _this.stage1.usdtPrice;
+              // _this.usdtPrice1 = _this.stage1.usdtPrice;
               _this.disBtn1 = _this.stage1.status == 0 ? true : _this.stage1.status == 1 ? false : _this.stage1.status == 2 ? true : true;
               _this.textBtn1 = _this.stage1.status == 0 ? '即将开始' : _this.stage1.status == 1 ? '我要入股' : _this.stage1.status == 2 ? '已结束' : '即将开始';
               //已分配百分率样式计算（获取百分率所在的分辨率）
@@ -281,7 +294,7 @@
               _this.incentiveYyiAmount2 = _this.stage2.incentiveYyiAmount;
               _this.incentiveYyiUnit2 = _this.returnUnit(_this.stage2.incentiveYyiUnit);
               _this.price2 = _this.stage2.price;
-              _this.usdtPrice2 = _this.stage2.usdtPrice;
+              // _this.usdtPrice2 = _this.stage2.usdtPrice;
               _this.disBtn2 = _this.stage2.status == 0 ? true : _this.stage2.status == 1 ? false : _this.stage2.status == 2 ? true : true;
               _this.textBtn2 = _this.stage2.status == 0 ? '即将开始' : _this.stage2.status == 1 ? '我要入股' : _this.stage2.status == 2 ? '已结束' : '即将开始';
               //已分配百分率样式计算
@@ -330,7 +343,16 @@
           }
         }
       },
-      setBuyPackage() {
+      setBuyPackage(stage) {
+
+        if (stage == 1 && this.disBtn1){
+          return;
+        }
+        
+        if (stage == 2 && this.disBtn2){
+          return;
+        }
+
         if(this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
           this.$router.push({name:'buyPackage'});
         } else if(window.sessionStorage.getItem('userNumber')) {
