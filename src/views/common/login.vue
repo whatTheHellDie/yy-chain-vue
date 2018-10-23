@@ -54,7 +54,7 @@
             </el-form-item>
             <el-form-item prop="rePassword">
               <label class="label" for="rePassword">确认密码 ：</label>
-              <el-input v-model="registerForm.rePassword" placeholder="请输入8-16位数字、字母组合密码" type="password"></el-input> 
+              <el-input v-model="registerForm.rePassword" placeholder="请输入8-16位数字、字母组合密码" type="password"></el-input>
             </el-form-item>
             <el-form-item prop="referrerNumber">
               <label class="label" for="referrerNumber">推荐会员 ：</label>
@@ -100,21 +100,21 @@
     data () {
       var checkPhone = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('手机号不能为空'));
+          return callback(new Error('手机号不能为空'))
         } else {
           const reg = /^1[3|4|5|7|8|6|9][0-9]\d{8}$/
-          console.log(reg.test(value));
+          console.log(reg.test(value))
           if (reg.test(value)) {
-            callback();
+            callback()
           } else {
-            return callback(new Error('请输入正确的手机号'));
+            return callback(new Error('请输入正确的手机号'))
           }
         }
-      }; 
+      }
       var validateReffer = (rule, value, callback) => {
-        
-      }; 
-      
+
+      }
+
       var checkPass = (rule, value, callback) => {
         const reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/
           console.log(reg.test(value));
@@ -221,11 +221,11 @@
           captcha: [
             {  required: true,message: '验证码不能为空', trigger: 'blur' }
           ]
-        },  
+        },
         rememberPass: false
         //      captchaPath: ''
       }
-      
+
     },
     components: {
       MyHeader,
@@ -299,11 +299,11 @@
       register () {
         this.$refs['registerForm'].validate((valid) => {
           if (valid) {
-            
+
             if (this.registerForm.password != this.registerForm.rePassword){
               this.$message.error('两次输入的密码不一致');
               return;
-            } 
+            }
 
             this.$http({
               url: this.$http.adornUrl('/user/register'),
@@ -363,7 +363,7 @@
              second--;
         },1000)
           } else {
-            
+
             this.$message.error(data.msg)
           }
         })

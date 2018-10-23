@@ -109,7 +109,7 @@
           return
         }
         if (this.form.idCardNumber.length !== 15 && this.form.idCardNumber.length !== 18) {
-          this.$alert('所输入的身份证号只能是15位或者是18位', '提示', {
+          this.$alert('请输入有效身份证号！', '提示', {
             confirmButtonText: '确定'
           })
           return
