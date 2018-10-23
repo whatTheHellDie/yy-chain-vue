@@ -10,12 +10,12 @@
                   <div v-for="item,i in chooseList" class="box box2" @click="loadList(i)" :class="{active:i == activeNumber}"><span class="span">{{item.name}}</span></div>
                 </div>
                 <div class="keyong">
-                  <div class="number">20.213511</div>
+                  <div class="number">0</div>
                   <div class="name">可用余额</div>
                 </div>
                 <div class="zijin-form">
                   <el-form ref="form" :inline="true" :model="form" label-width="80px">
-                    <label for="">资金变动类型</label>
+                    <label for="">分类 </label>
                     <el-form-item>
                       <el-select v-model="form.region" placeholder="全部状态">
                         <el-option label="区域一" value="shanghai"></el-option>
@@ -57,19 +57,6 @@
                 </li>
                 <li class="active">
                   <a href="javascript:void(0)">1</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">2</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">3</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">4</a>
-                </li>
-                ...
-                <li>
-                  <a href="javascript:void(0)">5</a>
                 </li>
                 <li>
                   <a href="javascript:void(0)">&gt;</a>
@@ -118,21 +105,7 @@
           resource: '',
           desc: ''
         },
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-           date1: '2016-05-02',
-          name1: '王小虎',
-          address1: '上海市普陀区金沙江路 1518 弄'
-        },{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-           date1: '2016-05-02',
-          name1: '王小虎',
-          address1: '上海市普陀区金沙江路 1518 弄'
-        }],
+        tableData: [],
         
       }
     },

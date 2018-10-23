@@ -12,7 +12,7 @@
     </dl>
     <dl>
       <dt><icon-svg name="money" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>资金管理</dt>
-      <dd v-for="item in sideNav.fund" :class="{active:$route.name == item.routeName }" @click="$router.push({ name: item.routeName })">{{item.name}}</dd>
+      <dd v-for="item in sideNav.fund" :class="{active:$route.name == item.routeName }" @click="turn(item.routeName)">{{item.name}}</dd>
     </dl>
   </div>
 </template>
@@ -80,7 +80,44 @@
         return this.$route.name == 'personalInformation'?"person1":"person";
         }
     },
-    methods: {},
+    methods: {
+      turn(name){
+        if(name=="chargeCoin"){
+          this.getPersonInfo()
+          return false;
+        }else{
+        this.$router.push({ name: name })
+        }
+      },
+      getPersonInfo () {
+        this.$http({
+          url: this.$http.adornUrl('/user/query/one'),
+          method: 'get'
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            if(!data.data) {
+              return;
+            }
+            if(data.data.auth==3){
+              this.$router.push({ name: 'chargeCoin' })
+            }else{
+              this.$confirm('您还没有实名认证或认证未通过', '提示', {
+          confirmButtonText: '去认证',
+          callback: action => {
+            this.$router.push({ name: 'realNameAuthentication' })
+          }
+        });
+            }
+          } else {
+            // this.$message.error(data.msg)
+            this.$message.error('获取实名认证信息失败')
+          }
+        }).catch(({error}) => {
+          this.dataListLoading = false
+          this.$message.error(error)
+        })
+      }
+    },
     mounted() {
       console.log(this.$route.name)
     }
