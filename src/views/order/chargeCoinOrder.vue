@@ -65,7 +65,7 @@
                 :total="elementTotal">
               </el-pagination>
             </div>
-            
+
           </div>
         </div>
       </div>

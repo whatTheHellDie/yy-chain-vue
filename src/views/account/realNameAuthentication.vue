@@ -17,6 +17,7 @@
               <i class="el-breadcrumb__separator el-icon-arrow-right"></i></span>
             </div>
           </div>
+
           <div class="box-body min425">
             <form class="form-horizontal"  role="form">
               <div class="form-group combo-form" v-if="reason">
@@ -65,10 +66,7 @@
                   <div class="btn-ti" @click="submitData()">提交</div>
                 </div>
               </div>
-
-
             </form>
-
           </div>
 
         </div>
@@ -167,7 +165,7 @@
         reader.onloadend = function () {
           if (img1.size > 1048576) {
             that.$alert('图片不能大于1m', '提示', {
-              confirmButtonText: '确定',
+              confirmButtonText: '确定'
             })
             return false
           }
@@ -225,11 +223,15 @@
       },
       lastReason () {
         this.$http({
-          url: this.$http.adornUrl('/user/au/nopass/remark'),
+          url: this.$http.adornUrl('/user/au/nopass'),
           method: 'get'
         }).then(({data}) => {
           if (data && data.code === '0000') {
-            this.reason = data.data
+            this.reason = data.data.remark
+            this.form.userName = data.data.userName
+            this.form.idCardNumber = data.data.idCardNumber
+            this.imgs[0] = data.data.idCardFrontPicUrl
+            this.imgs1[0] = data.data.idCardOppositePicUrl
           } else {
             this.$message.error(data.msg)
           }
