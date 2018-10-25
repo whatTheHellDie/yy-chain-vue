@@ -244,7 +244,7 @@
         }
         
         const regPsw = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/
-        if (!regPsw.test(this.newPassword) || !regPsw.test(this.repeatPassword)){
+        if (!regPsw.test(newPassword) || !regPsw.test(repeatPassword)){
           this.$message.error('请输入8-16位数字、字母组合密码')
           return;
         }
