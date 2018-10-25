@@ -19,26 +19,26 @@
           <div class="box-body min425">
             <div class="charge-coin set-password">
               <div class="form-group combo-form">
-                  <label for="zhuan" class="col-sm-2 control-label">转账数额</label><input type="text" class="form-control input" placeholder="请输入转账LoveBird数额">
+                  <label for="zhuan" class="col-sm-2 control-label">转账数额</label><input type="text" class="form-control input" v-model="form.chargeAmount" placeholder="请输入转账LoveBird数额">
                 </div>
                 <div class="form-group combo-form">
-                  <label for="zhuan" class="col-sm-2 control-label">交易号</label><input type="text" class="form-control input" placeholder="请在钱包记录页面复制URL粘贴在这里">
+                  <label for="zhuan" class="col-sm-2 control-label">交易号</label><input type="text" class="form-control input" v-model="form.chargeNumber" v-bind:value="form.chargeNumber" placeholder="请在钱包记录页面复制URL粘贴在这里">
                 </div>
-                
+
                 <div class="form-group combo-form">
                   <label for="zhuan" class="col-sm-2 control-label">上传凭证</label>
                   <div class="col-sm-4 pin">
                     凭证为转账支付成功的订单详情图片，需包含以下四项内容：转账金额、转账用户钱包地址、收款方钱包地址、交易时间。
                     <div class="clearfix">
                       <div class="tou-s">
-                        <img src="/static/img/sub.png" class="img" />
+                        <img :src="this.chargeVoucher" class="img" />
                         <div class="btn-sub">上传图片<input @change='add_img($event,0)' id="saveImage" accept="image/png,image/jpeg,image/gif" type="file"></div>
                       </div>
                     </div>
                   </div>
 
                 </div>
-                <div class="gu-btn">提交</div>
+                <div class="gu-btn" @click="submitData()">提交</div>
             </div>
           </div>
 
@@ -47,98 +47,154 @@
     </main-body>
   </div>
 </template>
+
 <style lang="scss" scoped>
-.card-box {
+  .card-box {
     display: inline-block;
     vertical-align: top;
+  }
+  .btn-sub {
+    position: relative;
+    cursor: pointer;
+    input {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      z-index: 99999;
+      opacity: 0;
+    }
   }
 </style>
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MainBody from '@/components/common/mainBody'
   export default {
     data() {
       return {
-        activeNumber: 0,
-        chooseList: [{
-            name: '全部'
-          },
-          {
-            name: '待支付'
-          },
-          {
-            name: '已完成'
-          },
-          {
-            name: '交易关闭'
-          },
-          {
-            name: '交易取消'
-          }
-        ],
-        chooseContent: [{
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 0, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 1, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 2, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-          {
-            id: "sdfsdfsfsdfsdfsd2323",
-            orderNumber: '2018083161408819',
-            status: 3, //0待支付，1已完成，2交易关闭，3交易取消
-            cny: "1000",
-            usdt: "0.954549",
-            number: "10万个",
-            total: "9.511152",
-            time: "2018-09-22 11:00:02",
-            usdt: "2.123452"
-          },
-        ]
+        imgs: ['/static/img/zhan.png'],
+        copyMessage: "LjoeXwCevS6RxdBjfLKBF5EQDLT2B1uRMWsdfsdf",
+        num1: 1,
+        orderNumber:"",
+        form: {
+          chargeAmount: '',
+          chargeNumber: '',
+          chargeVoucher: ''
+        }
       }
     },
     components: {
       MainBody
     },
+    created(){
+        this.orderNumber = this.$route.query.orderNumber;
+        this.form.chargeNumber = this.$route.query.chargeNumber;
+        this.form.chargeVoucher = this.$route.query.chargeVoucher;
+    },
     methods: {
-      loadList(i) {
-        this.activeNumber = i;
+      submitData() {
+        if(!this.form.chargeAmount) {
+          this.$alert('转账数额不能为空', '提示', {
+            confirmButtonText: '确定'
+          });
+          return false;
+        }
+        if(!this.form.chargeNumber) {
+          this.$alert('交易号不能为空', '提示', {
+            confirmButtonText: '确定'
+          });
+          return false;
+        }
+        if(!this.form.chargeVoucher) {
+          this.$alert('请上传图片', '提示', {
+            confirmButtonText: '确定'
+          });
+          return false;
+        }
+        this.$http({
+          url: this.$http.adornUrl('/fund/au//save'),
+          method: 'post',
+          data: this.$http.adornData({
+            'chargeAmount': this.form.chargeAmount,
+            'chargeNumber': this.form.chargeNumber,
+            'chargeVoucher': this.form.chargeVoucher,
+            'number' : this.orderNumber
+          })
+        }).then(({
+                   data
+                 }) => {
+          if(data && data.code === '0000') {
+            this.$message({
+              type: 'success',
+              message: '上传成功'
+            })
+            location.reload()
+          } else {
+            this.$alert(data.msg, '提示', {
+              confirmButtonText: '确定'
+            });
+          }
+        })
       },
-      pay(id) {
+      add_img(event, index) {
+        var reader = new FileReader();
+        var img1 = event.target.files[0];
+        if(window.sessionStorage.getItem("auth") == null) {
+          this.$alert('用户未认证', '提示', {
+            confirmButtonText: '确定',
+          });
+          return false
+        }
+        if(index == 0 && this.imgs.length > 0) {
+          this.imgs.splice(0, 1);
+        }
+        if(index == 1 && this.imgs1.length > 0) {
+          this.imgs1.splice(0, 1);
+        }
+        reader.readAsDataURL(img1);
+        var that = this;
+        reader.onloadend = function() {
+          if(img1.size > 1048576) {
+            that.$alert('图片不能大于1m', '提示', {
+              confirmButtonText: '确定',
+            });
+            return false
+          }
 
-      },
-      cancelOrder(id) {
-
-      },
-      delOrder(id) {
-
+          that.imgs.push(reader.result)
+          let x = document.getElementById('saveImage').files[0];
+          let params = new FormData();
+          params.append('fileName', x);
+          // alert(that.$cookie.get('token'));
+          let config = {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          };
+          that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              'ACCESS_TOKEN': that.$cookie.get('token')
+            }
+          }).then(({
+                     data
+                   }) => {
+            this.dataListLoading = false
+            console.log(data)
+            if(data && data.code === '0000') {
+              that.form.chargeVoucher = data.data
+            } else {
+              that.$message.error(data.msg)
+            }
+          }).catch(({
+                      error
+                    }) => {
+            that.dataListLoading = false
+            that.$message.error(error)
+          })
+        }
       }
     },
     mounted() {
@@ -146,9 +202,9 @@
       //
       //    clipboard.on('success', function(e) {
       //        e.clearSelection();
-      //        
+      //
       //    });
-      //    
+      //
       //    clipboard.on('error', function(e) {
       //        alert('该默认浏览器不支持点击复制,请长按选择复制钱包地址或选择分享二维码图片')
       //    });
