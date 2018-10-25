@@ -18,7 +18,7 @@
             	<input type="password" v-model="payPassword" class="input" />
               <span class="wang">忘记密码？</span>
             	<div class="shu-tip">请输入6位数字支付密码</div>
-            	<div class="gu-btn" @click="pay()">确认支付</div><!--<span class="please">请在 <span class="time">120S</span> 内完成支付！</span>-->
+            	<div class="gu-btn" @click="pay()">确认支付</div><span class="please">请在 <span class="time">{{totalTime}}S</span> 内完成支付！</span>
             </form>
           </dl>
         </div>
@@ -32,12 +32,13 @@
 </style>
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MyHeader from '@/components/common/header'
   import MyFooter from '@/components/common/footer'
   export default {
     data () {
       return {
+        totalTime: 10,
         stageCurrent: 0,
         roundCurrent: 0,
         yyiQuantity: 0,
@@ -50,8 +51,21 @@
       MyFooter
     },
     methods: {
-      handleChange(value) {
-        console.log(value);
+      countdown () {
+        var computeTime = this.totalTime
+        var time = setInterval(() => {
+          if (computeTime === 0) {
+            // 关闭定时器
+            clearInterval(time)
+
+            // 跳转到首页
+            this.$router.push({
+              name: 'buyPackage'
+            })
+          }
+          this.totalTime = computeTime
+          computeTime--
+        }, 1000)
       },
       pay () {
         this.$http({
@@ -67,7 +81,7 @@
         }).then(({data}) => {
           if (data && data.code === '0000') {
             this.$message.success(data.msg)
-            //跳到支付成功页面
+            // 跳到支付成功页面
             this.$router.push({
               name: 'buyPackageStatus',
               query: {
@@ -85,6 +99,8 @@
       this.roundCurrent = this.$route.query.roundCurrent
       this.yyiQuantity = this.$route.query.yyiQuantity
       this.payUsdtAmount = this.$route.query.payUsdtAmount
+      // 倒计时
+      this.countdown()
     }
   }
 </script>
