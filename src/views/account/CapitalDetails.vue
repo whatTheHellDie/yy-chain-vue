@@ -38,7 +38,7 @@
                     </el-table-column>
                     <el-table-column prop="name" label="账户类型" width="86">
                     </el-table-column>
-                    <el-table-column prop="address" label="资金变动类型" width="108">
+                    <el-table-column prop="address" label="分类" width="108">
                       </el-table-column>
                       <el-table-column prop="date1" label="详细说明" width="309 ">
                       </el-table-column>

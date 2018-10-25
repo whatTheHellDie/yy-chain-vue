@@ -87,9 +87,9 @@
   export default {
     data () {
       return {
-        totalNumberYyiAmount: '',
-        totalNumberOrder: '',
-        totalNumberUsdtAmount: '',
+        totalNumberYyiAmount: '0.000000',
+        totalNumberOrder: '0',
+        totalNumberUsdtAmount: '0',
         pageNum: 1,
         pageSize: 5,
         elementTotal: '',
@@ -117,7 +117,6 @@
           })
         }).then(({data}) => {
           console.log(data)
-          debugger
           if (data && data.code === '0000') {
             this.totalNumberYyiAmount = data.data.totalNumberYyiAmount
             this.totalNumberOrder = data.data.totalNumberOrder
