@@ -157,6 +157,9 @@
     },
     created: function () {
       this.getSharesViweData()
+
+      // 初始化定时支付时间
+      sessionStorage.setItem('totalTime', 10)
     }
   }
 </script>
