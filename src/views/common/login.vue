@@ -306,7 +306,7 @@
             }
 
             this.$http({
-              url: this.$http.adornUrl('/user/register'),
+              url: this.$http.adornUrl('/user/register/login'),
               method: 'post',
               data: this.$http.adornData({
                 'userNumber': this.registerForm.userNumber,
@@ -320,7 +320,14 @@
                 // alert(1)
                 this.$message.success(data.msg)
                 // alert(2)
-                this.$router.push({name: 'login'})
+                this.$cookie.set('token', data.data.token)
+                this.$router.replace({
+                  name: 'index'
+                })
+                window.sessionStorage.removeItem('userNumber')
+                window.sessionStorage.removeItem('auth')
+                window.sessionStorage.setItem('auth', data.data.auth )
+                window.sessionStorage.setItem('userNumber', data.data.userNumber)
               } else {
                 this.$message.error(data.msg)
               }

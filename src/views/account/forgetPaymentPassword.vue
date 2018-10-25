@@ -24,7 +24,9 @@
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">短信验证码</label>
-                <input type="text" class="form-control input" placeholder="请输入短信验证码" v-model="captcha"><div class="btn-sub">获取验证码</div>
+                <input type="text" class="form-control input" placeholder="请输入短信验证码" v-model="captcha">
+                <!-- <div class="btn-sub">获取验证码</div> -->
+                <div class="btn-sub" :class="{active:computeTime!='获取验证码'}" @click="getCaptcha()">{{computeTime}}</div>
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">新支付密码</label>
@@ -53,6 +55,7 @@
   export default {
     data() {
       return { 
+        computeTime: '获取验证码',
         phone: '',
         captcha: '',
         newPwd: '',
@@ -95,12 +98,52 @@
             'type' : 2,
             'phone': this.phone,
             'captcha': this.captcha
-          })
+          }) 
         }).then(({data}) => {
           if (data && data.code === '0000') {
             this.$message.success('重置密码成功')
             this.$router.push({name: 'personalInformation'})
           } else {
+            this.$message.error(data.msg)
+          }
+        })
+      },
+      // 获取验证码
+      getCaptcha () {
+        if(this.computeTime!="获取验证码"){
+          //处于倒计时
+          return false;
+        }
+        let phone = this.phone
+        if (phone == null || phone === '') {
+          this.$message.error('请先填写手机号')
+          return
+        }
+        this.$http({
+          url: this.$http.adornUrl('/sms/sendMSM'),
+          method: 'get',
+          params: this.$http.adornParams({
+            'phoneNumber': this.phone,
+            'countryCode': '86'
+          })
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.$message.success('验证码发送成功')
+            var second=60;
+            var that=this;
+            this.computeTime="剩余"+second--+"秒"
+        var time=setInterval(() => {
+          if(second==0){
+            console.log(this.computeTime)
+            that.computeTime="获取验证码"
+            clearInterval(time)
+            return false;
+          }
+             this.computeTime="剩余"+second+"秒"
+             second--;
+        },1000)
+          } else {
+
             this.$message.error(data.msg)
           }
         })
