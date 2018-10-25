@@ -7,15 +7,15 @@
             <div class="charge-order">
               <ul class="order-number">
                 <li>
-                  <div class="number">{{totalNumberOrder}}</div>
+                  <div class="number">{{!totalNumberOrder ? '0' : totalNumberOrder}}</div>
                   <div class="content">订单总数（笔）</div>
                 </li>
                 <li>
-                  <div class="number">{{totalNumberUsdtAmount}}</div>
+                  <div class="number">{{!totalNumberUsdtAmount ? '0.0' : totalNumberUsdtAmount}}</div>
                   <div class="content">累计入股USDT数额（枚）</div>
                 </li>
                 <li>
-                  <div class="number">{{totalNumberYyiAmount}}</div>
+                  <div class="number">{{!totalNumberYyiAmount ? '0.0' : totalNumberYyiAmount}}</div>
                   <div class="content">累计分配易用积分（万个）</div>
                 </li>
               </ul>
