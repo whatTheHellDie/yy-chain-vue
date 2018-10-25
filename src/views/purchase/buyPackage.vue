@@ -26,7 +26,7 @@
         <div class="order-gradient"></div>
         <div class="right">
           <div>账户USDT余额：<span class="default">{{sharesData.userUsdt}}</span>
-            <el-button type="primary" class="charge-btn">充币</el-button>
+            <el-button type="primary" @click="$router.push({name: 'chargeCoin'})" class="charge-btn">充币</el-button>
           </div>
           <div class="default1 mt11">起配积分数额：{{sharesData.startYyiQuantity}}万个</div>
           <div class="add_one clearfix">

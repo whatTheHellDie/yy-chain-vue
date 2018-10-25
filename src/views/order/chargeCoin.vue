@@ -18,7 +18,7 @@
                   </div>
                   <div class="way">方式二：收款方钱包地址
                     <div class="please">请您复制收款方数字钱包地址，在您的数字钱包中进行转账支付（USDT）。<br>
-                      <div class="copy text-right" v-clipboard:copy="copyMessage">复制钱包地址</div>
+                      <div class="copy text-right" v-clipboard:copy="copyMessage" v-clipboard:success="onCopy">复制钱包地址</div>
                       <div class="clear"></div>
                       <div class="wallet-address">
                         <div>钱包地址</div>
@@ -111,6 +111,12 @@
             });
             return false;
         }
+        if(this.form.chargeNumber.length<20) {
+          this.$alert('交易号至少为20位长度', '提示', {
+              confirmButtonText: '确定'
+            });
+            return false;
+        }
         if(!this.form.chargeVoucher) {
           this.$alert('请上传图片', '提示', {
               confirmButtonText: '确定'
@@ -131,7 +137,7 @@
           if(data && data.code === '0000') {
             this.$message({
               type: 'success',
-            message: '上传成功'
+            message: '充币订单提交成功'
           })
             location.reload()
           } else {
@@ -198,6 +204,12 @@
             that.$message.error(error)
           })
         }
+      },
+      onCopy(){
+        this.$message({
+          message: '复制成功',
+          type: 'success'
+        });
       }
     },
     mounted() {
