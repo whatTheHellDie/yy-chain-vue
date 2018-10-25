@@ -38,7 +38,7 @@
   export default {
     data () {
       return {
-        totalTime: 10,
+        totalTime: sessionStorage.getItem('totalTime'),
         stageCurrent: 0,
         roundCurrent: 0,
         yyiQuantity: 0,
@@ -52,12 +52,16 @@
     },
     methods: {
       countdown () {
-        var computeTime = this.totalTime
+        // sessionStorage.setItem('totalTime', this.totalTime)
+
+        var computeTime = sessionStorage.getItem('totalTime')
         var time = setInterval(() => {
           if (computeTime === 0) {
             // 关闭定时器
             clearInterval(time)
 
+            // 清空时间
+            sessionStorage.setItem('totalTime', 0)
             // 跳转到首页
             this.$router.push({
               name: 'buyPackage'
@@ -65,6 +69,7 @@
           }
           this.totalTime = computeTime
           computeTime--
+          sessionStorage.setItem('totalTime', computeTime)
         }, 1000)
       },
       pay () {
