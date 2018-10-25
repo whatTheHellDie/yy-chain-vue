@@ -244,7 +244,6 @@
         }).then(({data}) => {
           if (data && data.code === '0000') {
 
-            console.log('data:'+ JSON.stringify(data))
             if (data.data.sendYyiIssueAmounts){
               _this.sendYyiIssueAmounts = this.resetVal(data.data.sendYyiIssueAmounts);
             }
@@ -316,8 +315,7 @@
       resetVal (number) {
         var mNumber = parseInt(number)
         number = number.toString()
-        var point = number.split('.')[1];
-        console.log(point)
+        var point = number.split('.')[1]; 
         mNumber = mNumber.toString()
         if (mNumber.length <= 3){
           if(!point) {
@@ -335,7 +333,7 @@
               output += ',' + mNumber.substring(mod + 3 * i, mod + 3 * i + 3)
             }
           }
-          console.log(typeof point)
+          // console.log(typeof point)
           if(!point){
             return output
           }else{
