@@ -142,19 +142,23 @@
         this.dataListLoading = false
         })
       },
-
       //i 0,待处理 1，受理，2 不受理 3 全部
       loadList(i) {
         this.dataListLoading = true
         this.activeNumber = i
         this.index = i
+        if (i == 0) {
+          i = '';
+        } else  {
+         i= i-1;
+        }
         this.$http({
           url: this.$http.adornUrl('/bs/fund/query/list/page'),
           method: 'post',
           data: this.$http.adornData({
             'pageNum': this.pageNum,
             'pageSize': this.pageSize,
-            'accountType': i,
+            'status': i,
             'platform': 2
           })
         }).then(({data}) => {
