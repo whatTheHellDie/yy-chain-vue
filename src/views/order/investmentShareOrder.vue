@@ -127,10 +127,21 @@
             this.chooseContent = data.data.pageResponse.dataList
           } else {
             this.dataList = []
-            this.totalPage = 0
+            this.elementTotal = 0
           }
           this.dataListLoading = false
         })
+      },
+      // 每页数
+      handleSizeChange(val) {
+        this.pageSize = val
+        this.pageNum = 1
+        this.loadList()
+      },
+      // 当前页
+      handleCurrentChange(val) {
+        this.pageNum = val
+        this.loadList()
       },
       pay (id) {
       },
