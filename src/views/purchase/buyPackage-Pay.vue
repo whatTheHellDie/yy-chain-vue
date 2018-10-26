@@ -16,7 +16,7 @@
             <dd><label>需支付USDT(枚)：</label><span class="span">{{payUsdtAmount}}</span></dd>
             <form class="m-form" method="post">
             	<input type="password" v-model="payPassword" class="input" />
-              <span class="wang">忘记密码？</span>
+              <span class="wang" @click="resetPaymentPassword()">忘记密码？</span>
             	<div class="shu-tip">请输入6位数字支付密码</div>
             	<div class="gu-btn" @click="pay()">确认支付</div><span class="please">请在 <span class="time">{{totalTime}}S</span> 内完成支付！</span>
             </form>
@@ -66,6 +66,7 @@
             this.$router.push({
               name: 'buyPackage'
             })
+            return
           }
           this.totalTime = computeTime
           computeTime--
@@ -73,29 +74,68 @@
         }, 1000)
       },
       pay () {
-        this.$http({
-          url: this.$http.adornUrl('/shares/pay'),
-          method: 'post',
-          data: this.$http.adornData({
-            'currentStage': this.stageCurrent,
-            'currentRound': this.roundCurrent,
-            'sendYyiQuantity': this.yyiQuantity,
-            'payUsdtAmount': this.payUsdtAmount,
-            'payPassword': this.payPassword
-          })
-        }).then(({data}) => {
-          if (data && data.code === '0000') {
-            this.$message.success(data.msg)
-            // 跳到支付成功页面
-            this.$router.push({
-              name: 'buyPackageStatus',
-              query: {
-                status: 0
-              }
+        var stageCurrent = Number(this.stageCurrent)
+        if (stageCurrent === 1) { // 第一阶段
+
+          this.$http({
+            url: this.$http.adornUrl('/shares/firstStagePay'),
+            method: 'post',
+            data: this.$http.adornData({
+              'currentStage': this.stageCurrent,
+              'currentRound': this.roundCurrent,
+              'sendYyiQuantity': this.yyiQuantity,
+              'payUsdtAmount': this.payUsdtAmount,
+              'payPassword': this.payPassword
             })
-          } else {
-            this.$message.error(data.msg)
-          }
+          }).then(({data}) => {
+            if (data && data.code === '0000') {
+              this.$message.success(data.msg)
+              // 跳到支付成功页面
+              this.$router.push({
+                name: 'buyPackageStatus',
+                query: {
+                  status: 0
+                }
+              })
+            } else {
+              this.$message.error(data.msg)
+            }
+          })
+
+        } else if (stageCurrent === 2) { // 第二阶段
+
+          this.$http({
+            url: this.$http.adornUrl('/shares/secondStagePay'),
+            method: 'post',
+            data: this.$http.adornData({
+              'currentStage': this.stageCurrent,
+              'currentRound': this.roundCurrent,
+              'sendYyiQuantity': this.yyiQuantity,
+              'payUsdtAmount': this.payUsdtAmount,
+              'payPassword': this.payPassword
+            })
+          }).then(({data}) => {
+            if (data && data.code === '0000') {
+              this.$message.success(data.msg)
+              // 跳到支付成功页面
+              this.$router.push({
+                name: 'buyPackageStatus',
+                query: {
+                  status: 0
+                }
+              })
+            } else {
+              this.$message.error(data.msg)
+            }
+          })
+
+        }
+
+      },
+      resetPaymentPassword () {
+        // 跳到重置支付密码页面
+        this.$router.push({
+          name: 'resetPaymentPassword'
         })
       }
     },
