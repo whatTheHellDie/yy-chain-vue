@@ -78,7 +78,7 @@
           })
         }).then(({data}) => {
           if (data && data.code === '0000') {
-            this.$message.success('设置密码成功')
+            this.$message.success('设置支付密码成功')
             this.$router.replace({
               name: 'personalInformation'
             })

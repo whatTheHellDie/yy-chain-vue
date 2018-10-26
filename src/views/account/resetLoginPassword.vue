@@ -92,7 +92,7 @@
           if (data && data.code === '0000') {
             this.$cookie.delete('token')
             window.sessionStorage.removeItem('userNumber')
-            this.$message.success('修改密码成功')
+            this.$message.success('登录密码修改成功')
             this.$router.replace({
               name: 'login'
             })

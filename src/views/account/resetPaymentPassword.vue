@@ -88,7 +88,7 @@
         }).then(({data}) => {
           if (data && data.code === '0000') { 
             // window.location.href='/personalInformation';
-            this.$message.success('修改密码成功')  
+            this.$message.success('支付密码重置成功')  
             this.$router.replace({
               name: 'personalInformation'
             })

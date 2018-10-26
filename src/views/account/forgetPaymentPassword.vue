@@ -101,7 +101,7 @@
           }) 
         }).then(({data}) => {
           if (data && data.code === '0000') {
-            this.$message.success('重置密码成功')
+            this.$message.success('支付密码重置成功')
             this.$router.push({name: 'personalInformation'})
           } else {
             this.$message.error(data.msg)
