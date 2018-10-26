@@ -100,13 +100,14 @@
     },
     methods: {
       submitData () {
-        if (!this.form.userName) {
+        if (!this.form.userName || !this.form.userName.trim()) {
           this.$alert('真实姓名不能为空', '提示', {
             confirmButtonText: '确定'
           })
           return
         }
-        if (this.form.idCardNumber.length !== 15 && this.form.idCardNumber.length !== 18) {
+        if (!this.form.idCardNumber || !this.form.idCardNumber.trim() ||
+          (this.form.idCardNumber.length !== 15 && this.form.idCardNumber.length !== 18)) {
           this.$alert('请输入有效身份证号！', '提示', {
             confirmButtonText: '确定'
           })
@@ -149,7 +150,7 @@
 
         if (!/image\/\w+/.test(img1.type) || !img1.type || !/\.(?:jpg|png|gif)$/.test(img1.name)) {
           this.$alert('图片只能是jpg,gif,png', '提示', {
-            confirmButtonText: '确定',
+            confirmButtonText: '确定'
           })
           return false
         }
@@ -164,7 +165,7 @@
         var that = this
         reader.onloadend = function () {
           if (img1.size > 1048576) {
-            that.$alert('图片不能大于1m', '提示', {
+            that.$alert('图片不能大于1M', '提示', {
               confirmButtonText: '确定'
             })
             return false
@@ -172,10 +173,10 @@
           if (index == 0) {
             that.imgs.push(reader.result)
             let x = document.getElementById('saveImage').files[0];
-            let params = new FormData() ;
-            params.append('fileName',x);
-            console.log(params);
-            let config = { headers:{'Content-Type': 'multipart/form-data'}};
+            let params = new FormData()
+            params.append('fileName', x)
+            console.log(params)
+            let config = { headers: {'Content-Type': 'multipart/form-data'}}
             that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
               headers: {
                 "Content-Type": "multipart/form-data",
@@ -193,12 +194,11 @@
               that.dataListLoading = false
               that.$message.error(error)
             })
-
           } else {
             that.imgs1.push(reader.result)
             let x = document.getElementById('saveImage1').files[0];
             let params = new FormData() ;
-            params.append('fileName',x);
+            params.append('fileName', x);
             let config = { headers:{'Content-Type': 'multipart/form-data'}};
             that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
               headers: {
@@ -230,8 +230,12 @@
             this.reason = data.data.remark
             this.form.userName = data.data.userName
             this.form.idCardNumber = data.data.idCardNumber
-            this.imgs[0] = data.data.idCardFrontPicUrl
-            this.imgs1[0] = data.data.idCardOppositePicUrl
+            if (data.data.idCardFrontPicUrl) {
+              this.imgs[0] = data.data.idCardFrontPicUrl
+            }
+            if (data.data.idCardOppositePicUrl) {
+              this.imgs1[0] = data.data.idCardOppositePicUrl
+            }
           } else {
             this.$message.error(data.msg)
           }
