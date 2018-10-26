@@ -116,29 +116,29 @@
         if(!this.personInfo){
           return;
         }
-        //未认证
-        if(this.personInfo.auth == '1'){
+        //待审核
+        if(this.personInfo.auth == '0'){
           this.isAuthentic = false;
           this.noAuthentic = true;
-          this.authenticText = '未认证';
+          this.authenticText = '待审核';
         }
-        //认证失败
-        if(this.personInfo.auth == '4'){
+        //审核不通过
+        if(this.personInfo.auth == '2'){
           this.isAuthentic = false;
           this.noAuthentic = true;
-          this.authenticText = '认证失败';
+          this.authenticText = '审核不通过';
         }
         //认证中
-        if(this.personInfo.auth == '2'){
+        // if(this.personInfo.auth == '2'){
+        //   this.isAuthentic = true;
+        //   this.noAuthentic = false;
+        //   this.authenticText = '认证中...';
+        // }
+        //审核通过
+        if(this.personInfo.auth == '1'){
           this.isAuthentic = true;
           this.noAuthentic = false;
-          this.authenticText = '认证中...';
-        }
-        //已认证
-        if(this.personInfo.auth == '3'){
-          this.isAuthentic = true;
-          this.noAuthentic = false;
-          this.authenticText = '已认证';
+          this.authenticText = '审核通过';
         }
         if(this.personInfo.payPwd){
           this.noSetPass = false;
