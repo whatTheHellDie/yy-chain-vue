@@ -239,13 +239,13 @@
           return
         }
         if (newPassword !== repeatPassword) {
-          this.$message.error('两次输入的密码不一样')
+          this.$message.error('您两次输入的新密码不一样')
           return
         }
         
         const regPsw = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/
         if (!regPsw.test(newPassword) || !regPsw.test(repeatPassword)){
-          this.$message.error('请输入8-16位数字、字母组合密码')
+          this.$message.error('请输入8-16位数字、字母组合的新密码')
           return;
         }
  

@@ -56,12 +56,12 @@
 
         var computeTime = sessionStorage.getItem('totalTime')
         var time = setInterval(() => {
-          if (computeTime === 0) {
+          if (computeTime <= 0) {
             // 关闭定时器
             clearInterval(time)
 
             // 清空时间
-            sessionStorage.setItem('totalTime', 0)
+            sessionStorage.removeItem('totalTime')
             // 跳转到首页
             this.$router.push({
               name: 'buyPackage'

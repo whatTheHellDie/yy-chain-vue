@@ -34,7 +34,7 @@
             </el-form-item>-->
             <div class="remember-pass clearfix">
               <!--<el-checkbox v-model="rememberPass">记住账号</el-checkbox>-->
-              <span class="cursor default pull-right" @click="$router.push({name:'forgetPassword'})">忘记密码 ？</span>
+              <span class="cursor default pull-right" @click="$router.push({name:'forgetPassword'})">忘记密码？</span>
 
             </div>
             <el-form-item>

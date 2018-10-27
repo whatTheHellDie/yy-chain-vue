@@ -232,9 +232,11 @@
             this.form.idCardNumber = data.data.idCardNumber
             if (data.data.idCardFrontPicUrl) {
               this.imgs[0] = data.data.idCardFrontPicUrl
+              this.form.idCardFrontPicUrl = data.data.idCardFrontPicUrl
             }
             if (data.data.idCardOppositePicUrl) {
               this.imgs1[0] = data.data.idCardOppositePicUrl
+              this.form.idCardOppositePicUrl = data.data.idCardOppositePicUrl
             }
           } else {
             this.$message.error(data.msg)

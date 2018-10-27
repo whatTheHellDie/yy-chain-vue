@@ -30,11 +30,11 @@
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">新支付密码</label>
-                <input type="password" class="form-control input" placeholder="6位数字" v-model="newPwd">
+                <input type="password" class="form-control input" placeholder="请输入6位数字" v-model="newPwd">
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">确认支付密码</label>
-                <input type="password" class="form-control input" placeholder="6位数字" v-model="repeatPwd">
+                <input type="password" class="form-control input" placeholder="请输入6位数字" v-model="repeatPwd">
               </div>
               <div class="gu-btn" @click="update()">提交</div>
             </div>
@@ -74,13 +74,13 @@
         }
 
         if (this.newPwd != this.repeatPwd){
-          this.$message.error('两次密码输入不一致')
+          this.$message.error('您两次输入的新密码不一致')
           return;
         }
 
         const regPsw = /^[0-9]\d{5}$/ 
         if (!regPsw.test(this.newPwd) || !regPsw.test(this.repeatPwd)){
-          this.$message.error('请输入6位数字密码')
+          this.$message.error('请输入6位数字新密码')
           return;
         }
 
@@ -101,7 +101,7 @@
           }) 
         }).then(({data}) => {
           if (data && data.code === '0000') {
-            this.$message.success('重置密码成功')
+            this.$message.success('支付密码重置成功')
             this.$router.push({name: 'personalInformation'})
           } else {
             this.$message.error(data.msg)

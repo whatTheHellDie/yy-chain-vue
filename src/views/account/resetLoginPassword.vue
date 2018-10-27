@@ -67,13 +67,13 @@
       reset () {
           
         if (this.newPwd != this.repeatPwd){
-          this.$message.error('两次密码输入不一致')
+          this.$message.error('您两次输入的新密码不一致');
           return;
         }
 
         const regPsw = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/
-        if (!regPsw.test(this.oldPwd) || !regPsw.test(this.newPwd) || !regPsw.test(this.repeatPwd)){
-          this.$message.error('请输入8-16位数字、字母组合密码')
+        if (!regPsw.test(this.newPwd) || !regPsw.test(this.repeatPwd)){
+          this.$message.error('请输入8-16位数字、字母组合的新密码');
           return;
         }
  
@@ -92,7 +92,7 @@
           if (data && data.code === '0000') {
             this.$cookie.delete('token')
             window.sessionStorage.removeItem('userNumber')
-            this.$message.success('修改密码成功')
+            this.$message.success('登录密码修改成功')
             this.$router.replace({
               name: 'login'
             })
