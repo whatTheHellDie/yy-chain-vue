@@ -49,7 +49,7 @@
                     </div>
                   </div>
                   <div class="not-pass" v-if="item.status==2">
-                    <span>不受理原因：{{item.remark}}</span><span class="pull-right charge-btn" @click="reUpload(item.number,item.chargeNumber,item.chargeVoucher)">重新上传</span>
+                    <span>不受理原因：{{item.remark}}</span><span class="pull-right charge-btn" @click="reUpload(item.number,item.chargeNumber,item.chargeVoucher,item.realChargeAmount)">重新上传</span>
                   </div>
                 </dd>
               </dl>
@@ -172,12 +172,13 @@
           this.dataListLoading = false;
         })
       },
-      reUpload(id,number,chargeVoucher){
+      reUpload(id,number,chargeVoucher,realChargeAmount){
         this.$router.push({ name: 'reChargeCoin',
            query: {
              orderNumber: id ,
              chargeNumber :number,
-             chargeVoucher : chargeVoucher
+             chargeVoucher : chargeVoucher,
+             chargeAmount : realChargeAmount
           }})
       },
       // 每页数

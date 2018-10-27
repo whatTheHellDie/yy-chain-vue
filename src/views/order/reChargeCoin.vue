@@ -31,7 +31,7 @@
                     凭证为转账支付成功的订单详情图片，需包含以下四项内容：转账金额、转账用户钱包地址、收款方钱包地址、交易时间。
                     <div class="clearfix">
                       <div class="tou-s">
-                        <img :src="this.chargeVoucher" class="img" />
+                        <img :src="this.form.chargeVoucher" class="img" />
                         <div class="btn-sub">上传图片<input @change='add_img($event,0)' id="saveImage" accept="image/png,image/jpeg,image/gif" type="file"></div>
                       </div>
                     </div>
@@ -92,6 +92,7 @@
         this.orderNumber = this.$route.query.orderNumber;
         this.form.chargeNumber = this.$route.query.chargeNumber;
         this.form.chargeVoucher = this.$route.query.chargeVoucher;
+        this.form.chargeAmount  = this.$route.query.chargeAmount;
     },
     methods: {
       submitData() {
