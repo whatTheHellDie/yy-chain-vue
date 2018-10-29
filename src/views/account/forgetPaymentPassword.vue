@@ -20,7 +20,7 @@
             <div class="charge-coin set-password forget-password">
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">手机号码</label>
-                <input type="text" class="form-control input" placeholder="请输入您绑定的手机号码" v-model="phone">
+                <input type="text" class="form-control input" placeholder="请输入您绑定的手机号码" v-model="phoneFormat">
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">短信验证码</label>
@@ -50,13 +50,14 @@
 </style>
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MainBody from '@/components/common/mainBody'
   export default {
     data() {
-      return { 
+      return {
         computeTime: '获取验证码',
         phone: '',
+        phoneFormat: '',
         captcha: '',
         newPwd: '',
         repeatPwd: ''
@@ -66,6 +67,7 @@
       MainBody
     },
     methods: {
+      // 重置支付密码
       update(){
         const regPhone = /^1[3|4|5|7|8|6|9][0-9]\d{8}$/
         if (!regPhone.test(this.phone)){
@@ -78,7 +80,7 @@
           return;
         }
 
-        const regPsw = /^[0-9]\d{5}$/ 
+        const regPsw = /^[0-9]\d{5}$/
         if (!regPsw.test(this.newPwd) || !regPsw.test(this.repeatPwd)){
           this.$message.error('请输入6位数字新密码')
           return;
@@ -86,19 +88,19 @@
 
         if (!this.captcha){
           this.$message.error('请输入验证码')
-          return;
+          return
         }
-        
+
         this.$http({
           url: this.$http.adornUrl('/user/reset/pwd'),
           method: 'post',
           params: this.$http.adornParams({
             'oldPwd': '',
             'newPwd': this.newPwd,
-            'type' : 2,
+            'type': 2,
             'phone': this.phone,
             'captcha': this.captcha
-          }) 
+          })
         }).then(({data}) => {
           if (data && data.code === '0000') {
             this.$message.success('支付密码重置成功')
@@ -110,9 +112,9 @@
       },
       // 获取验证码
       getCaptcha () {
-        if(this.computeTime!="获取验证码"){
-          //处于倒计时
-          return false;
+        if (this.computeTime != '获取验证码') {
+          // 处于倒计时
+          return false
         }
         let phone = this.phone
         if (phone == null || phone === '') {
@@ -137,19 +139,41 @@
             console.log(this.computeTime)
             that.computeTime="获取验证码"
             clearInterval(time)
-            return false;
+            return false
           }
              this.computeTime="剩余"+second+"秒"
-             second--;
+             second--
         },1000)
           } else {
-
             this.$message.error(data.msg)
           }
         })
-      } 
+      },
+      // 获取当前登录人的手机号
+      getPersonPhone () {
+        this.$http({
+          url: this.$http.adornUrl('/user/login/phone'),
+          method: 'get'
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.phone = data.data
+            this.phoneFormat = this.formatPhone(this.phone)
+          } else {
+            this.$message.error(data.msg)
+          }
+        }).catch(({error}) => {
+          this.$message.error(error)
+        })
+      },
+      formatPhone (value) {
+        if (value.length > 8) {
+          return value.substr(0, 3) + '****' + value.substr(7)
+        }
+        return value
+      }
     },
-    mounted() { 
+    mounted () {
+      this.getPersonPhone()
     }
   }
 </script>

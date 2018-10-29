@@ -77,9 +77,9 @@
   export default {
     data () {
       return {
-        step: 1, 
+        step: 1,
         phoneNo: '',  //用于接收手机号，以防格式化后获取到不正确的号码
-        computeTime:"获取验证码", 
+        computeTime:"获取验证码",
 
         dataForm: {
           userNumber: '',
@@ -143,17 +143,17 @@
         }
       },
       // 获取验证码
-      getCaptcha () { 
+      getCaptcha () {
         if(this.computeTime!="获取验证码"){
           //处于倒计时
           return false;
         }
         // let phone = this.dataForm.phone
-        let phone = this.phoneNo; 
+        let phone = this.phoneNo;
         if (!phone) {
           this.$message.error('手机号为空')
           return
-        } 
+        }
         // 验证是否未正确的手机号
         if (!this.vaildPhone(phone)){
           this.$message.error('手机号格式不正确')
@@ -198,8 +198,8 @@
         if (!phone) {
           this.$message.error('手机号为空')
           return
-        } 
-        //验证是否未正确的手机号
+        }
+        // 验证是否未正确的手机号
         if (!this.vaildPhone(phone)){
           this.$message.error('手机号格式不正确')
           return;
@@ -242,13 +242,11 @@
           this.$message.error('您两次输入的新密码不一样')
           return
         }
-        
         const regPsw = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/
         if (!regPsw.test(newPassword) || !regPsw.test(repeatPassword)){
           this.$message.error('请输入8-16位数字、字母组合的新密码')
           return;
         }
- 
         this.$http({
           url: this.$http.adornUrl('/user/set/longPwd'),
           method: 'post',
@@ -266,29 +264,27 @@
         })
       },
       vaildPhone(value){
-          const reg = /^1[3|4|5|7|8|6|9][0-9]\d{8}$/ 
-          if (reg.test(value)) { 
+          const reg = /^1[3|4|5|7|8|6|9][0-9]\d{8}$/
+          if (reg.test(value)) {
             // this.$message.error('请输入正确的手机号')
             return true;
           }
           return false;
       },
       getPhoneByNumber(number){
-        
         if (!number){
           return;
         }
-        
         this.$http({
           url: this.$http.adornUrl('/user/getPhoneByNumber'),
           method: 'post',
           params: this.$http.adornParams({
-            'userNumber': number 
+            'userNumber': number
           })
         }).then(({data}) => {
-          if (data && data.code === '0000') { 
+          if (data && data.code === '0000') {
             this.phoneNo = data.data;
-            this.dataForm.phone = this.formatPhone(data.data); 
+            this.dataForm.phone = this.formatPhone(data.data);
           } else {
             this.$message.error(data.msg)
           }
