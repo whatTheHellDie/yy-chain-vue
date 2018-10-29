@@ -88,7 +88,7 @@
     components: {
       MainBody
     },
-    created(){
+    activated(){
         this.orderNumber = this.$route.query.orderNumber;
         this.form.chargeNumber = this.$route.query.chargeNumber;
         this.form.chargeVoucher = this.$route.query.chargeVoucher;

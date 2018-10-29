@@ -244,7 +244,7 @@
         })
       }
     },
-    created: function () {
+    activated: function () {
       this.lastReason()
     }
   }

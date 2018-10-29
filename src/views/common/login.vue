@@ -240,7 +240,7 @@
         }
       }
     },
-    created() {
+    activated() {
         this.createUserNumber();
     },
     watch: {

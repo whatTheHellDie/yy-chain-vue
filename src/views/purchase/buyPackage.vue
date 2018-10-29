@@ -3,7 +3,7 @@
     <my-header></my-header>
     <div class="box-card order-page">
       <h1>入股</h1>
-      <div class="box-body box-body0">
+      <div class="box-body box-body0" style="padding-right: 0;">
         <div class="left">
           <div class="qi">第 <span>{{sharesData.roundCurrent}}</span> / {{sharesData.roundAmountCurrent}} 期</div>
           <div class="intro">每期配送完毕，自动进入下一期，单价上涨0.1%。</div>
@@ -158,7 +158,7 @@
       }
 
     },
-    created: function () {
+    activated: function () {
       this.getSharesViweData()
     }
   }

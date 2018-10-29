@@ -125,9 +125,6 @@
       MyHeader,
       MyFooter
     },
-    created() {
-      //    this.getCaptcha()
-    },
     methods: {
       // 切换注册登录
       switchForm(status) {

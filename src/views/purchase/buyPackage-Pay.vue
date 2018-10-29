@@ -139,7 +139,7 @@
         })
       }
     },
-    created: function () {
+    activated: function () {
       this.stageCurrent = this.$route.query.stageCurrent
       this.roundCurrent = this.$route.query.roundCurrent
       this.yyiQuantity = this.$route.query.yyiQuantity

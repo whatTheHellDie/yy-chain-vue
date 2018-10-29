@@ -120,7 +120,7 @@
         ]
       }
     },
-    created () {
+    activated () {
       this.loadList(0),
       this.getCount()
     },

@@ -218,7 +218,7 @@
         }
       }, 3000);
     },
-    created() {
+    activated() {
          this.getInfo();
          this.getUsdtPrice();
     },
@@ -342,7 +342,7 @@
         }
       },
       setBuyPackage(stage) {
- 
+
         if (stage == 1 && this.disBtn1){
           return;
         }
@@ -352,9 +352,58 @@
         }
 
         if(this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
-          this.$router.push({name:'buyPackage'});
-        } else if(window.sessionStorage.getItem('userNumber')) {
+          this.$http({
+            url: this.$http.adornUrl('/user/query/one'),
+            method: 'get'
+          }).then(({
+            data
+          }) => {
+            if(data && data.code === '0000') {
+              if(!data.data) {
+                return;
+              }
+              if(data.data.auth == 1) {
+                this.$confirm('您还没有实名认证', '提示', {
+                  confirmButtonText: '去认证',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+                }).then(() => {
+                  this.$router.push({
+                    name: 'realNameAuthentication'
+                  })
+                });
+              } else if(data.data.auth == 2) {
+                this.$alert('您还在认证中，请验证通过后再试', '提示', {
+                  confirmButtonText: '确认',
+                });
+              } else if(data.data.auth == 3) {
+                this.$router.push({
+                  name: 'chargeCoin'
+                })
+              } else {
+                this.$confirm('认证失败，请重新认证', '提示', {
+                  confirmButtonText: '去认证',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+                }).then(() => {
+                  this.$router.push({
+                    name: 'realNameAuthentication'
+                  })
+                });
+              }
+            } else {
+              // this.$message.error(data.msg)
+              this.$message.error('获取实名认证信息失败')
+            }
+          }).catch(({
+            error
+          }) => {
+            this.dataListLoading = false
+            this.$message.error(error)
+          })
           
+        } else if(window.sessionStorage.getItem('userNumber')) {
+          window.sessionStorage.setItem('userNumber')
           this.$confirm('您还没有登录，请登录', '提示', {
             confirmButtonText: '去登录',
             cancelButtonText: '取消',

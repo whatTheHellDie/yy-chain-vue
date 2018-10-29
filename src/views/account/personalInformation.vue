@@ -152,7 +152,7 @@
     mounted: function () {
       this.getPersonInfo();
     },
-    updated: function () {
+    activated: function () {
       this.showValidate();
     }
   }

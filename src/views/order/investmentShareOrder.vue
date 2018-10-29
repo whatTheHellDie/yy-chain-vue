@@ -21,7 +21,7 @@
               </ul>
             </div>
             <div class="bechoose-list rugu-list">
-              <dl>
+              <dl v-if="chooseContent.length">
                 <dd class="clearfix" v-for="item,i in chooseContent">
                   <div class="clearfix">
                     <div class="title clearfix">入股订单编号：{{item.number}}
@@ -57,9 +57,10 @@
                   </div>
                 </dd>
               </dl>
+              <div v-else><img src="/static/img/no-data.jpg" alt="" class="no-data" /></div>
             </div>
 
-            <div class="block" style="text-align: center;margin: 30px 0 40px">
+            <div class="block" style="text-align: center;margin: 30px 0 40px" v-if="chooseContent.length">
               <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -78,7 +79,11 @@
   </div>
 </template>
 <style lang="scss" scoped>
-
+.no-data{
+  display: block;
+  margin: 0 auto;
+  padding: 130px 0;
+}
 </style>
 
 <script>
@@ -101,7 +106,7 @@
     components: {
       MainBody
     },
-    created () {
+    activated () {
       this.loadList()
     },
     methods: {

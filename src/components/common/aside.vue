@@ -24,30 +24,30 @@
         num1: 1,
         sideNav: {
           account: [ //账户管理
-//          {
-//            name: "个人信息",
-//            routeName: "personalInformation"
-//          },
-//          {
-//            name: "实名认证",
-//            routeName: "realNameAuthentication"
-//          },
-//          {
-//            name: "设置支付密码",
-//            routeName: "setPaymentPassword"
-//          },
-//          {
-//            name: "忘记支付密码",
-//            routeName: "forgetPaymentPassword"
-//          },
-//          {
-//            name: "重置支付密码",
-//            routeName: "resetPaymentPassword"
-//          },
-//          {
-//            name: "重置登录密码",
-//            routeName: "resetLoginPassword"
-//          },
+            //          {
+            //            name: "个人信息",
+            //            routeName: "personalInformation"
+            //          },
+            //          {
+            //            name: "实名认证",
+            //            routeName: "realNameAuthentication"
+            //          },
+            //          {
+            //            name: "设置支付密码",
+            //            routeName: "setPaymentPassword"
+            //          },
+            //          {
+            //            name: "忘记支付密码",
+            //            routeName: "forgetPaymentPassword"
+            //          },
+            //          {
+            //            name: "重置支付密码",
+            //            routeName: "resetPaymentPassword"
+            //          },
+            //          {
+            //            name: "重置登录密码",
+            //            routeName: "resetLoginPassword"
+            //          },
           ],
           order: [ //订单管理
             {
@@ -73,61 +73,85 @@
       }
     },
     computed: {
-      iconName(){
-        return this.$route.name == 'accountIndex'?"index1":"index"
-        },
-        iconName1(){
-        return this.$route.name == 'personalInformation'?"person1":"person";
-        }
+      iconName() {
+        return this.$route.name == 'accountIndex' ? "index1" : "index"
+      },
+      iconName1() {
+        return this.$route.name == 'personalInformation' ? "person1" : "person";
+      }
     },
     methods: {
-      turn(name){
-        if(name=="chargeCoin"){
+      turn(name) {
+        if(name == "chargeCoin") {
           this.getPersonInfo()
           return false;
-        }else{
-        this.$router.push({ name: name })
+        } else {
+          this.$router.push({
+            name: name
+          })
         }
       },
-      getPersonInfo () {
+      getPersonInfo() {
         this.$http({
           url: this.$http.adornUrl('/user/query/one'),
           method: 'get'
-        }).then(({data}) => {
-          if (data && data.code === '0000') {
+        }).then(({
+          data
+        }) => {
+          if(data && data.code === '0000') {
             if(!data.data) {
               return;
             }
-            if(data.data.auth==3){
-              this.$router.push({ name: 'chargeCoin' })
-            }else{
-              this.$confirm('您还没有实名认证或认证未通过', '提示', {
-          confirmButtonText: '去认证',
-          callback: action => {
-            this.$router.push({ name: 'realNameAuthentication' })
-          }
-        });
+            if(data.data.auth == 1) {
+              this.$confirm('您还没有实名认证', '提示', {
+                confirmButtonText: '去认证',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                this.$router.push({
+                  name: 'realNameAuthentication'
+                })
+              });
+            } else if(data.data.auth == 2) {
+              this.$alert('您还在认证中，请验证通过后再试', '提示', {
+                confirmButtonText: '确认',
+              });
+            } else if(data.data.auth == 3) {
+              this.$router.push({
+                name: 'chargeCoin'
+              })
+            } else {
+              this.$confirm('认证失败，请重新认证', '提示', {
+                confirmButtonText: '去认证',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                this.$router.push({
+                  name: 'realNameAuthentication'
+                })
+              });
             }
           } else {
             // this.$message.error(data.msg)
             this.$message.error('获取实名认证信息失败')
           }
-        }).catch(({error}) => {
+        }).catch(({
+          error
+        }) => {
           this.dataListLoading = false
           this.$message.error(error)
         })
       }
     },
-    mounted() {
-      console.log(this.$route.name)
-    }
+    mounted() {}
   }
 </script>
 
 <style>
-.left-navbar dt.active {
+  .left-navbar dt.active {
     color: #ed9d0e;
   }
+  
   .left-navbar dd.active {
     color: #ed9d0e;
   }
