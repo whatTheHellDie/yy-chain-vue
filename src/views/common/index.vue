@@ -342,7 +342,7 @@
         }
       },
       setBuyPackage(stage) {
-
+ 
         if (stage == 1 && this.disBtn1){
           return;
         }
@@ -354,7 +354,7 @@
         if(this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
           this.$router.push({name:'buyPackage'});
         } else if(window.sessionStorage.getItem('userNumber')) {
-          window.sessionStorage.setItem('userNumber')
+          
           this.$confirm('您还没有登录，请登录', '提示', {
             confirmButtonText: '去登录',
             cancelButtonText: '取消',
