@@ -78,7 +78,7 @@
         if (stageCurrent === 1) { // 第一阶段
 
           this.$http({
-            url: this.$http.adornUrl('/shares/firstStagePay'),
+            url: this.$http.adornUrl('/shares/au/firstStagePay'),
             method: 'post',
             data: this.$http.adornData({
               'currentStage': this.stageCurrent,
@@ -105,7 +105,7 @@
         } else if (stageCurrent === 2) { // 第二阶段
 
           this.$http({
-            url: this.$http.adornUrl('/shares/secondStagePay'),
+            url: this.$http.adornUrl('/shares/au/secondStagePay'),
             method: 'post',
             data: this.$http.adornData({
               'currentStage': this.stageCurrent,

@@ -64,7 +64,7 @@
 </style>
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MyHeader from '@/components/common/header'
   import MyFooter from '@/components/common/footer'
   export default {
@@ -89,12 +89,9 @@
       MyFooter
     },
     methods: {
-      handleChange (value) {
-        //console.log(value)
-      },
       getSharesViweData () {
         this.$http({
-          url: this.$http.adornUrl('/bs/shares/getSharesViweData'),
+          url: this.$http.adornUrl('/shares/au/getSharesViweData'),
           method: 'get'
         }).then(({data}) => {
           if (data && data.code === '0000') {
@@ -114,11 +111,11 @@
         })
       },
       subOrAdd (flag) {
-        if (flag === 0) {//减
+        if (flag === 0) { // 减
           this.yyiQuantity = Number(this.yyiQuantity) - 1
         }
 
-        if (flag === 1) {//加
+        if (flag === 1) { // 加
           this.yyiQuantity = Number(this.yyiQuantity) + 1
         }
 
@@ -127,7 +124,7 @@
         }
         var that = this
         this.$http({
-          url: this.$http.adornUrl('/bs/shares/clickAddOrSub'),
+          url: this.$http.adornUrl('/shares/au/clickAddOrSub'),
           method: 'post',
           params: this.$http.adornParams({
             'currentStage': that.sharesData.stageCurrent,
