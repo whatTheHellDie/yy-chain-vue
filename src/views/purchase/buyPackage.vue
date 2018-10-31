@@ -94,7 +94,7 @@
       },
       getSharesViweData () {
         this.$http({
-          url: this.$http.adornUrl('/shares/getSharesViweData'),
+          url: this.$http.adornUrl('/bs/shares/getSharesViweData'),
           method: 'get'
         }).then(({data}) => {
           if (data && data.code === '0000') {
@@ -127,7 +127,7 @@
         }
         var that = this
         this.$http({
-          url: this.$http.adornUrl('/shares/clickAddOrSub'),
+          url: this.$http.adornUrl('/bs/shares/clickAddOrSub'),
           method: 'post',
           params: this.$http.adornParams({
             'currentStage': that.sharesData.stageCurrent,

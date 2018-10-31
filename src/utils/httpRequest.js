@@ -3,7 +3,7 @@ import axios from 'axios'
 import router from '@/router'
 import qs from 'qs'
 import merge from 'lodash/merge'
-import { clearLoginInfo } from '@/utils'
+import {clearLoginInfo} from '@/utils'
 
 const http = axios.create({
   timeout: 1000 * 30,
@@ -17,7 +17,7 @@ const http = axios.create({
  * 请求拦截
  */
 http.interceptors.request.use(config => {
-config.headers['ACCESS_TOKEN'] = Vue.cookie.get('token') // 请求头带上token
+  config.headers['ACCESS_TOKEN'] = Vue.cookie.get('token') // 请求头带上token
   return config
 }, error => {
   return Promise.reject(error)
@@ -27,10 +27,16 @@ config.headers['ACCESS_TOKEN'] = Vue.cookie.get('token') // 请求头带上token
  * 响应拦截
  */
 http.interceptors.response.use(response => {
-//if (response.data && response.data.code === 401) { // 401, token失效
-//  clearLoginInfo()
-//  router.push({ name: 'login' })
-//}
+  if (response.data && response.data.code === '6666') { // 401, token失效
+    Vue.cookie.delete('token')
+    router.push({
+      name: 'login',
+      query: {
+        loginStatus: 'failed'
+      }
+    })
+    return Promise.reject(error)
+  }
   return response
 }, error => {
   return Promise.reject(error)

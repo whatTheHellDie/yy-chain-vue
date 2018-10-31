@@ -50,7 +50,7 @@
 <script>
   //import { getUUID } from '@/utils'
   import MainBody from '@/components/common/mainBody'
-  export default { 
+  export default {
     components: { MainBody },
     data() {
       return {
@@ -62,33 +62,33 @@
     methods: {
       //重置支付密码
       resetPayPwd() {
-          
+
         if (this.newPwd != this.repeatPwd){
           this.$message.error('您两次输入的新密码不一致')
           return;
         }
 
-        const regPsw = /^[0-9]\d{5}$/ 
+        const regPsw = /^[0-9]\d{5}$/
         if (!regPsw.test(this.newPwd) || !regPsw.test(this.repeatPwd)){
           this.$message.error('请输入6位数字新密码')
           return;
         }
- 
+
         this.$http({
-          url: this.$http.adornUrl('/user/reset/pwd'),
+          url: this.$http.adornUrl('/user/au/reset/pwd'),
           method: 'post',
           params: this.$http.adornParams({
             'oldPwd': this.oldPwd,
             'newPwd': this.newPwd,
             'type': 2, //支付密码
-               
+
             'phone': '',
             'captcha': ''
           })
         }).then(({data}) => {
-          if (data && data.code === '0000') { 
+          if (data && data.code === '0000') {
             // window.location.href='/personalInformation';
-            this.$message.success('支付密码重置成功')  
+            this.$message.success('支付密码重置成功')
             this.$router.replace({
               name: 'personalInformation'
             })

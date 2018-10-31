@@ -240,12 +240,17 @@
         }
       }
     },
-    activated() {
+    created() {
+      if(this.$route.query.loginStatus=="failed"){
+        this.$message.error("登录超时，请重新登录！")
+      }
         this.createUserNumber();
     },
     watch: {
+
       '$route' (to, from) {
         // 对路由变化作出响应...
+
         this.createUserNumber();
       }
     },
@@ -253,7 +258,7 @@
       // 切换注册登录
       createUserNumber () {
         this.$http({
-          url: this.$http.adornUrl('/id/create'),
+          url: this.$http.adornUrl('/user/id/create'),
           method: 'get'
         }).then(({data}) => {
           this.dataListLoading = false

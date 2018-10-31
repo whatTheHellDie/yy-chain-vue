@@ -65,7 +65,7 @@
     },
     methods: {
       reset () {
-          
+
         if (this.newPwd != this.repeatPwd){
           this.$message.error('您两次输入的新密码不一致');
           return;
@@ -76,15 +76,15 @@
           this.$message.error('请输入8-16位数字、字母组合的新密码');
           return;
         }
- 
+
         this.$http({
-          url: this.$http.adornUrl('/user/reset/pwd'),
+          url: this.$http.adornUrl('/user/au/reset/pwd'),
           method: 'post',
           params: this.$http.adornParams({
             'oldPwd': this.oldPwd,
             'newPwd': this.newPwd,
             'type': 1,
-            
+
             'phone': '',
             'captcha': ''
           })

@@ -88,7 +88,7 @@
     methods: {
       getPersonInfo () {
         this.$http({
-          url: this.$http.adornUrl('/user/query/one'),
+          url: this.$http.adornUrl('/user/au/query/one'),
           method: 'get'
         }).then(({data}) => {
           if (data && data.code === '0000') {
