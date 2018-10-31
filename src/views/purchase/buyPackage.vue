@@ -64,7 +64,7 @@
 </style>
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MyHeader from '@/components/common/header'
   import MyFooter from '@/components/common/footer'
   export default {
@@ -89,9 +89,6 @@
       MyFooter
     },
     methods: {
-      handleChange (value) {
-        //console.log(value)
-      },
       getSharesViweData () {
         this.$http({
           url: this.$http.adornUrl('/shares/au/getSharesViweData'),
@@ -114,11 +111,11 @@
         })
       },
       subOrAdd (flag) {
-        if (flag === 0) {//减
+        if (flag === 0) { // 减
           this.yyiQuantity = Number(this.yyiQuantity) - 1
         }
 
-        if (flag === 1) {//加
+        if (flag === 1) { // 加
           this.yyiQuantity = Number(this.yyiQuantity) + 1
         }
 

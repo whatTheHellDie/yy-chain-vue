@@ -93,7 +93,7 @@
       },
       getPersonInfo() {
         this.$http({
-          url: this.$http.adornUrl('/user/query/one'),
+          url: this.$http.adornUrl('/user/au/query/one'),
           method: 'get'
         }).then(({
           data
@@ -151,7 +151,7 @@
   .left-navbar dt.active {
     color: #ed9d0e;
   }
-  
+
   .left-navbar dd.active {
     color: #ed9d0e;
   }

@@ -223,7 +223,7 @@
       },
       lastReason () {
         this.$http({
-          url: this.$http.adornUrl('/user/au/nopass'),
+          url: this.$http.adornUrl('/user/au/last/auth'),
           method: 'get'
         }).then(({data}) => {
           if (data && data.code === '0000') {

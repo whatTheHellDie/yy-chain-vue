@@ -232,7 +232,7 @@
           if (data.data && data.code === '0000') {
               this.usdtPrice1 = data.data.usdtPrice1;
               this.usdtPrice2 = data.data.usdtPrice2;
-          } 
+          }
         })
       },
       getInfo(){
@@ -315,7 +315,7 @@
       resetVal (number) {
         var mNumber = parseInt(number)
         number = number.toString()
-        var point = number.split('.')[1]; 
+        var point = number.split('.')[1];
         mNumber = mNumber.toString()
         if (mNumber.length <= 3){
           if(!point) {
@@ -346,14 +346,14 @@
         if (stage == 1 && this.disBtn1){
           return;
         }
-        
+
         if (stage == 2 && this.disBtn2){
           return;
         }
 
         if(this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
           this.$http({
-            url: this.$http.adornUrl('/user/query/one'),
+            url: this.$http.adornUrl('/user/au/query/one'),
             method: 'get'
           }).then(({
             data
@@ -401,7 +401,7 @@
             this.dataListLoading = false
             this.$message.error(error)
           })
-          
+
         } else if(window.sessionStorage.getItem('userNumber')) {
           window.sessionStorage.setItem('userNumber')
           this.$confirm('您还没有登录，请登录', '提示', {

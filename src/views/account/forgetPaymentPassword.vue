@@ -92,7 +92,7 @@
         }
 
         this.$http({
-          url: this.$http.adornUrl('/user/reset/pwd'),
+          url: this.$http.adornUrl('/user/au/reset/pwd'),
           method: 'post',
           params: this.$http.adornParams({
             'oldPwd': '',
