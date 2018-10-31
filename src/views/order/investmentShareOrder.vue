@@ -144,7 +144,7 @@
         this.loadList()
       },
       // 当前页
-      handleCurrentChange(val) {
+      handleCurrentChange (val) {
         this.pageNum = val
         this.loadList()
       },

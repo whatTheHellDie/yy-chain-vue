@@ -7,65 +7,79 @@
             <div class="charge-list">
               <div class="choose-box">
                 <div class="choose-list">
-                  <div v-for="item,i in chooseList" class="box box2" @click="loadList(i)" :class="{active:i == activeNumber}"><span class="span">{{item.name}}</span></div>
+                  <!--<div v-for="item,i in chooseList" class="box box2" @click="loadList(i)"
+                       :class="{active:i == activeNumber}">
+                    <span class="span">{{item.name}}</span>
+                  </div>-->
+                  <div class="box box2" @click="loadList(1)" :class="{active:1 == activeNumber}">
+                    <span class="span">USDT</span>
+                  </div>
+                  <div class="box box2" @click="loadList(3)" :class="{active:3 == activeNumber}">
+                    <span class="span">易用积分</span>
+                  </div>
+                  <div class="box box2" @click="loadList(2)" :class="{active:2 == activeNumber}">
+                    <span class="span">YYC</span>
+                  </div>
                 </div>
                 <div class="keyong">
-                  <div class="number">0</div>
+                  <div class="number">{{accountBalance}}</div>
                   <div class="name">可用余额</div>
                 </div>
                 <div class="zijin-form">
                   <el-form ref="form" :inline="true" :model="form" label-width="80px">
                     <label for="">分类 </label>
                     <el-form-item>
-                      <el-select v-model="form.region" placeholder="全部状态">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
+                      <el-select v-model="form.region">
+                        <el-option v-for="option in typeOptions" :key="option.value" :label="option.label"
+                                   :value="option.value"></el-option>
                       </el-select>
                     </el-form-item>
                     <label for="">时间</label>
-                    <el-form-item>
-                      <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                    <el-form-item prop="createTime">
+                      <el-date-picker type="daterange" placeholder="选择日期" v-model="form.createTime"
+                                      style="width: 100%;margin-top:2px;"
+                                      unlink-panels="true" value-format="yyyy-MM-dd">
+
+                      </el-date-picker>
                     </el-form-item>
                     <el-form-item>
-                      <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-                    </el-form-item>
-                    <el-form-item>
-                      <div class="gu-btn">搜索</div>
+                     <!-- <div class="gu-btn">搜索</div>-->
+                      <el-button type="primary" @click="loadList()">搜索</el-button>
                     </el-form-item>
                   </el-form>
                   <el-table :data="tableData" border>
-                    <el-table-column prop="date" label="时间" width="157">
+                    <el-table-column prop="createTime" label="时间" width="155">
                     </el-table-column>
-                    <el-table-column prop="name" label="账户类型" width="86">
+                    <el-table-column prop="accountType" label="账户类型" width="80">
+                      <template slot-scope="scope">
+                        <div v-if="scope.row.accountType == 1">USDT</div>
+                        <div v-else-if="scope.row.accountType == 2">YYC</div>
+                        <div v-else-if="scope.row.accountType == 3">易用积分</div>
+                      </template>
                     </el-table-column>
-                    <el-table-column prop="address" label="分类" width="108">
+                    <el-table-column prop="recordFirstType" label="分类" :formatter="firstType" width="80">
                       </el-table-column>
-                      <el-table-column prop="date1" label="详细说明" width="309 ">
+                      <el-table-column prop="remark" label="详细说明" width="350">
                       </el-table-column>
-                      <el-table-column prop="name1" label="变动金额" width="121">
+                      <el-table-column prop="recordAmount" label="变动金额">
                       </el-table-column>
-                      <el-table-column prop="address1" label="账户可用余额" width="127">
+                      <el-table-column prop="balance" label="账户可用余额">
                       </el-table-column>
                   </el-table>
                 </div>
               </div>
             </div>
-            <div class="m-page mb40">
-              <ul class="pagination">
-                <li>
-                  <a href="javascript:void(0)">&lt;</a>
-                </li>
-                <li class="active">
-                  <a href="javascript:void(0)">1</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">&gt;</a>
-                </li>
-              </ul>
-              <div class="turn-to">
-                跳至<input type="text" value="1">页
-                <a href="javascript:void(0)" class="btn btn-turn">跳转</a>
-              </div>
+
+            <div class="block" style="text-align: center;margin: 30px 0 40px">
+              <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                background=""
+                :current-page="pageNum"
+                :page-size="pageSize"
+                layout="prev, pager, next, jumper"
+                :total="elementTotal">
+              </el-pagination>
             </div>
           </div>
 
@@ -79,61 +93,123 @@
 </style>
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MainBody from '@/components/common/mainBody'
   export default {
-    data() {
+    data () {
       return {
-        activeNumber: 0,
-        chooseList: [{
-            name: 'USDT'
-          },
-          {
-            name: '易用积分'
-          },
-          {
-            name: 'YYC'
-          },
-        ],
+        activeNumber: 3,
+        pageNum: 1,
+        pageSize: 8,
+        elementTotal: 0,
+        accountBalance: 0,
         form: {
           name: '',
           region: '',
-          date1: '',
-          date2: '',
+          createTime: '',
           delivery: false,
           type: [],
           resource: '',
           desc: ''
         },
-        tableData: [],
-        
+        typeOptions: [
+          {value: '', label: '全部'},
+          {value: '1', label: '入股'},
+          {value: '2', label: '奖励'},
+          {value: '3', label: '挂卖'},
+          {value: '4', label: '销毁'},
+          {value: '5', label: '释放'},
+          {value: '6', label: '资产分配'},
+          {value: '7', label: '充币'},
+          {value: '8', label: '提币'},
+          {value: '9', label: '转账'}
+        ],
+        tableData: []
       }
     },
     components: {
       MainBody
     },
+    created () {
+      this.loadList()
+    },
     methods: {
-      loadList(i) {
-        this.activeNumber = i;
+      loadList (i) {
+        if (i) {
+          this.activeNumber = i
+        }
+        if (!this.form.createTime) {
+          this.form.createTime = []
+        }
+        this.$http({
+          url: this.$http.adornUrl('/fund/record/list'),
+          method: 'post',
+          data: this.$http.adornData({
+            'pageNum': this.pageNum,
+            'pageSize': this.pageSize,
+            'createEndTime': this.form.createTime.length === 2 ? this.form.createTime[1] : '',
+            'createStartTime': this.form.createTime.length >= 1 ? this.form.createTime[0] : '',
+            'accountType': this.activeNumber,
+            'recordFirstType': this.form.region
+          })
+        }).then(({data}) => {
+          console.log(data)
+          if (data && data.code === '0000') {
+            this.tableData = data.data.dataList
+            this.elementTotal = data.data.elementTotal
+            console.log(data.data.pageSize)
+          } else {
+            this.dataList = []
+            this.elementTotal = 0
+          }
+          this.dataListLoading = false
+        })
+        this.$http({
+          url: this.$http.adornUrl('/fund/record/accountBalance'),
+          method: 'get',
+          params: this.$http.adornParams({'accountType': this.activeNumber})
+        }).then(({data}) => {
+          console.log(data)
+          if (data && data.code === '0000') {
+            this.accountBalance = data.data
+          } else {
+            this.accountBalance = 0
+          }
+          this.dataListLoading = false
+        })
       },
-      pay(id) {
-
+      // 每页数
+      handleSizeChange (val) {
+        this.pageSize = val
+        this.pageNum = 1
+        this.loadList()
       },
-      cancelOrder(id) {
-
+      // 当前页
+      handleCurrentChange (val) {
+        this.pageNum = val
+        this.loadList()
       },
-      delOrder(id) {
-
+      pay (id) {},
+      cancelOrder (id) {},
+      delOrder (id) {},
+      firstType (row, column, cellValue) {
+        if (this.typeOptions.length > 0) {
+          for (let i = 0; i < this.typeOptions.length; i++) {
+            if (cellValue == this.typeOptions[i].value) {
+              return this.typeOptions[i].label
+            }
+          }
+        }
       }
     },
-    mounted() {
+    mounted () {
       //    var clipboard = new ClipboardJS('.copy');
       //
       //    clipboard.on('success', function(e) {
       //        e.clearSelection();
-      //        
+      //
       //    });
-      //    
+      //
       //    clipboard.on('error', function(e) {
       //        alert('该默认浏览器不支持点击复制,请长按选择复制钱包地址或选择分享二维码图片')
       //    });
