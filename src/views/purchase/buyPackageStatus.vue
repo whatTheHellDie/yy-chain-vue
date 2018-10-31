@@ -33,7 +33,7 @@
 </style>
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MyHeader from '@/components/common/header'
   import MyFooter from '@/components/common/footer'
   export default {
@@ -51,14 +51,14 @@
     },
     methods: {
       toOrderViwe () {
-        //跳到订单页面
+        // 跳到订单页面
         this.$router.push({
           name: 'investmentShareOrder',
           query: {}
         })
       },
       toIndexViwe () {
-        //跳到主页
+        // 跳到主页
         this.$router.push({
           name: 'index',
           query: {}
