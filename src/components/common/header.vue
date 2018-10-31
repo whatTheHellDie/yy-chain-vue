@@ -44,7 +44,7 @@
       }
     },
     created() {
-      if(this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
+      if(this.$cookie.get('yy-chain-token') && window.sessionStorage.getItem('userNumber')) {
         this.loginStatus = 1
       }
       if(this.$route.name == 'register' || this.$route.name == 'login') {
@@ -62,7 +62,7 @@
           data
         }) => {
           if(data && data.code === '0000') {
-            this.$cookie.delete('token')
+            this.$cookie.delete('yy-chain-token')
             this.$message.success('注销成功')
             this.loginStatus = '0'
             this.$router.push({
@@ -74,7 +74,7 @@
         })
       },
       toAccount() {
-        if(this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
+        if(this.$cookie.get('yy-chain-token') && window.sessionStorage.getItem('userNumber')) {
           this.$router.push({
             name: 'accountIndex'
           })

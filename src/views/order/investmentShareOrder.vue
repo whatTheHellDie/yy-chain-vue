@@ -106,7 +106,7 @@
     components: {
       MainBody
     },
-    activated () {
+    created () {
       this.loadList()
     },
     methods: {

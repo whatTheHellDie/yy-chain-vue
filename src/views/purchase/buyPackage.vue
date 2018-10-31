@@ -158,7 +158,7 @@
       }
 
     },
-    activated: function () {
+    created: function () {
       this.getSharesViweData()
     }
   }

@@ -46,7 +46,7 @@
       MyHeader,
       MyFooter
     },
-    activated: function () {
+    created: function () {
       this.status = this.$route.query.status
     },
     methods: {

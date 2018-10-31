@@ -218,7 +218,7 @@
         }
       }, 3000);
     },
-    activated() {
+    created() {
          this.getInfo();
          this.getUsdtPrice();
     },
@@ -351,7 +351,7 @@
           return;
         }
 
-        if(this.$cookie.get('token') && window.sessionStorage.getItem('userNumber')) {
+        if(this.$cookie.get('yy-chain-token') && window.sessionStorage.getItem('userNumber')) {
           this.$http({
             url: this.$http.adornUrl('/user/au/query/one'),
             method: 'get'
@@ -378,7 +378,7 @@
                 });
               } else if(data.data.auth == 3) {
                 this.$router.push({
-                  name: 'chargeCoin'
+                  name: 'buyPackage'
                 })
               } else {
                 this.$confirm('认证失败，请重新认证', '提示', {
