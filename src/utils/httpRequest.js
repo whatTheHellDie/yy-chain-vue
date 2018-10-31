@@ -17,7 +17,7 @@ const http = axios.create({
  * 请求拦截
  */
 http.interceptors.request.use(config => {
-  config.headers['ACCESS_TOKEN'] = Vue.cookie.get('token') // 请求头带上token
+  config.headers['ACCESS_TOKEN'] = Vue.cookie.get('yy-chain-token') // 请求头带上token
   return config
 }, error => {
   return Promise.reject(error)
@@ -28,7 +28,7 @@ http.interceptors.request.use(config => {
  */
 http.interceptors.response.use(response => {
   if (response.data && response.data.code === '6666') { // 401, token失效
-    Vue.cookie.delete('token')
+    Vue.cookie.delete('yy-chain-token')
     router.push({
       name: 'login',
       query: {

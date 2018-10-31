@@ -60,7 +60,7 @@ const mainRoutes = {
 
   ],
   beforeEnter (to, from, next) {
-    let token = Vue.cookie.get('token')
+    let token = Vue.cookie.get('yy-chain-token')
     if (!token || !/\S/.test(token)) {
       clearLoginInfo()
       next({ name: 'login' })

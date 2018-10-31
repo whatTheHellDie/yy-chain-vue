@@ -285,7 +285,7 @@
               })
             }).then(({data}) => {
               if (data && data.code === '01201') {
-                this.$cookie.set('token', data.data.token)
+                this.$cookie.set('yy-chain-token', data.data.token)
                 this.$router.replace({
                   name: 'index'
                 })
@@ -325,7 +325,7 @@
                 // alert(1)
                 this.$message.success(data.msg)
                 // alert(2)
-                this.$cookie.set('token', data.data.token)
+                this.$cookie.set('yy-chain-token', data.data.token)
                 this.$router.replace({
                   name: 'index'
                 })

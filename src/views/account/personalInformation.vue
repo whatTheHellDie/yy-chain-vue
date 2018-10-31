@@ -102,10 +102,12 @@
             this.personInfo.auth = data.data.auth
             this.personInfo.payPwd = data.data.payPassword
             this.personInfo.phone = data.data.phone
+            this.showValidate()
           } else {
             // this.$message.error(data.msg)
             this.$message.error('刷新失败')
           }
+
         }).catch(({error}) => {
           this.dataListLoading = false
           this.$message.error(error)
@@ -150,10 +152,10 @@
       }
     },
     mounted: function () {
-      this.getPersonInfo();
+
     },
-    activated: function () {
-      this.showValidate();
+    created: function () {
+      this.getPersonInfo();
     }
   }
 </script>
