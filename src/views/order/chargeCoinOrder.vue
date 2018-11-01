@@ -142,36 +142,35 @@
         this.dataListLoading = false
         })
       },
-      //i 0,待处理 1，受理，2 不受理 3 全部
+      // i 0,待处理 1，受理，2 不受理 3 全部
       loadList(i) {
         this.dataListLoading = true
         this.activeNumber = i
         this.index = i
         if (i == 0) {
-          i = '';
-        } else  {
-         i= i-1;
+          i = ''
+        } else {
+          i = i - 1
         }
         this.$http({
-          url: this.$http.adornUrl('/bs/fund/query/list/page'),
+          url: this.$http.adornUrl('/fund/au/query/list/page'),
           method: 'post',
           data: this.$http.adornData({
             'pageNum': this.pageNum,
             'pageSize': this.pageSize,
-            'status': i,
-            'platform': 2
+            'status': i
           })
         }).then(({data}) => {
           if (data && data.code === '0000') {
             console.log(data.data.dataList)
-            this.chooseContent = data.data.dataList ;
-            this.elementTotal = data.data.elementTotal ;
-            this.dataListLoading = true;
+            this.chooseContent = data.data.dataList
+            this.elementTotal = data.data.elementTotal
+            this.dataListLoading = true
           } else {
             this.dataList = []
             this.elementTotal = 0
           }
-          this.dataListLoading = false;
+          this.dataListLoading = false
         })
       },
       reUpload(id,number,chargeVoucher,realChargeAmount){

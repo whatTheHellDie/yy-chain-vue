@@ -95,27 +95,27 @@
         this.form.chargeAmount  = this.$route.query.chargeAmount;
     },
     methods: {
-      submitData() {
-        if(!this.form.chargeAmount) {
+      submitData () {
+        if (!this.form.chargeAmount) {
           this.$alert('转账数额不能为空', '提示', {
             confirmButtonText: '确定'
-          });
-          return false;
+          })
+          return false
         }
-        if(!this.form.chargeNumber) {
+        if (!this.form.chargeNumber) {
           this.$alert('交易号不能为空', '提示', {
             confirmButtonText: '确定'
-          });
-          return false;
+          })
+          return false
         }
-        if(!this.form.chargeVoucher) {
+        if (!this.form.chargeVoucher) {
           this.$alert('请上传图片', '提示', {
             confirmButtonText: '确定'
-          });
-          return false;
+          })
+          return false
         }
         this.$http({
-          url: this.$http.adornUrl('/fund/au//save'),
+          url: this.$http.adornUrl('/fund/au/save'),
           method: 'post',
           data: this.$http.adornData({
             'chargeAmount': this.form.chargeAmount,
