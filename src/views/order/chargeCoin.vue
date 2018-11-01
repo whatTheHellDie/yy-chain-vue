@@ -177,18 +177,18 @@
           }
 
           that.imgs.push(reader.result)
-          let x = document.getElementById('saveImage').files[0];
-          let params = new FormData();
-          params.append('fileName', x);
+          let x = document.getElementById('saveImage').files[0]
+          let params = new FormData()
+          params.append('fileName', x)
           // alert(that.$cookie.get('token'));
-          let config = {
+          // let config = {
+          //   headers: {
+          //     'Content-Type': 'multipart/form-data'
+          //   }
+          // };
+          that.$axios.post(that.$http.adornUrl('/picture/au/upload'), params, {
             headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          };
-          that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
-            headers: {
-              "Content-Type": "multipart/form-data",
+              'Content-Type': 'multipart/form-data',
               'access_token': that.$cookie.get('yy-chain-token')
             }
           }).then(({
@@ -196,7 +196,7 @@
           }) => {
             this.dataListLoading = false
             console.log(data)
-            if(data && data.code === '0000') {
+            if (data && data.code === '0000') {
               that.form.chargeVoucher = data.data
             } else {
               that.$message.error(data.msg)
@@ -209,11 +209,11 @@
           })
         }
       },
-      onCopy(){
+      onCopy () {
         this.$message({
           message: '复制成功',
           type: 'success'
-        });
+        })
       }
     },
     mounted() {

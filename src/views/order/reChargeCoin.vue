@@ -174,7 +174,7 @@
               'Content-Type': 'multipart/form-data'
             }
           };
-          that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
+          that.$axios.post(that.$http.adornUrl('/picture/au/upload'), params, {
             headers: {
               "Content-Type": "multipart/form-data",
               'access_token': that.$cookie.get('yy-chain-token')
