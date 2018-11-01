@@ -189,7 +189,7 @@
           that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
             headers: {
               "Content-Type": "multipart/form-data",
-              'ACCESS_TOKEN': that.$cookie.get('yy-chain-token')
+              'access_token': that.$cookie.get('yy-chain-token')
             }
           }).then(({
             data
