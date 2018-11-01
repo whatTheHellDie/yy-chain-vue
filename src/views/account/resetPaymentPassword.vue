@@ -48,11 +48,11 @@
 </style>
 
 <script>
-  //import { getUUID } from '@/utils'
+  // import { getUUID } from '@/utils'
   import MainBody from '@/components/common/mainBody'
   export default {
     components: { MainBody },
-    data() {
+    data () {
       return {
         oldPwd: '',
         newPwd: '',
@@ -60,9 +60,8 @@
       }
     },
     methods: {
-      //重置支付密码
-      resetPayPwd() {
-
+      // 重置支付密码
+      resetPayPwd () {
         if (this.newPwd != this.repeatPwd){
           this.$message.error('您两次输入的新密码不一致')
           return;
@@ -71,7 +70,7 @@
         const regPsw = /^[0-9]\d{5}$/
         if (!regPsw.test(this.newPwd) || !regPsw.test(this.repeatPwd)){
           this.$message.error('请输入6位数字新密码')
-          return;
+          return
         }
 
         this.$http({
@@ -96,9 +95,9 @@
             this.$message.error(data.msg)
           }
         })
-      },
+      }
     },
-    mounted() {
+    mounted () {
     }
   }
 </script>
