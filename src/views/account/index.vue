@@ -47,7 +47,7 @@
                 </div>
                 <div class="w33">
                   <div class="name">累计获得USDT数额</div>
-                  <div class="content" v-html="resetVal(fund.usdt)"></div>
+                  <div class="content" v-html="resetVal(fund.teamRewardsUsdt)"></div>
                 </div>
                 <div class="w33">
                   <div class="name">累计获得奖励易用积分数额</div>
@@ -182,6 +182,7 @@
           yyc: '',
           yyi: '',
           usdt: '',
+          teamRewardsUsdt: '',
           sendYyi: '',
           incentiveYyi: '',
           frozenYyi: '',
@@ -236,6 +237,7 @@
             this.fund.yyc = data.data.yyc
             this.fund.yyi = data.data.yyi
             this.fund.usdt = data.data.usdt
+            this.fund.teamRewardsUsdt = data.data.teamRewardsUsdt
             this.fund.sendYyi = data.data.sendYyi
             this.fund.incentiveYyi = data.data.incentiveYyi
             this.fund.frozenYyi = data.data.frozenYyi

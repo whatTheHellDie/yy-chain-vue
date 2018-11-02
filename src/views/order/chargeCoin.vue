@@ -85,7 +85,7 @@
     data() {
       return {
         imgs: ['/static/img/zhan.png'],
-        copyMessage: "LjoeXwCevS6RxdBjfLKBF5EQDLT2B1uRMWsdfsdf",
+        copyMessage: 'LjoeXwCevS6RxdBjfLKBF5EQDLT2B1uRMWsdfsdf',
         num1: 1,
         form: {
           chargeAmount: '',
@@ -138,12 +138,15 @@
           })
         }).then(({data}) => {
           this.btn == 1
-          if (data && data.code === '0000') {
-            this.$message({
-              type: 'success',
-              message: '充币订单提交成功'
+          if (data && data.code === '01404') {
+            this.$alert(data.msg, '提示', {
+              confirmButtonText: '确定',
+              callback: action => {
+                this.$router.push({
+                  name: 'chargeCoinOrder'
+                })
+              }
             })
-            location.reload()
           } else {
             this.$alert(data.msg, '提示', {
               confirmButtonText: '确定'
@@ -154,7 +157,7 @@
       add_img(event, index) {
         var reader = new FileReader();
         var img1 = event.target.files[0];
-        if(window.sessionStorage.getItem("auth") == null) {
+        if(window.sessionStorage.getItem('auth') == null) {
           this.$alert('用户未认证', '提示', {
             confirmButtonText: '确定',
           });
@@ -195,7 +198,6 @@
             data
           }) => {
             this.dataListLoading = false
-            console.log(data)
             if (data && data.code === '0000') {
               that.form.chargeVoucher = data.data
             } else {
@@ -216,17 +218,7 @@
         })
       }
     },
-    mounted() {
-      //    var clipboard = new ClipboardJS('.copy');
-      //
-      //    clipboard.on('success', function(e) {
-      //        e.clearSelection();
-      //
-      //    });
-      //
-      //    clipboard.on('error', function(e) {
-      //        alert('该默认浏览器不支持点击复制,请长按选择复制钱包地址或选择分享二维码图片')
-      //    });
+    mounted () {
     }
   }
 </script>
