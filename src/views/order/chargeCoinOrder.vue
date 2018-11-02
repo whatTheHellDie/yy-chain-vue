@@ -40,7 +40,7 @@
                       <div class="content">
                         <div class="number">交易号: <span class="hao">{{item.chargeNumber}}</span></div>
                         <div class="number">凭证:
-                          <span class="hao"><img :src="item.chargeVoucher" alt="" class="pin" style="height: 300px;width: 500px" /></span>
+                          <span class="hao"><img :src="item.chargeVoucher" alt="" class="pin" /></span>
                         </div>
                         <div class="number">下单时间: <span class="hao">{{item.createTime}}</span></div>
                       </div>
