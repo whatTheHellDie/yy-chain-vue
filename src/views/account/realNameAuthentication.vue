@@ -177,10 +177,10 @@
             params.append('fileName', x)
             console.log(params)
             let config = { headers: {'Content-Type': 'multipart/form-data'}}
-            that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
+            that.$axios.post(that.$http.adornUrl('/picture/au/upload'), params, {
               headers: {
                 "Content-Type": "multipart/form-data",
-                'ACCESS_TOKEN' : that.$cookie.get('token')
+                'access_token' : that.$cookie.get('yy-chain-token')
               }
             }).then(({data}) => {
               this.dataListLoading = false
@@ -200,10 +200,10 @@
             let params = new FormData() ;
             params.append('fileName', x);
             let config = { headers:{'Content-Type': 'multipart/form-data'}};
-            that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
+            that.$axios.post(that.$http.adornUrl('/picture/au/upload'), params, {
               headers: {
                 "Content-Type": "multipart/form-data",
-                'ACCESS_TOKEN' : that.$cookie.get('token')
+                'access_token' : that.$cookie.get('yy-chain-token')
               }
             }).then(({data}) => {
               this.dataListLoading = false

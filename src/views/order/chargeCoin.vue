@@ -99,58 +99,55 @@
       MainBody
     },
     methods: {
-      submitData() {
-
-        if(!this.form.chargeAmount) {
+      submitData () {
+        if (!this.form.chargeAmount) {
           this.$alert('转账数额不能为空', '提示', {
-              confirmButtonText: '确定'
-            });
-            return false;
+            confirmButtonText: '确定'
+          })
+          return false
         }
-        if(!this.form.chargeNumber) {
+        if (!this.form.chargeNumber) {
           this.$alert('交易号不能为空', '提示', {
-              confirmButtonText: '确定'
-            });
-            return false;
+            confirmButtonText: '确定'
+          })
+          return false
         }
-        if(this.form.chargeNumber.length<20) {
+        if (this.form.chargeNumber.length < 20) {
           this.$alert('交易号不能少于20字符', '提示', {
-              confirmButtonText: '确定'
-            });
-            return false;
+            confirmButtonText: '确定'
+          })
+          return false
         }
-        if(!this.form.chargeVoucher) {
+        if (!this.form.chargeVoucher) {
           this.$alert('请上传图片', '提示', {
-              confirmButtonText: '确定'
-            });
-            return false;
+            confirmButtonText: '确定'
+          })
+          return false
         }
-        if(this.btn==0){
-          return false;
+        if (this.btn == 0) {
+          return false
         }
-        this.btn==0;
+        this.btn == 0;
         this.$http({
-          url: this.$http.adornUrl('/fund/au//save'),
+          url: this.$http.adornUrl('/fund/au/charge'),
           method: 'post',
           data: this.$http.adornData({
             'chargeAmount': this.form.chargeAmount,
             'chargeNumber': this.form.chargeNumber,
             'chargeVoucher': this.form.chargeVoucher
           })
-        }).then(({
-          data
-        }) => {
-          this.btn==1
-          if(data && data.code === '0000') {
+        }).then(({data}) => {
+          this.btn == 1
+          if (data && data.code === '0000') {
             this.$message({
               type: 'success',
-            message: '充币订单提交成功'
-          })
+              message: '充币订单提交成功'
+            })
             location.reload()
           } else {
             this.$alert(data.msg, '提示', {
               confirmButtonText: '确定'
-            });
+            })
           }
         })
       },
@@ -180,26 +177,26 @@
           }
 
           that.imgs.push(reader.result)
-          let x = document.getElementById('saveImage').files[0];
-          let params = new FormData();
-          params.append('fileName', x);
+          let x = document.getElementById('saveImage').files[0]
+          let params = new FormData()
+          params.append('fileName', x)
           // alert(that.$cookie.get('token'));
-          let config = {
+          // let config = {
+          //   headers: {
+          //     'Content-Type': 'multipart/form-data'
+          //   }
+          // };
+          that.$axios.post(that.$http.adornUrl('/picture/au/upload'), params, {
             headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          };
-          that.$axios.post(that.$http.adornUrl('/fund/au/fileUpload'), params, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              'ACCESS_TOKEN': that.$cookie.get('yy-chain-token')
+              'Content-Type': 'multipart/form-data',
+              'access_token': that.$cookie.get('yy-chain-token')
             }
           }).then(({
             data
           }) => {
             this.dataListLoading = false
             console.log(data)
-            if(data && data.code === '0000') {
+            if (data && data.code === '0000') {
               that.form.chargeVoucher = data.data
             } else {
               that.$message.error(data.msg)
@@ -212,11 +209,11 @@
           })
         }
       },
-      onCopy(){
+      onCopy () {
         this.$message({
           message: '复制成功',
           type: 'success'
-        });
+        })
       }
     },
     mounted() {
