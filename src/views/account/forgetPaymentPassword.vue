@@ -20,7 +20,7 @@
             <div class="charge-coin set-password forget-password">
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">手机号码</label>
-                <input type="text" class="form-control input" placeholder="请输入您绑定的手机号码" v-model="phoneFormat">
+                <input type="text" class="form-control input" v-model="phoneFormat" disabled>
               </div>
               <div class="form-group combo-form">
                 <label for="zhuan" class="col-sm-2 control-label">短信验证码</label>
@@ -117,6 +117,7 @@
           return false
         }
         let phone = this.phone
+        alert(this.phone)
         if (phone == null || phone === '') {
           this.$message.error('请先填写手机号')
           return
@@ -152,7 +153,7 @@
       // 获取当前登录人的手机号
       getPersonPhone () {
         this.$http({
-          url: this.$http.adornUrl('/user/login/phone'),
+          url: this.$http.adornUrl('/user/au/login/phone'),
           method: 'get'
         }).then(({data}) => {
           if (data && data.code === '0000') {
