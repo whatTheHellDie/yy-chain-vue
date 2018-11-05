@@ -117,7 +117,6 @@
           return false
         }
         let phone = this.phone
-        alert(this.phone)
         if (phone == null || phone === '') {
           this.$message.error('请先填写手机号')
           return
