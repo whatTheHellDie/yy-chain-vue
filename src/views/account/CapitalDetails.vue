@@ -11,13 +11,13 @@
                        :class="{active:i == activeNumber}">
                     <span class="span">{{item.name}}</span>
                   </div>-->
-                  <div class="box box2" @click="loadList(1)" :class="{active:1 == activeNumber}">
+                  <div class="box box2" @click="tabClick(1)" :class="{active:1 == activeNumber}">
                     <span class="span">USDT</span>
                   </div>
-                  <div class="box box2" @click="loadList(3)" :class="{active:3 == activeNumber}">
+                  <div class="box box2" @click="tabClick(3)" :class="{active:3 == activeNumber}">
                     <span class="span">易用积分</span>
                   </div>
-                  <div class="box box2" @click="loadList(2)" :class="{active:2 == activeNumber}">
+                  <div class="box box2" @click="tabClick(2)" :class="{active:2 == activeNumber}">
                     <span class="span">YYC</span>
                   </div>
                 </div>
@@ -164,19 +164,30 @@
           }
           this.dataListLoading = false
         })
+      },
+      queryBalance (i) {
         this.$http({
-          url: this.$http.adornUrl('/fund/record/accountBalance'),
-          method: 'get',
-          params: this.$http.adornParams({'accountType': this.activeNumber})
+          url: this.$http.adornUrl('/fund/au/person'),
+          method: 'get'
         }).then(({data}) => {
           console.log(data)
           if (data && data.code === '0000') {
-            this.accountBalance = data.data
+            if (i == 1) {
+              this.accountBalance = data.data.usdt
+            } else if (i == 2) {
+              this.accountBalance = data.data.yyc
+            } else if (i == 3) {
+              this.accountBalance = data.data.yyi
+            }
           } else {
             this.accountBalance = 0
           }
           this.dataListLoading = false
         })
+      },
+      tabClick (i) {
+        this.loadList(i)
+        this.queryBalance(i)
       },
       // 每页数
       handleSizeChange (val) {
@@ -203,16 +214,7 @@
       }
     },
     mounted () {
-      //    var clipboard = new ClipboardJS('.copy');
-      //
-      //    clipboard.on('success', function(e) {
-      //        e.clearSelection();
-      //
-      //    });
-      //
-      //    clipboard.on('error', function(e) {
-      //        alert('该默认浏览器不支持点击复制,请长按选择复制钱包地址或选择分享二维码图片')
-      //    });
+      this.tabClick(this.activeNumber)
     }
   }
 </script>
