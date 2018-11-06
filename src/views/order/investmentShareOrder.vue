@@ -36,7 +36,7 @@
                         </div>
                       </div>
                       <div class="yy-content">
-                        <div class="yy-title">数量</div>
+                        <div class="yy-title">数量（万个）</div>
                         <div class="y-content min60 clearfix">
                           <span>{{item.sendYyiQuantity}}</span>
                         </div>
@@ -156,14 +156,6 @@
       }
     },
     mounted () {
-      //    var clipboard = new ClipboardJS('.copy');
-      //
-      //    clipboard.on('success', function(e) {
-      //        e.clearSelection();
-      //    });
-      //    clipboard.on('error', function(e) {
-      //        alert('该默认浏览器不支持点击复制,请长按选择复制钱包地址或选择分享二维码图片')
-      //    });
     }
   }
 </script>

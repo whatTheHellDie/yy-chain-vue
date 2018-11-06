@@ -238,7 +238,7 @@
       getInfo(){
         let _this = this;
         this.$http({
-          url: this.$http.adornUrl('/stageInfo/getAll'),
+          url: this.$http.adornUrl('/stageInfo/get/all'),
           method: 'get',
           // params: this.$http.adornParams()
         }).then(({data}) => {
