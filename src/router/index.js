@@ -40,7 +40,7 @@ const globalRoutes = [
   { path: '/setPaymentPassword', component: _import('account/setPaymentPassword'), name: 'setPaymentPassword', meta: { title: '实名认证' } },
   { path: '/forgetPaymentPassword', component: _import('account/forgetPaymentPassword'), name: 'forgetPaymentPassword', meta: { title: '设置支付密码' } },
   { path: '/resetPaymentPassword', component: _import('account/resetPaymentPassword'), name: 'resetPaymentPassword', meta: { title: '重置支付密码' } },
-  { path: '/resetLoginPassword', component: _import('account/resetLoginPassword'), name: 'resetLoginPassword', meta: { title: '重置登录密码' } },
+  { path: '/resetLoginPassword', component: _import('account/resetLoginPassword'), name: 'resetLoginPassword', meta: { title: '重置登录密码' } }
 ]
 
 // 主入口路由(需嵌套上左右整体布局)

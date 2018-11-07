@@ -76,7 +76,6 @@
       pay () {
         var stageCurrent = Number(this.stageCurrent)
         if (stageCurrent === 1) { // 第一阶段
-
           this.$http({
             url: this.$http.adornUrl('/shares/au/first/stage/pay'),
             method: 'post',
@@ -97,13 +96,19 @@
                   status: 0
                 }
               })
+            } else if (data && data.code === '03107') {
+              this.$confirm(data.msg, '提示', {
+                confirmButtonText: '设置支付密码',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                this.$router.push({ name: 'setPaymentPassword' })
+              })
             } else {
               this.$message.error(data.msg)
             }
           })
-
         } else if (stageCurrent === 2) { // 第二阶段
-
           this.$http({
             url: this.$http.adornUrl('/shares/au/second/stage/pay'),
             method: 'post',

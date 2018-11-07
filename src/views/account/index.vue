@@ -32,7 +32,7 @@
                   <div class="hover-content">
                     <div class="clearfix">配送易用积分<span class="pull-right">{{fund.sendYyi}}</span></div>
                     <div class="clearfix">激励易用积分<span class="pull-right">{{fund.incentiveYyi}}</span></div>
-                    <div class="clearfix">未到账易用积分<span class="pull-right">{{fund.frozenYyi}}</span></div>
+                    <!--<div class="clearfix">未到账易用积分<span class="pull-right">{{fund.frozenYyi}}</span></div>-->
                   </div>
                 </div>
               </div>
@@ -203,7 +203,7 @@
           if(!point) {
             return (mNumber == '' ? '0' : mNumber)
           }else{
-            return (mNumber == '' ? '0' : mNumber) + '.' + point
+            return (mNumber == '' ? '0' : mNumber) + '.<span class="little-num">' + point + '</span>'
           }
         }else {
           var mod = mNumber.length % 3;
