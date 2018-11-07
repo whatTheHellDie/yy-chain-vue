@@ -98,6 +98,9 @@
     components: {
       MainBody
     },
+    created: function () {
+      this.lastReason()
+    },
     methods: {
       submitData () {
         if (!this.form.userName || !this.form.userName.trim()) {
@@ -243,9 +246,6 @@
           }
         })
       }
-    },
-    created: function () {
-      this.lastReason()
     }
   }
 </script>
