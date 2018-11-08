@@ -47,7 +47,8 @@
                     </div>
                     <div class="gradient"></div>
                     <div class="right">
-                      <div class="number number2">充币数额（USDT）：<br><span class="hao2">{{item.realChargeAmount}}</span></div>
+                      <div class="number number2">申请充币数额（USDT）：<br><span class="hao2">{{item.realChargeAmount}}</span></div>
+                      <div class="number number2">实际到账数额（USDT）：<br><span class="hao2"></span></div>
                     </div>
                   </div>
                   <div class="not-pass" v-if="item.status==2">

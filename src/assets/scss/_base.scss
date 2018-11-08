@@ -617,7 +617,7 @@ overflow: hidden;text-align: center;background: #000;color: #fff;}
          &.active{color: #ee9d0e;}
         }
     }
-    .left{float: left;width: 637px;}
+    .left{float: left;width: 542px;}
     .content{
         padding: 20px 29px;
         color: #000;
@@ -626,8 +626,9 @@ overflow: hidden;text-align: center;background: #000;color: #fff;}
     .number{margin-bottom: 16px;}
     .hao{font-weight: normal;margin-left: 20px;}
     .gradient{width: 1px; height: 212px;float: left;margin-top: 22px;}
-    .number2{text-align: center;padding-top: 86px;line-height: 39px;font-weight: 800;}
-    .hao2{color: #ED9D0E;font-size: 20px;}
+    .right{float: left;padding-top: 38px;padding-left: 30px;width: 345px;}
+    .number2{line-height: 36px;font-weight: 800;}
+    .hao2{color: #ED9D0E;font-size: 20px;display: block;text-align: center;}
     .not-pass{ padding: 0 29px;color: #F33938;height: 60px;line-height: 60px;border-top: 1px solid rgba(204,204,204,.3);}
     .charge-btn{
         width: 120px;
