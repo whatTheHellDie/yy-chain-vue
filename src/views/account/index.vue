@@ -38,106 +38,106 @@
               </div>
             </div>
             <div class="my-zichang hei212" style="border-top: 0;">
-              <div class="title">直推概况</div>
+              <div class="title">概况</div>
               <div class="clear"></div>
               <div class="money-list clearfix">
-                <div class="w33">
+                <div class="w33" style="width: 50%">
                   <div class="name">直推会员人数</div>
                   <div class="content" v-html="resetVal(fund.directlyUserCount)"></div>
                 </div>
-                <div class="w33">
+                <div class="w33" style="width: 50%">
                   <div class="name">累计获得USDT数额</div>
                   <div class="content" v-html="resetVal(fund.teamRewardsUsdt)"></div>
                 </div>
-                <div class="w33">
-                  <div class="name">累计获得奖励易用积分数额</div>
-                  <div class="content" v-html="resetVal(fund.teamRewardsYyi)"></div>
-                </div>
+                <!--<div class="w33">-->
+                  <!--<div class="name">累计获得奖励易用积分数额</div>-->
+                  <!--<div class="content" v-html="resetVal(fund.teamRewardsYyi)"></div>-->
+                <!--</div>-->
               </div>
             </div>
-            <div class="my-zichang">
-              <div class="title">团队概况</div>
-              <div class="clear"></div>
-              <div class="team-list clearfix">
-                <div class="left">
-                  <div class="population">
-                    团队总人数(人)
-                  </div>
-                  <div class="number">0</div>
+            <!--<div class="my-zichang">-->
+              <!--<div class="title">团队概况</div>-->
+              <!--<div class="clear"></div>-->
+              <!--<div class="team-list clearfix">-->
+                <!--<div class="left">-->
+                  <!--<div class="population">-->
+                    <!--团队总人数(人)-->
+                  <!--</div>-->
+                  <!--<div class="number">0</div>-->
 
-                </div>
-                <div class="right clearfix">
-                  <div class="w33">
-                    <div class="population">vip会员(人)</div>
-                    <div class="s-number">0</div>
-                  </div>
-                  <div class="w33">
-                    <div class="population">普通会员(人)</div>
-                    <div class="s-number">0</div>
-                  </div>
-                  <div class="w33">
-                    <div class="population">其他(人)</div>
-                    <div class="s-number">0</div>
-                  </div>
-                </div>
-              </div>
-              <div class="team-list clearfix">
-                <div class="left">
-                  <div class="population">
-                    累计获得奖励易用积分数(个)
-                  </div>
-                  <div class="number" v-html="resetVal(0)"></div>
-                </div>
-                <div class="right clearfix">
-                  <div class="w50">
-                    <div class="population">今日获得(个)</div>
-                    <div class="s-number" v-html="resetVal(0)"></div>
-                  </div>
-                  <div class="w50">
-                    <div class="population">本月获得(个)</div>
-                    <div class="s-number" v-html="resetVal(0)"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="team-list clearfix">
-                <div class="left">
-                  <div class="population">
-                  累计获得USDT数额(枚)
-                  </div>
-                  <div class="number">0</div>
+                <!--</div>-->
+                <!--<div class="right clearfix">-->
+                  <!--<div class="w33">-->
+                    <!--<div class="population">vip会员(人)</div>-->
+                    <!--<div class="s-number">0</div>-->
+                  <!--</div>-->
+                  <!--<div class="w33">-->
+                    <!--<div class="population">普通会员(人)</div>-->
+                    <!--<div class="s-number">0</div>-->
+                  <!--</div>-->
+                  <!--<div class="w33">-->
+                    <!--<div class="population">其他(人)</div>-->
+                    <!--<div class="s-number">0</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="team-list clearfix">-->
+                <!--<div class="left">-->
+                  <!--<div class="population">-->
+                    <!--累计获得奖励易用积分数(个)-->
+                  <!--</div>-->
+                  <!--<div class="number" v-html="resetVal(0)"></div>-->
+                <!--</div>-->
+                <!--<div class="right clearfix">-->
+                  <!--<div class="w50">-->
+                    <!--<div class="population">今日获得(个)</div>-->
+                    <!--<div class="s-number" v-html="resetVal(0)"></div>-->
+                  <!--</div>-->
+                  <!--<div class="w50">-->
+                    <!--<div class="population">本月获得(个)</div>-->
+                    <!--<div class="s-number" v-html="resetVal(0)"></div>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="team-list clearfix">-->
+                <!--<div class="left">-->
+                  <!--<div class="population">-->
+                  <!--累计获得USDT数额(枚)-->
+                  <!--</div>-->
+                  <!--<div class="number">0</div>-->
 
-                </div>
-                <div class="right clearfix">
-                  <div class="w33 w50">
-                    <div class="population">今日获得(枚)</div>
-                    <div class="s-number" v-html="resetVal(0)"></div>
-                  </div>
-                  <div class="w33 w50">
-                    <div class="population">本月获得(枚)</div>
-                    <div class="s-number" v-html="resetVal(0)"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="team-list clearfix">
-                <div class="left">
-                  <div class="population">
-                    团队总人数(人)
-                  </div>
-                  <div class="number">0</div>
+                <!--</div>-->
+                <!--<div class="right clearfix">-->
+                  <!--<div class="w33 w50">-->
+                    <!--<div class="population">今日获得(枚)</div>-->
+                    <!--<div class="s-number" v-html="resetVal(0)"></div>-->
+                  <!--</div>-->
+                  <!--<div class="w33 w50">-->
+                    <!--<div class="population">本月获得(枚)</div>-->
+                    <!--<div class="s-number" v-html="resetVal(0)"></div>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="team-list clearfix">-->
+                <!--<div class="left">-->
+                  <!--<div class="population">-->
+                    <!--团队总人数(人)-->
+                  <!--</div>-->
+                  <!--<div class="number">0</div>-->
 
-                </div>
-                <div class="right clearfix">
-                  <div class="w33 w50">
-                    <div class="population">今日业绩(个)</div>
-                    <div class="s-number" v-html="resetVal(0)"></div>
-                  </div>
-                  <div class="w33 w50">
-                    <div class="population">本月业绩(个)</div>
-                    <div class="s-number" v-html="resetVal(0)"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                <!--</div>-->
+                <!--<div class="right clearfix">-->
+                  <!--<div class="w33 w50">-->
+                    <!--<div class="population">今日业绩(个)</div>-->
+                    <!--<div class="s-number" v-html="resetVal(0)"></div>-->
+                  <!--</div>-->
+                  <!--<div class="w33 w50">-->
+                    <!--<div class="population">本月业绩(个)</div>-->
+                    <!--<div class="s-number" v-html="resetVal(0)"></div>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
           </div>
         </div>
       </div>

@@ -47,8 +47,8 @@
                     </div>
                     <div class="gradient"></div>
                     <div class="right">
-                      <div class="number number2">申请充币数额（USDT）：<br><span class="hao2">{{item.realChargeAmount}}</span></div>
-                      <div class="number number2">实际到账数额（USDT）：<br><span class="hao2"></span></div>
+                      <div class="number number2">申请充币数额（USDT）：<br><span class="hao2">{{item.applyChargeAmount}}</span></div>
+                      <div class="number number2">实际到账数额（USDT）：<br><span class="hao2">{{item.realChargeAmount}}</span></div>
                     </div>
                   </div>
                   <div class="not-pass" v-if="item.status==2">
@@ -110,6 +110,7 @@
           chargeNumber: '',
           chargeVoucher: "/static/img/sub.png",
           createTime: '',//下单时间
+          applyChargeAmount: '', //充币数额
           realChargeAmount: ''//充币数额
         }]
       }
