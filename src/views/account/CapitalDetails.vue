@@ -153,7 +153,6 @@
             'recordFirstType': this.form.region
           })
         }).then(({data}) => {
-          console.log(data)
           if (data && data.code === '0000') {
             this.tableData = data.data.dataList
             this.elementTotal = data.data.elementTotal
@@ -170,7 +169,6 @@
           url: this.$http.adornUrl('/fund/au/person'),
           method: 'get'
         }).then(({data}) => {
-          console.log(data)
           if (data && data.code === '0000') {
             if (i == 1) {
               this.accountBalance = data.data.usdt
@@ -186,8 +184,37 @@
         })
       },
       tabClick (i) {
+        this.form.region = ''
         this.loadList(i)
         this.queryBalance(i)
+        if (i == 1) {
+          this.typeOptions = [
+            {value: '', label: '全部'},
+            {value: '1', label: '入股'},
+            {value: '2', label: '奖励'},
+            {value: '6', label: '资产分配'},
+            {value: '7', label: '充币'},
+            {value: '8', label: '提币'},
+            {value: '9', label: '转账'}
+          ]
+        } else if (i == 2) {
+          this.typeOptions = [
+            {value: '', label: '全部'},
+            {value: '5', label: '释放'},
+            {value: '8', label: '提币'},
+            {value: '9', label: '转账'}
+          ]
+        } else if (i == 3) {
+          this.typeOptions = [
+            {value: '', label: '全部'},
+            {value: '1', label: '入股'},
+            {value: '2', label: '奖励'},
+            {value: '3', label: '挂卖'},
+            {value: '4', label: '销毁'},
+            {value: '5', label: '释放'},
+            {value: '9', label: '转账'}
+          ]
+        }
       },
       // 每页数
       handleSizeChange (val) {
