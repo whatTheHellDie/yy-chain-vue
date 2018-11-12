@@ -94,9 +94,6 @@
 </template>
 
 <script>
-  window.addEventListener("popstate", function(e) {
-    window.history.pushState({}, "", "/login");
-  });
   import MyHeader from '@/components/common/header'
   import MyFooter from '@/components/common/footer'
   export default {
@@ -244,6 +241,9 @@
       }
     },
     created() {
+      window.addEventListener("popstate", function(e) {
+        window.history.pushState({}, "", "/login");
+      });
       if(this.$route.query.loginStatus=="failed"){
         this.$message.error("登录超时，请重新登录！")
       }
