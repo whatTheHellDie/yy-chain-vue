@@ -50,8 +50,6 @@
       if(this.$route.name == 'register' || this.$route.name == 'login') {
         this.loginStatus = 2
       }
-      this.$store.commit('user/updateName', "haha")
-      console.log(this.$store.state.user.name)
     },
     methods: {
       logout() {
