@@ -185,6 +185,7 @@
       },
       tabClick (i) {
         this.form.region = ''
+        this.pageNum = 1
         this.loadList(i)
         this.queryBalance(i)
         if (i == 1) {
