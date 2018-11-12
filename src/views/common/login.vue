@@ -94,6 +94,9 @@
 </template>
 
 <script>
+  window.addEventListener("popstate", function(e) {
+    window.history.pushState({}, "", "/login");
+  });
   import MyHeader from '@/components/common/header'
   import MyFooter from '@/components/common/footer'
   export default {
