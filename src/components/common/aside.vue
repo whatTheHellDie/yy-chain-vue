@@ -48,6 +48,7 @@
             //            name: "重置登录密码",
             //            routeName: "resetLoginPassword"
             //          },
+             
           ],
           order: [ //订单管理
             {
@@ -57,12 +58,24 @@
             {
               name: "充币订单",
               routeName: "chargeCoinOrder"
+            },
+             {
+              name: "提币订单",
+              routeName: "withdrawalOrder"
             }
           ],
           fund: [ //资金管理
             {
+              name: "数字钱包",
+              routeName: "digitalWallet"
+            },
+            {
               name: "充币",
               routeName: "chargeCoin"
+            },
+             {
+              name: "提币",
+              routeName: "withdrawal"
             },
             {
               name: "资金明细",
