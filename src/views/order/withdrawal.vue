@@ -138,9 +138,9 @@
         this.form.realWithdrawalAmount = (this.form.withdrawalAmount - this.form.withdrawalAmount*this.form.handingFee).toFixed(2);
       },
       submitForm (formName) {
-        if(this.form.accountType == 1 &&  this.form.withdrawalAmount > this.totalNumberUsdtAmount){
+        if(this.form.accountType == 1 &&  parseFloat(this.form.withdrawalAmount) > parseFloat(this.totalNumberUsdtAmount)){
             return  this.$message.error('USDT账户余额不足')
-          }else if(this.form.accountType == 2 &&  this.form.withdrawalAmount > this.totalNumberYycAmount){
+          }else if(this.form.accountType == 2 &&  parseFloat(this.form.withdrawalAmount) > parseFloat(this.totalNumberYycAmount)){
             return  this.$message.error('YYC账户余额不足')
           }
         this.$refs[formName].validate((valid) => {
@@ -169,8 +169,10 @@
                   }
                 })
               } else {
-                this.$message.error(data.msg)
+                this.$message({message: data.msg,
+                  type: 'error'})
               }
+              this.$router.push({ name: 'withdrawalOrder'})
             })
           } else {
             console.log('error submit!!');
