@@ -16,19 +16,19 @@
                 </li>
               </ul>
             </div>
-            <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-              <el-form-item label="提币类型：" prop="accountType" >
-                <el-select v-model="form.accountType" @change="getWalletList(form.accountType)">
+            <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm"  style="padding:50px 0 0 50px">
+              <el-form-item label="提币类型：" prop="accountType">
+                <el-select v-model="form.accountType" @change="getWalletList(form.accountType)" style="width: 250px;">
                   <el-option label="USDT" value="1"></el-option>
                   <el-option label="YYC" value="2"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="数字钱包：" prop="walletId">
-                <el-select v-model="form.walletId" @change="selectChange(form.walletId)">
+                <el-select v-model="form.walletId" @change="selectChange(form.walletId)" style="width: 250px;">
                   <el-option v-for="item in this.walletList" :key="item.walletId" :label="item.name"  :value="item.walletId">
                   </el-option>
                 </el-select>
-                <el-button @click="$router.push({ name: 'digitalWallet' })">添加数字钱包</el-button>
+                <el-button @click="$router.push({ name: 'digitalWallet' })" class="elbut">添加数字钱包</el-button>
               </el-form-item>
               <el-form-item label="提币数额：" prop="withdrawalAmount" >
                 <el-input v-model="form.withdrawalAmount" @blur="calculationFee()"></el-input>
@@ -54,6 +54,13 @@
   </div>
 </template>
 <style lang="scss" scoped>
+.el-input--medium{width: 250px !important;}
+.elbut{
+    background-color: white;
+    color: #ed9d0e;
+    border-color: #ed9d0e;
+    margin-left: 10px;
+}
 </style>
 
 <script>
@@ -84,7 +91,7 @@
           accountType: '',
           wallet: '',
           walletAddress: '',
-          handingFee: '0',
+          handingFee: '',
           withdrawalAmount: '',
           realWithdrawalAmount: '',
           payPassword: ''
