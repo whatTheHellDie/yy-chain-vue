@@ -16,32 +16,35 @@
                 </li>
               </ul>
             </div>
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-              <el-form-item label="提币类型：" prop="region">
-                <el-select v-model="ruleForm.region" >
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
+            <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
+              <el-form-item label="提币类型：" prop="accountType" >
+                <el-select v-model="form.accountType" @change="getWalletList(form.accountType)">
+                  <el-option label="USDT" value="1"></el-option>
+                  <el-option label="YYC" value="2"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="数字钱包：" prop="region">
-                <el-select v-model="ruleForm.region" >
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
+              <el-form-item label="数字钱包：" prop="walletId">
+                <el-select v-model="form.walletId" @change="selectChange(form.walletId)">
+                  <el-option v-for="item in this.walletList" :key="item.walletId" :label="item.name"  :value="item.walletId">
+                  </el-option>
                 </el-select>
+                <el-button @click="$router.push({ name: 'digitalWallet' })">添加数字钱包</el-button>
               </el-form-item>
-              <el-form-item label="提币数额：" prop="name">
-                <el-input v-model="ruleForm.name"></el-input>
+              <el-form-item label="提币数额：" prop="withdrawalAmount" >
+                <el-input v-model="form.withdrawalAmount" @blur="calculationFee()"></el-input>
               </el-form-item>
-              <el-form-item label="手续费：" prop="delivery">
+              <el-form-item label="手续费：" prop="handingFee">
+                <el-input v-model="form.handingFee" disabled="disabled"></el-input>
               </el-form-item>
                <el-form-item label="预计到账：" prop="delivery">
+                 <el-input v-model="form.realWithdrawalAmount" disabled="disabled"></el-input>
               </el-form-item>
-              <el-form-item label="支付密码：" prop="name">
-                <el-input v-model="ruleForm.name"></el-input>
+              <el-form-item label="支付密码：" prop="payPassword">
+                <el-input type="password" v-model="form.payPassword"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-                <el-button @click="resetForm('ruleForm')">重置</el-button>
+                <el-button type="primary" @click="submitForm('form')">提交</el-button>
+                <el-button @click="resetForm('form')">重置</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -56,37 +59,49 @@
 <script>
   // import { getUUID } from '@/utils'
   import MainBody from '@/components/common/mainBody'
+  import { throws } from 'assert';
   export default {
     data () {
+      let checkAmount = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('请输入提币数额'))
+        } else {
+           const reg =  /\D/g
+          if (reg.test(value)) {
+             return callback(new Error('请输入数字'))
+          }else if (value < 50) {
+            return callback(new Error('提币数额不能低于50个'))
+          } else {
+            callback()
+          }
+        }
+      }
       return {
         totalNumberYycAmount: '0.000000',
-        totalNumberUsdtAmount: '0',
-        activeNumber: 0,
-        chooseContent: [],
-         ruleForm: {
-          name: '',
-          region: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+        totalNumberUsdtAmount: '0.000000',
+         form: {
+          walletId: '',
+          accountType: '',
+          wallet: '',
+          walletAddress: '',
+          handingFee: '0',
+          withdrawalAmount: '',
+          realWithdrawalAmount: '',
+          payPassword: ''
         },
+        walletList: [],
         rules: {
-          name: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          accountType: [
+            { required: true, message: '请选择提币类型', trigger: 'change' }
           ],
-          region: [
-            { required: true, message: '请选择活动区域', trigger: 'change' }
+          walletId: [
+            { required: true, message: '请选择钱包', trigger: 'change' }
           ],
-          type: [
-            { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
+          withdrawalAmount: [
+            { required: true, validator: checkAmount, trigger: 'blur' }
           ],
-          resource: [
-            { required: true, message: '请选择活动资源', trigger: 'change' }
-          ],
-          desc: [
-            { required: true, message: '请填写活动形式', trigger: 'blur' }
+          payPassword: [
+            { required: true, message: '请填写支付密码', trigger: 'blur' }
           ]
         }
       }
@@ -98,39 +113,95 @@
       this.loadList()
     },
     methods: {
-      loadList (i) {
-        this.activeNumber = i
+      loadList () {
         this.$http({
-          url: this.$http.adornUrl('/shares/order/information'),
-          method: 'post',
-          data: this.$http.adornData({
-            'status': 1
-          })
+          url: this.$http.adornUrl('/fund/au/current/info'),
+          method: 'get'
         }).then(({data}) => {
-          console.log(data)
+           console.log(data)
           if (data && data.code === '0000') {
-            this.totalNumberYyiAmount = data.data.totalNumberYyiAmount
-            this.totalNumberOrder = data.data.totalNumberOrder
-            this.totalNumberUsdtAmount = data.data.totalNumberUsdtAmount
-            this.chooseContent = data.data.pageResponse.dataList
+            this.totalNumberYycAmount = data.data.yyc
+            this.totalNumberUsdtAmount = data.data.usdt
           } else {
-            this.dataList = []
-            this.elementTotal = 0
+            this.$message.error(data.msg)
           }
-          this.dataListLoading = false
         })
       },
-      pay (id) {
+      calculationFee() {
+        this.form.realWithdrawalAmount = (this.form.withdrawalAmount - this.form.withdrawalAmount*this.form.handingFee).toFixed(2);
       },
-      cancelOrder (id) {
+      submitForm (formName) {
+        if(this.form.accountType == 1 &&  this.form.withdrawalAmount > this.totalNumberUsdtAmount){
+            return  this.$message.error('USDT账户余额不足')
+          }else if(this.form.accountType == 2 &&  this.form.withdrawalAmount > this.totalNumberYycAmount){
+            return  this.$message.error('YYC账户余额不足')
+          }
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$http({
+              url: this.$http.adornUrl('/fund/au/insert'),
+              method: 'post',
+              data: this.$http.adornData({
+                walletId : this.form.walletId,
+                accountType : this.form.accountType,
+                wallet: this.form.wallet,
+                walletAddress: this.form.walletAddress,
+                withdrawalAmount: this.form.withdrawalAmount,
+                realWithdrawalAmount: this.form.realWithdrawalAmount,
+                payPassword: this.form.payPassword
+              })
+            }).then(({data}) => {
+              if (data && data.code === '0000') {
+                this.$message({
+                  message: '提交成功',
+                  type: 'success',
+                  duration: 1500,
+                  onClose: () => {
+                    this.loadList()
+                    this.form = {}
+                  }
+                })
+              } else {
+                this.$message.error(data.msg)
+              }
+            })
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       },
-      delOrder (id) {
+      getWalletList(accountType){
+        if(!accountType){return}
+        this.$http({
+          url: this.$http.adornUrl('/fund/au/wallet/list'),
+          method: 'get',
+          params: this.$http.adornParams({'walletType': accountType})
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.walletList = data.data.walletList
+            this.form.handingFee = data.data.handingFee
+          } else {
+            this.walletList=[]
+            this.$message.error(data.msg)
+          }
+        })
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+      selectChange(id){
+        if (this.walletList.length > 0) {
+          for (let i = 0; i < this.walletList.length; i++) {
+            if (id == this.walletList[i].walletId) {
+              this.form.wallet = this.walletList[i].name
+              this.form.walletAddress = this.walletList[i].address
+              console.log(this.form.walletAddress+"---"+this.form.wallet)
+            }
+          }
+        }
+      },
+      resetForm(form) {
+        this.$refs[form].resetFields();
       }
     },
-    mounted () {
-    }
+    mounted () {}
   }
 </script>

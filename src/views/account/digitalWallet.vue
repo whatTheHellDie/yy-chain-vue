@@ -6,24 +6,29 @@
           <h1>数字钱包管理&nbsp;&nbsp;<span class="h1span">最多保存20个数字钱包</span></h1>
           <div class="box-body">
             <div class="chargeCoin2">
-              <el-form ref="form" :model="form" label-width="180px">
-                <el-form-item label="数字钱包名称：">
+              <el-form ref="form" :model="form" :rules="formxRules" label-width="180px">
+                <input type="hidden" v-model="form.walletId" >
+                <el-form-item label="数字钱包名称："  prop="name">
                   <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="数字钱包类型：">
+                <el-form-item label="数字钱包类型："  prop="walletType">
                   <el-select v-model="form.walletType" placeholder="请选择数字钱包类型">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+                    <el-option v-for="item in options2"
+                      :key="item.value"
+                      :label="item.label"  :value="item.value"  :disabled="item.disabled">
+                    </el-option>
+                    <!-- <el-option :label="USDT" :value="1"></el-option>
+                    <el-option :label="YYC" :value="2"></el-option> -->
                   </el-select>
                 </el-form-item>
-                <el-form-item label="数字钱包地址：">
+                <el-form-item label="数字钱包地址：" prop="address">
                   <el-input v-model="form.address" placeholder="请输入数字钱包地址"></el-input>
                 </el-form-item>
-                <el-form-item label="手机号码：">
+                <el-form-item label="手机号码：" prop="phone">
                   <el-input v-model="form.phone" placeholder="请输入手机号"></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="onSubmit">保存</el-button>
+                  <el-button type="primary" @click="onSubmit(form.walletId)">保存</el-button>
                 </el-form-item>
               </el-form>
               <el-table :data="tableData" border>
@@ -31,16 +36,19 @@
                 </el-table-column>
                 <el-table-column prop="walletType" label="数字钱包类型">
                   <template slot-scope="scope">
-                    <div v-if="scope.row.accountType == 1">USDT</div>
-                    <div v-else-if="scope.row.accountType == 2">YYC</div>
-                    <div v-else-if="scope.row.accountType == 3">易用积分</div>
+                    <div v-if="scope.row.walletType == 1">USDT</div>
+                    <div v-else-if="scope.row.walletType == 2">YYC</div>
                   </template>
                 </el-table-column>
                 <el-table-column prop="address" label="数字钱包地址" width="350">
                 </el-table-column>
                 <el-table-column prop="phone" label="手机号码">
                 </el-table-column>
-                <el-table-column prop="balance" label="操作">
+                <el-table-column  header-align="center" align="center" label="操作">
+                  <template slot-scope="scope">
+                    <el-button type="text" size="small" @click="updateHandle(scope.row.walletId)">修改</el-button>
+                    <el-button type="text" size="small" @click="deleteHandle(scope.row.walletId,scope.row.name)">删除</el-button>
+                  </template>
                 </el-table-column>
               </el-table>
             </div>
@@ -63,15 +71,41 @@
   import MainBody from '@/components/common/mainBody'
   export default {
     data () {
+       var checkPhone = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('手机号不能为空'))
+        } else {
+          const reg = /^1[3|4|5|7|8|6|9][0-9]\d{8}$/
+          console.log(reg.test(value))
+          if (reg.test(value)) {
+            callback()
+          } else {
+            return callback(new Error('请输入正确的手机号'))
+          }
+        }
+      }
       return {
         tableData: [],
+        options2: [{
+          value: '1',
+          label: 'USDT'
+        },{
+          value: '2',
+          label: 'YYC'
+        }],
          form: {
+          walletId: '',
           name: '',
           walletType: '',
           address: '',
           phone: ''
         },
-        chooseContent: []
+         formxRules: {
+          walletType: [{ required: true, message: '请选择钱包类型', trigger: 'blur' }],
+          phone: [{ required: true, validator: checkPhone, trigger: 'blur' }],
+          name: [{ required: true, message: '钱包名称不能为空', trigger: 'blur' }],
+          address: [{ required: true, message: '钱包地址不能为空', trigger: 'blur' }]
+        }
       }
     },
     components: {
@@ -81,37 +115,146 @@
       this.loadList()
     },
     methods: {
-      loadList (i) {
-        this.activeNumber = i
+      loadList () {
         this.$http({
-          url: this.$http.adornUrl('/shares/order/information'),
-          method: 'post',
-          data: this.$http.adornData({
-            'status': 1
-          })
+          url: this.$http.adornUrl('/wallet/au/list'),
+          method: 'get'
         }).then(({data}) => {
-          console.log(data)
           if (data && data.code === '0000') {
-            this.totalNumberYyiAmount = data.data.totalNumberYyiAmount
-            this.totalNumberOrder = data.data.totalNumberOrder
-            this.totalNumberUsdtAmount = data.data.totalNumberUsdtAmount
-            this.elementTotal = data.data.pageResponse.elementTotal
-            this.chooseContent = data.data.pageResponse.dataList
+            this.tableData = data.data
+             console.log(this.tableData)
           } else {
-            this.dataList = []
-            this.elementTotal = 0
+            this.tableData = []
+            this.$message.error(data.msg)
           }
-          this.dataListLoading = false
         })
       },
-      pay (id) {
+      // 保存
+      onSubmit (walletId) {
+        if (!(/^1[345678]\d{9}$/.test(this.form.phone))) {
+          this.$message.error('请输入正确电话号码')
+          return
+        }
+        if(!walletId){
+          this.$http({
+            url: this.$http.adornUrl('/wallet/au/insert'),
+            method: 'post',
+            data: this.$http.adornData({
+              name: this.form.name,
+              walletType: this.form.walletType,
+              phone: this.form.phone,
+              address: this.form.address
+            })
+          }).then(({data}) => {
+            if (data && data.code === '0000') {
+              this.$message({
+                message: '操作成功',
+                type: 'success',
+                duration: 1500,
+                onClose: () => {
+                  this.loadList()
+                  this.form = {}
+                }
+              })
+            } else if (data.code === '0001') {
+               this.$message({
+                message: '最多保存20个数字钱包',
+                type: 'faild',
+                duration: 1500,
+                onClose: () => {
+                  this.loadList()
+                  this.form = {}
+                }
+              })
+            } else {
+              this.$message.error(data.msg)
+            }
+          })
+        } else {
+          if (this.form.walletType=="USDT"){
+            this.form.walletType=1;
+          } else if (this.form.walletType=="YYC"){
+            this.form.walletType=2;
+          }
+          this.$http({
+            url: this.$http.adornUrl('/wallet/au/update'),
+            method: 'post',
+            data: this.$http.adornData({
+              walletId: this.form.walletId,
+              name: this.form.name,
+              walletType: this.form.walletType,
+              phone: this.form.phone,
+              address: this.form.address
+            })
+          }).then(({data}) => {
+            if (data && data.code === '0000') {
+              this.$message({
+                message: '操作成功',
+                type: 'success',
+                duration: 1500,
+                onClose: () => {
+                  this.dialogFormVisible2 = false
+                  this.loadList()
+                  this.form = {}
+                }
+              })
+            } else {
+              this.$message.error(data.msg)
+            }
+          })
+        }
       },
-      cancelOrder (id) {
+      // 详情 / 修改页面
+      updateHandle (id) {
+        this.$http({
+          url: this.$http.adornUrl('/wallet/au/detail'),
+          method: 'get',
+          params: this.$http.adornParams({'walletId': id})
+        }).then(({data}) => {
+          if (data && data.code === '0000') {
+            this.form.walletId = data.data.walletId
+            this.form.name = data.data.name
+            if(data.data.walletType=="1"){
+              this.form.walletType ="USDT" ;
+            }else{
+              this.form.walletType ="YYC" ;
+            }
+            this.form.phone = data.data.phone
+            this.form.address = data.data.address
+          } else {
+            this.form = {}
+            this.$message.error(data.msg)
+          }
+        })
       },
-      delOrder (id) {
+      // 删除
+      deleteHandle (id, name) {
+        this.$confirm(`确定${id ? '删除' : '批量删除'}【${name}】钱包吗?`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http({
+            url: this.$http.adornUrl('/wallet/au/delete'),
+            method: 'get',
+            params: this.$http.adornParams({'walletId': id})
+          }).then(({data}) => {
+            if (data && data.code === '0000') {
+              this.$message({
+                message: '操作成功',
+                type: 'success',
+                duration: 1500,
+                onClose: () => {
+                  this.loadList()
+                }
+              })
+            } else {
+              this.$message.error(data.msg)
+            }
+          })
+        }).catch(() => {})
       }
     },
-    mounted () {
-    }
+    mounted () {}
   }
 </script>
