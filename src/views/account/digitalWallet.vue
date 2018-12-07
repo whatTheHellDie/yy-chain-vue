@@ -3,13 +3,13 @@
     <main-body navIndex="1">
       <div slot="content">
         <div class="box-card2">
-          <h1>数字钱包管理&nbsp;&nbsp;<span class="h1span">最多保存20个数字钱包</span></h1>
+          <h1>数字钱包管理&nbsp;&nbsp;<span class="h1span">（最多保存20个数字钱包）</span></h1>
           <div class="box-body">
             <div class="chargeCoin2">
               <el-form ref="form" :model="form" :rules="formxRules" label-width="180px">
                 <input type="hidden" v-model="form.walletId" >
                 <el-form-item label="数字钱包名称："  prop="name">
-                  <el-input v-model="form.name"></el-input>
+                  <el-input v-model="form.name"  placeholder="请输入数字钱包名称"></el-input>
                 </el-form-item>
                 <el-form-item label="数字钱包类型："  prop="walletType">
                   <el-select v-model="form.walletType" placeholder="请选择数字钱包类型">
@@ -62,7 +62,7 @@
   .h1span{
     font-size: xx-small;
     font-family: -webkit-pictograph;
-    color: cadetblue;
+    color: #ED9D0E;
   }
 </style>
 
@@ -232,7 +232,8 @@
         this.$confirm(`确定${id ? '删除' : '批量删除'}【${name}】钱包吗?`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning'
+          type: 'warning',
+          center: true
         }).then(() => {
           this.$http({
             url: this.$http.adornUrl('/wallet/au/delete'),
