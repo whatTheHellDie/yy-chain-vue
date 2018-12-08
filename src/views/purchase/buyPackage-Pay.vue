@@ -97,13 +97,17 @@
                 }
               })
             } else if (data && data.code === '01108') {
-              this.$confirm(data.msg, '提示', {
+              this.$message.error('请输入支付密码')
+            } else if (data && data.code === '03107') {
+              this.$confirm('请先设置支付密码', '提示', {
                 confirmButtonText: '设置支付密码',
                 cancelButtonText: '取消',
                 type: 'warning'
               }).then(() => {
                 this.$router.push({ name: 'setPaymentPassword' })
               })
+            } else if (data && data.code === '03102') {
+              this.$message.error('请支付密码不正确')
             } else {
               this.$message.error(data.msg)
             }
