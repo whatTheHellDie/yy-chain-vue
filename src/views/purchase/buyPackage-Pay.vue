@@ -96,7 +96,7 @@
                   status: 0
                 }
               })
-            } else if (data && data.code === '03107') {
+            } else if (data && data.code === '01108') {
               this.$confirm(data.msg, '提示', {
                 confirmButtonText: '设置支付密码',
                 cancelButtonText: '取消',
