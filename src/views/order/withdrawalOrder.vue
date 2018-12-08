@@ -60,14 +60,8 @@
                   </el-table>
                 </div>
             <div class="block" style="text-align: center;margin: 30px 0 40px">
-              <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                background=""
-                :current-page="pageNum"
-                :page-size="pageSize"
-                layout="prev, pager, next, jumper"
-                :total="elementTotal">
+              <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                background="" :current-page="pageNum" :page-size="pageSize" layout="prev, pager, next, jumper" :total="elementTotal">
               </el-pagination>
             </div>
 
@@ -107,9 +101,10 @@
         ],
          statusOptions: [
           {value: '', label: '全部'},
-          {value: 0, label: '处理中'},
-          {value: 1, label: '提币成功'},
-          {value: 2, label: '提币失败'}
+          {value: 0, label: '待处理'},
+          {value: 1, label: '处理中'},
+          {value: 2, label: '提币成功'},
+          {value: 3, label: '提币失败'}
         ]
       }
     },
