@@ -158,6 +158,15 @@
         // 关闭定时器
         clearInterval(time)
       }
+    },
+    // mounted () {
+    //   if (window.history && window.history.pushState) {
+    //     // history.pushState(null, null, document.URL)
+    //     window.addEventListener('popstate', '', true)
+    //   }
+    // },
+    destroyed () {
+      window.removeEventListener('popstate', clearInterval(time), false)
     }
   }
 </script>
