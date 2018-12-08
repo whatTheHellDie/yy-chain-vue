@@ -35,6 +35,7 @@
   // import { getUUID } from '@/utils'
   import MyHeader from '@/components/common/header'
   import MyFooter from '@/components/common/footer'
+  var time = ''
   export default {
     data () {
       return {
@@ -55,7 +56,7 @@
         // sessionStorage.setItem('totalTime', this.totalTime)
 
         var computeTime = sessionStorage.getItem('totalTime')
-        var time = setInterval(() => {
+        time = setInterval(() => {
           if (computeTime <= 0) {
             // 关闭定时器
             clearInterval(time)
@@ -151,6 +152,12 @@
       this.payUsdtAmount = this.$route.query.payUsdtAmount
       // 倒计时
       this.countdown()
+    },
+    watch: {
+      $route (to, from) {
+        // 关闭定时器
+        clearInterval(time)
+      }
     }
   }
 </script>
