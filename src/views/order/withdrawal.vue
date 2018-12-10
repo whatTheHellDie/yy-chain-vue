@@ -73,10 +73,10 @@
         if (!value) {
           return callback(new Error('请输入提币数额'))
         } else {
-           const reg =  /\D/g
+          const reg = /\D/g
           if (reg.test(value)) {
-             return callback(new Error('请输入数字'))
-          }else if (value < 50) {
+            return callback(new Error('请输入数字'))
+          } else if (value < 50) {
             return callback(new Error('提币数额不能低于50个'))
           } else {
             callback()
@@ -86,7 +86,7 @@
       return {
         totalNumberYycAmount: '0.000000',
         totalNumberUsdtAmount: '0.000000',
-         form: {
+        form: {
           walletId: '',
           accountType: '',
           wallet: '',
@@ -96,6 +96,7 @@
           realWithdrawalAmount: '',
           payPassword: ''
         },
+        handingFeeRatio: '',
         walletList: [],
         rules: {
           accountType: [
@@ -125,7 +126,6 @@
           url: this.$http.adornUrl('/fund/au/current/info'),
           method: 'get'
         }).then(({data}) => {
-           console.log(data)
           if (data && data.code === '0000') {
             this.totalNumberYycAmount = data.data.yyc
             this.totalNumberUsdtAmount = data.data.usdt
@@ -134,23 +134,24 @@
           }
         })
       },
-      calculationFee() {
-        this.form.realWithdrawalAmount = (this.form.withdrawalAmount - this.form.withdrawalAmount*this.form.handingFee).toFixed(2);
+      calculationFee () {
+        this.form.handingFee = (this.form.withdrawalAmount * this.handingFeeRatio).toFixed(2);
+        this.form.realWithdrawalAmount = (this.form.withdrawalAmount - this.form.withdrawalAmount * this.form.handingFee).toFixed(2);
       },
       submitForm (formName) {
-        if(this.form.accountType == 1 &&  parseFloat(this.form.withdrawalAmount) > parseFloat(this.totalNumberUsdtAmount)){
-            return  this.$message.error('USDT账户余额不足')
-          }else if(this.form.accountType == 2 &&  parseFloat(this.form.withdrawalAmount) > parseFloat(this.totalNumberYycAmount)){
-            return  this.$message.error('YYC账户余额不足')
-          }
+        if (this.form.accountType == 1 &&  parseFloat(this.form.withdrawalAmount) > parseFloat(this.totalNumberUsdtAmount)) {
+          return this.$message.error('USDT账户余额不足')
+        } else if (this.form.accountType == 2 && parseFloat(this.form.withdrawalAmount) > parseFloat(this.totalNumberYycAmount)) {
+          return this.$message.error('YYC账户余额不足')
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http({
               url: this.$http.adornUrl('/fund/au/insert'),
               method: 'post',
               data: this.$http.adornData({
-                walletId : this.form.walletId,
-                accountType : this.form.accountType,
+                walletId: this.form.walletId,
+                accountType: this.form.accountType,
                 wallet: this.form.wallet,
                 walletAddress: this.form.walletAddress,
                 withdrawalAmount: this.form.withdrawalAmount,
@@ -168,20 +169,22 @@
                     this.form = {}
                   }
                 })
+                this.$router.push({name: 'withdrawalOrder'})
               } else {
-                this.$message({message: data.msg,
-                  type: 'error'})
+                this.$message({
+                  message: data.msg,
+                  type: 'error'
+                })
               }
-              this.$router.push({ name: 'withdrawalOrder'})
             })
           } else {
-            console.log('error submit!!');
-            return false;
+            console.log('error submit!!')
+            return false
           }
-        });
+        })
       },
-      getWalletList(accountType){
-        if(!accountType){return}
+      getWalletList (accountType) {
+        if (!accountType) { return }
         this.$http({
           url: this.$http.adornUrl('/fund/au/wallet/list'),
           method: 'get',
@@ -189,26 +192,26 @@
         }).then(({data}) => {
           if (data && data.code === '0000') {
             this.walletList = data.data.walletList
-            this.form.handingFee = data.data.handingFee
+            this.handingFeeRatio = data.data.handingFee
           } else {
-            this.walletList=[]
+            this.walletList = []
             this.$message.error(data.msg)
           }
         })
       },
-      selectChange(id){
+      selectChange (id) {
         if (this.walletList.length > 0) {
           for (let i = 0; i < this.walletList.length; i++) {
             if (id == this.walletList[i].walletId) {
               this.form.wallet = this.walletList[i].name
               this.form.walletAddress = this.walletList[i].address
-              console.log(this.form.walletAddress+"---"+this.form.wallet)
+              console.log(this.form.walletAddress + "---" + this.form.wallet)
             }
           }
         }
       },
-      resetForm(form) {
-        this.$refs[form].resetFields();
+      resetForm (form) {
+        this.$refs[form].resetFields()
       }
     },
     mounted () {}

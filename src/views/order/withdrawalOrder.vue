@@ -99,7 +99,7 @@
           {value: 1, label: 'USDT'},
           {value: 2, label: 'YYC'}
         ],
-         statusOptions: [
+        statusOptions: [
           {value: '', label: '全部'},
           {value: 0, label: '待处理'},
           {value: 1, label: '处理中'},
