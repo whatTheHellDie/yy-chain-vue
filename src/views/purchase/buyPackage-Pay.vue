@@ -35,7 +35,6 @@
   // import { getUUID } from '@/utils'
   import MyHeader from '@/components/common/header'
   import MyFooter from '@/components/common/footer'
-  var time = ''
   export default {
     data () {
       return {
@@ -56,11 +55,18 @@
         // sessionStorage.setItem('totalTime', this.totalTime)
 
         var computeTime = sessionStorage.getItem('totalTime')
-        time = setInterval(() => {
+        var time = setInterval(() => {
+          if(this.$route.path!="/buyPackage-Pay"){
+               // 关闭定时器
+            clearInterval(time)
+            // 清空时间
+            sessionStorage.removeItem('totalTime')
+            return false;
+          }
+          
           if (computeTime <= 0) {
             // 关闭定时器
             clearInterval(time)
-
             // 清空时间
             sessionStorage.removeItem('totalTime')
             // 跳转到首页
@@ -97,18 +103,14 @@
                   status: 0
                 }
               })
-            } else if (data && data.code === '01108') {
-              this.$message.error('请输入支付密码')
             } else if (data && data.code === '03107') {
-              this.$confirm('请先设置支付密码', '提示', {
+              this.$confirm(data.msg, '提示', {
                 confirmButtonText: '设置支付密码',
                 cancelButtonText: '取消',
                 type: 'warning'
               }).then(() => {
                 this.$router.push({ name: 'setPaymentPassword' })
               })
-            } else if (data && data.code === '03102') {
-              this.$message.error('请支付密码不正确')
             } else {
               this.$message.error(data.msg)
             }
@@ -156,21 +158,6 @@
       this.payUsdtAmount = this.$route.query.payUsdtAmount
       // 倒计时
       this.countdown()
-    },
-    watch: {
-      $route (to, from) {
-        // 关闭定时器
-        clearInterval(time)
-      }
-    },
-    // mounted () {
-    //   if (window.history && window.history.pushState) {
-    //     // history.pushState(null, null, document.URL)
-    //     window.addEventListener('popstate', '', true)
-    //   }
-    // },
-    destroyed () {
-      window.removeEventListener('popstate', clearInterval(time), false)
     }
   }
 </script>
