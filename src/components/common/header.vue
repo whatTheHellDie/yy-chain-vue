@@ -2,8 +2,7 @@
   <header>
     <div class="index-top">
       <div class="wrap">
-        <icon-svg name="phone" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>
-        800-820-0000
+        <!--<icon-svg name="phone" class="site-sidebar__menu-icon" style="vertical-align: -2px;"></icon-svg>-->
         <div class="login-box clearfix">
           <div v-if="loginStatus==0"><span class="span cursor" @click="$router.push({ name: 'login' })">登录</span>|<span class="span cursor" @click="$router.push({ name: 'register' })">注册</span></div>
           <div v-if="loginStatus==1">尊敬的<span class="white">{{loginUserNumber}}</span>用户，欢迎您来到易用链！

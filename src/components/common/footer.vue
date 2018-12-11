@@ -6,8 +6,8 @@
           <dd>深圳易用文化传播有限公司</dd>
         </dl>
          <dl class="pull-left">
-          <dt>联系我们</dt>
-          <dd style="font-size: 20px;font-weight: 800;">800-820-8888</dd>
+          <!--<dt>联系我们</dt>-->
+          <!--<dd style="font-size: 20px;font-weight: 800;">800-820-8888</dd>-->
         </dl>
       </div>
       <div class="index-bottom">
