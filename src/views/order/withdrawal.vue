@@ -136,7 +136,7 @@
       },
       calculationFee () {
         this.form.handingFee = (this.form.withdrawalAmount * this.handingFeeRatio).toFixed(2);
-        this.form.realWithdrawalAmount = (this.form.withdrawalAmount - this.form.withdrawalAmount * this.form.handingFee).toFixed(2);
+        this.form.realWithdrawalAmount = (this.form.withdrawalAmount - this.form.handingFee).toFixed(2);
       },
       submitForm (formName) {
         if (this.form.accountType == 1 &&  parseFloat(this.form.withdrawalAmount) > parseFloat(this.totalNumberUsdtAmount)) {
@@ -170,6 +170,16 @@
                   }
                 })
                 this.$router.push({name: 'withdrawalOrder'})
+              }else if (data.code === '01108') {
+                this.$confirm('您还没有设置支付密码', '提示', {
+                  confirmButtonText: '去设置',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+                }).then(() => {
+                  this.$router.push({
+                    name: 'setPaymentPassword'
+                  })
+                });
               } else {
                 this.$message({
                   message: data.msg,
@@ -184,6 +194,7 @@
         })
       },
       getWalletList (accountType) {
+        this.form.walletId = ''
         if (!accountType) { return }
         this.$http({
           url: this.$http.adornUrl('/fund/au/wallet/list'),

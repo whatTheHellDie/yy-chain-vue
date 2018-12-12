@@ -95,8 +95,8 @@
     },
     methods: {
       turn(name) {
-        if(name == "chargeCoin") {
-          this.getPersonInfo()
+        if(name == "chargeCoin" || name == "withdrawal") {
+          this.getPersonInfo(name)
           return false;
         } else {
           this.$router.push({
@@ -104,13 +104,11 @@
           })
         }
       },
-      getPersonInfo() {
+      getPersonInfo(name) {
         this.$http({
           url: this.$http.adornUrl('/user/au/query/one'),
           method: 'get'
-        }).then(({
-          data
-        }) => {
+        }).then(({ data }) => {
           if(data && data.code === '0000') {
             if(!data.data) {
               return;
@@ -130,9 +128,15 @@
                 confirmButtonText: '确认',
               });
             } else if(data.data.auth == 3) {
-              this.$router.push({
-                name: 'chargeCoin'
-              })
+              if(name == "chargeCoin"){
+                this.$router.push({
+                  name: 'chargeCoin'
+                })
+              }else if(name == "withdrawal"){
+                this.$router.push({
+                  name: 'withdrawal'
+                })
+              }
             } else {
               this.$confirm('认证失败，请重新认证', '提示', {
                 confirmButtonText: '去认证',
@@ -148,9 +152,7 @@
             // this.$message.error(data.msg)
             this.$message.error('获取实名认证信息失败')
           }
-        }).catch(({
-          error
-        }) => {
+        }).catch(({ error }) => {
           this.dataListLoading = false
           this.$message.error(error)
         })
