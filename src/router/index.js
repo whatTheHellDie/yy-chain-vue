@@ -29,6 +29,7 @@ const globalRoutes = [
    //订单
   { path: '/chargeCoin', component: _import('order/chargeCoin'), name: 'chargeCoin', meta: { title: '充币' } },
   { path: '/withdrawal', component: _import('order/withdrawal'), name: 'withdrawal', meta: { title: '提币' } },
+  { path: '/transfer', component: _import('order/transfer'), name: 'transfer', meta: { title: '转账' } },
   { path: '/chargeCoinOrder', component: _import('order/chargeCoinOrder'), name: 'chargeCoinOrder', meta: { title: '充币订单' } },
   { path: '/withdrawalOrder', component: _import('order/withdrawalOrder'), name: 'withdrawalOrder', meta: { title: '提币订单' } },
   { path: '/reChargeCoin', component: _import('order/reChargeCoin'), name: 'reChargeCoin', meta: { title: '重新提交' } },

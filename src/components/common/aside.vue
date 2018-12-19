@@ -78,6 +78,10 @@
               routeName: "withdrawal"
             },
             {
+              name: "转账",
+              routeName: "transfer"
+            },
+            {
               name: "资金明细",
               routeName: "CapitalDetails"
             }
@@ -95,7 +99,7 @@
     },
     methods: {
       turn(name) {
-        if(name == "chargeCoin" || name == "withdrawal") {
+        if(name == "chargeCoin" || name == "withdrawal" || name == "transfer") {
           this.getPersonInfo(name)
           return false;
         } else {
@@ -128,13 +132,17 @@
                 confirmButtonText: '确认',
               });
             } else if(data.data.auth == 3) {
-              if(name == "chargeCoin"){
+              if (name == "chargeCoin") {
                 this.$router.push({
                   name: 'chargeCoin'
                 })
-              }else if(name == "withdrawal"){
+              } else if(name == "withdrawal") {
                 this.$router.push({
                   name: 'withdrawal'
+                })
+              } else if(name == "transfer") {
+                this.$router.push({
+                  name: 'transfer'
                 })
               }
             } else {

@@ -237,7 +237,6 @@
       },
       // 删除
       deleteHandle (id, name) {
-        debugger
         this.$confirm(`确定${id ? '删除' : '批量删除'}【${name}】钱包吗?`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

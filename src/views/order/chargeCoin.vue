@@ -11,9 +11,7 @@
                 <div class="form-group combo-form clearfix">
                   <div class="way">方式一：扫描收款二维码
                     <div class="please">请用您的个人数字钱包扫描二维码进行转账（USDT）。<br>
-                      <div class="erwei">
-
-                      </div>
+                      <div class="erwei"></div>
                     </div>
                   </div>
                   <div class="way">方式二：收款方钱包地址
@@ -35,7 +33,6 @@
                   <div class="form-group combo-form">
                     <label for="zhuan" class="col-sm-2 control-label">交易号</label><input type="text" class="form-control input" v-model="form.chargeNumber" placeholder="请在钱包记录页面复制URL粘贴在这里">
                   </div>
-
                   <div class="form-group combo-form">
                     <label for="zhuan" class="col-sm-2 control-label">上传凭证</label>
                     <div class="col-sm-4 pin">
@@ -43,20 +40,16 @@
                       <div class="clearfix">
                         <div class="tou-s">
                           <img :src="imgs[0]" class="img" />
-
                           <div class="btn-sub">上传图片<input @change='add_img($event,0)' id="saveImage" accept="image/png,image/jpeg,image/gif" type="file"></div>
                         </div>
                       </div>
                     </div>
-
                   </div>
                 </form>
                 <div class="gu-btn" @click="submitData()">提交</div>
-
               </form>
             </div>
           </div>
-
         </div>
       </div>
     </main-body>
